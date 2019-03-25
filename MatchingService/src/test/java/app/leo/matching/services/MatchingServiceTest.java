@@ -1,8 +1,8 @@
 package app.leo.matching.services;
 
-import app.leo.matching.models.Applicant;
-import app.leo.matching.models.MatchResult;
-import app.leo.matching.models.Recruiter;
+import app.leo.matching.demo.Applicant;
+import app.leo.matching.demo.MatchingService;
+import app.leo.matching.demo.Recruiter;
 import org.junit.Assert;
 import org.junit.Test;
 
