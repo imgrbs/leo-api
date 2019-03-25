@@ -1,4 +1,4 @@
-package app.leo.matching.models;
+package app.leo.matching.demo;
 
 import java.util.ArrayList;
 import java.util.List;

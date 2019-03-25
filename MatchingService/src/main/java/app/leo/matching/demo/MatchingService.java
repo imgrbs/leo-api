@@ -1,8 +1,4 @@
-package app.leo.matching.services;
-
-import app.leo.matching.models.Applicant;
-import app.leo.matching.models.MatchResult;
-import app.leo.matching.models.Recruiter;
+package app.leo.matching.demo;
 
 import java.util.ArrayList;
 import java.util.List;
