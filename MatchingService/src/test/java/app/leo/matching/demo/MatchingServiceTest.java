@@ -1,4 +1,4 @@
-package app.leo.matching.services;
+package app.leo.matching.demo;
 
 import app.leo.matching.demo.Applicant;
 import app.leo.matching.demo.MatchingService;
