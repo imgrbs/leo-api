@@ -11,6 +11,14 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long matchId;
 
+    public Match() {
+    }
+
+    public Match(Long matchId, @NotBlank String name) {
+        this.matchId = matchId;
+        this.name = name;
+    }
+
     @NotBlank
     private String name;
 
