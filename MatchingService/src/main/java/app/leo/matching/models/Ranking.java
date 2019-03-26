@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @MappedSuperclass
-public class Ranking {
+public class Ranking implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +15,6 @@ public class Ranking {
 
     @NotNull
     private int sequence;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "match_id")

@@ -1,6 +1,7 @@
 package app.leo.matching.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,6 +24,7 @@ public class ApplicantMatch implements Serializable {
     private Match match;
 
     @OneToMany(mappedBy = "applicantMatch")
+    @JsonManagedReference
     private List<ApplicantRanking> applicantRanking;
 
     private long applicantId;

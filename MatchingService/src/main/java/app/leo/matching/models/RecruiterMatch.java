@@ -1,10 +1,12 @@
 package app.leo.matching.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "recruiter_matches")
-public class RecruiterMatch {
+public class RecruiterMatch  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +16,7 @@ public class RecruiterMatch {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "match_id")
+    @JsonBackReference
     private Match match;
 
     private long recruiterId;

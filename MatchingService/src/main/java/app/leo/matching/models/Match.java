@@ -1,6 +1,6 @@
 package app.leo.matching.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,7 +16,8 @@ public class Match implements Serializable {
     private Long id;
 
     @OneToMany(mappedBy = "match")
-    private List<ApplicantMatch> applicants;
+    @JsonManagedReference
+    private List<ApplicantMatch> applicantMatches;
 
     public Match() {
     }
@@ -37,6 +38,14 @@ public class Match implements Serializable {
         this.id = id;
     }
 
+    public List<ApplicantMatch> getApplicantMatches() {
+        return applicantMatches;
+    }
+
+    public void setApplicantMatches(List<ApplicantMatch> applicantMatches) {
+        this.applicantMatches = applicantMatches;
+    }
+
     public String getName() {
         return name;
     }
@@ -45,11 +54,4 @@ public class Match implements Serializable {
         this.name = name;
     }
 
-    public List<ApplicantMatch> getApplicants() {
-        return applicants;
-    }
-
-    public void setApplicants(List<ApplicantMatch> applicants) {
-        this.applicants = applicants;
-    }
 }

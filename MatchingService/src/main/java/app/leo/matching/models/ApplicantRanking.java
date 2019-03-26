@@ -1,6 +1,7 @@
 package app.leo.matching.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -19,6 +20,14 @@ public class ApplicantRanking extends Ranking {
     @JoinColumn(name = "position_id")
     @JsonBackReference
     private Position position;
+
+    public ApplicantRanking() {
+    }
+
+    public ApplicantRanking(ApplicantMatch applicantMatch, Position position) {
+        this.applicantMatch = applicantMatch;
+        this.position = position;
+    }
 
     public ApplicantMatch getApplicantMatch() {
         return applicantMatch;
