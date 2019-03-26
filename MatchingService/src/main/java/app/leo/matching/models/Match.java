@@ -10,7 +10,7 @@ public class Match {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long matchId;
+    private Long id;
 
     @OneToMany
     private List<ApplicantMatch> applicantMatchList;
@@ -18,20 +18,20 @@ public class Match {
     public Match() {
     }
 
-    public Match(Long matchId, @NotBlank String name) {
-        this.matchId = matchId;
+    public Match(Long id, @NotBlank String name) {
+        this.id = id;
         this.name = name;
     }
 
     @NotBlank
     private String name;
 
-    public Long getMatchId() {
-        return matchId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMatchId(Long matchId) {
-        this.matchId = matchId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

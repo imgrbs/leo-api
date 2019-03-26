@@ -8,7 +8,7 @@ public class Ranking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rankingId;
+    private Long id;
 
     @NotNull
     private int sequence;
@@ -16,12 +16,12 @@ public class Ranking {
     @ManyToOne
     private Match match;
 
-    public Long getRankingId() {
-        return rankingId;
+    public Long getId() {
+        return id;
     }
 
-    public void setRankingId(Long rankingId) {
-        this.rankingId = rankingId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getSequence() {
