@@ -1,31 +1,31 @@
 package app.leo.matching.models;
 
-import app.leo.matching.demo.Applicant;
-import app.leo.matching.demo.Recruiter;
-
-import java.util.List;
-import java.util.Map;
-
 public class MatchResult {
 
-    private Map<Position, List<ApplicantMatch>> result;
+    private ApplicantMatch applicantMatch;
+    private Position position;
 
-    public MatchResult(Map<Position, List<ApplicantMatch>> result) {
-        this.result = result;
+    public MatchResult() {
     }
 
-    public Map<Position, List<ApplicantMatch>> getResult() {
-        return result;
+    public MatchResult(ApplicantMatch applicantMatch, Position position) {
+        this.applicantMatch = applicantMatch;
+        this.position = position;
     }
 
-    public void setResult(Map<Position, List<ApplicantMatch>> result) {
-        this.result = result;
+    public ApplicantMatch getApplicantMatch() {
+        return applicantMatch;
     }
 
-    @Override
-    public String toString() {
-        return "MatchResult{" +
-                "result=" + result +
-                '}';
+    public void setApplicantMatch(ApplicantMatch applicantMatch) {
+        this.applicantMatch = applicantMatch;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }
