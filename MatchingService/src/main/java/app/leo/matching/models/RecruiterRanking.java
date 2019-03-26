@@ -7,10 +7,6 @@ import javax.persistence.*;
 @Table(name = "recruiter_rankings")
 public class RecruiterRanking extends Ranking {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long recruiterRankingId;
-
     @ManyToOne
     private RecruiterMatch recruiterMatch;
 
@@ -33,11 +29,4 @@ public class RecruiterRanking extends Ranking {
         this.applicantMatch = applicantMatch;
     }
 
-    public Long getRecruiterRankingId() {
-        return recruiterRankingId;
-    }
-
-    public void setRecruiterRankingId(Long recruiterRankingId) {
-        this.recruiterRankingId = recruiterRankingId;
-    }
 }

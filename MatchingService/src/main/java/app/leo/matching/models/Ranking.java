@@ -3,7 +3,8 @@ package app.leo.matching.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-abstract class Ranking {
+@MappedSuperclass
+public class Ranking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
