@@ -2,7 +2,6 @@ package app.leo.matching.services;
 
 import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.models.Match;
-import app.leo.matching.models.MatchResult;
 import app.leo.matching.repositories.ApplicantMatchRepository;
 import app.leo.matching.repositories.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class MatchService {
     }
 
     public Match getMatchByMatchId(long id) {
-        return this.matchRepository.getMatchByMatchId(id);
+        return this.matchRepository.getMatchById(id);
     }
 
     public List<ApplicantMatch> getApplicantMatchByMatchId(long matchId) {

@@ -49,7 +49,7 @@ public class MatchServiceTests {
 
     @Test
     public void findByIdShouldReturnValidMatchWhenMatchIdIsCorrect() {
-        Mockito.when(matchRepository.getMatchByMatchId(this.match.getId())).thenReturn(this.match);
+        Mockito.when(matchRepository.getMatchById(this.match.getId())).thenReturn(this.match);
 
         Match matchMock = matchService.getMatchByMatchId(this.match.getId());
 
