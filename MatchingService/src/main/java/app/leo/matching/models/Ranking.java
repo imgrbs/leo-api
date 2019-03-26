@@ -21,6 +21,14 @@ public class Ranking implements Serializable {
     @JsonBackReference
     private Match match;
 
+    public Ranking() {
+    }
+
+    public Ranking(@NotNull int sequence, Match match) {
+        this.sequence = sequence;
+        this.match = match;
+    }
+
     public Long getId() {
         return id;
     }
