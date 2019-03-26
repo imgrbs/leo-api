@@ -16,9 +16,9 @@ public class ApplicantRanking extends Ranking {
     private ApplicantMatch applicantMatch;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "position_id")
-    @JsonBackReference
+    @JsonManagedReference
     private Position position;
 
     public ApplicantRanking() {

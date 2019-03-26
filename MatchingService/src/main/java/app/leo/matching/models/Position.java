@@ -26,6 +26,7 @@ public class Position implements Serializable {
     private int capacity;
 
     @OneToMany(mappedBy = "position")
+    @JsonBackReference
     private List<ApplicantRanking> applicants;
 
     public Position() {
