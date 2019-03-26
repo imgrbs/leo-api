@@ -16,6 +16,22 @@ public class ApplicantMatch {
     @OneToOne
     private Match match;
 
+    @OneToMany
+    private ApplicantRanking applicantRanking;
+
+    public ApplicantMatch(Long applicantMatchId, boolean isComfirmation, Match match) {
+        this.applicantMatchId = applicantMatchId;
+        this.isComfirmation = isComfirmation;
+        this.match = match;
+    }
+
+    public ApplicantMatch(Long applicantMatchId, boolean isComfirmation, Match match, ApplicantRanking applicantRanking) {
+        this.applicantMatchId = applicantMatchId;
+        this.isComfirmation = isComfirmation;
+        this.match = match;
+        this.applicantRanking = applicantRanking;
+    }
+
     public Long getApplicantMatchId() {
         return applicantMatchId;
     }
@@ -38,5 +54,13 @@ public class ApplicantMatch {
 
     public void setMatch(Match match) {
         this.match = match;
+    }
+
+    public ApplicantRanking getApplicantRanking() {
+        return applicantRanking;
+    }
+
+    public void setApplicantRanking(ApplicantRanking applicantRanking) {
+        this.applicantRanking = applicantRanking;
     }
 }
