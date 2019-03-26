@@ -1,5 +1,6 @@
 package app.leo.matching.demo;
 
+import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.models.Match;
 import app.leo.matching.models.MatchResult;
 
@@ -34,5 +35,20 @@ public class MatchingService {
         Map<Recruiter,List<Applicant>> result = recruiters.stream().collect(Collectors.toMap(recruiter -> recruiter,Recruiter::getAcceptedApplicants));
         MatchResult result1 = new MatchResult(result);
         return result1;
+    }
+
+    public static boolean isAllMatched(List<ApplicantMatch> applicants){
+        for (ApplicantMatch a:
+             applicants) {
+            boolean result = applicants.getApplicantRankingList.size!=0 ||applicants.getApplicantRankingList.
+          if(!result)
+              continue;
+            return  result;
+        }
+        return false;
+    }
+
+    public boolean isAcceptedByRecruiter(Applicant applicant){
+
     }
 }
