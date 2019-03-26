@@ -35,6 +35,13 @@ public class Position implements Serializable {
     public Position() {
     }
 
+    public Position(@NotBlank String name, @NotNull int capacity, RecruiterMatch recruiterMatch) {
+
+        this.name = name;
+        this.capacity = capacity;
+        this.recruiterMatch = recruiterMatch;
+    }
+
     public Long getId() {
         return id;
     }
