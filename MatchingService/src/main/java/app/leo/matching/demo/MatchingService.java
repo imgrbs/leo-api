@@ -1,8 +1,6 @@
 package app.leo.matching.demo;
 
-import app.leo.matching.models.ApplicantMatch;
-import app.leo.matching.models.Match;
-import app.leo.matching.models.MatchResult;
+import app.leo.matching.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +45,18 @@ public class MatchingService {
         return false;
     }
 
-    public boolean isAcceptedByRecruiter(Applicant applicant){
+    public boolean isAcceptedByRecruiter(ApplicantMatch applicant, Position position){
+         if(position.getCapacity()>0){
+            return true;
+         }
+         return false;
+    }
+
+    public boolean isRecruiterHasFullCapacity(Position position){
+        return position.getCapacity()>0;
+    }
+
+    public boolean isRankBetterThanAcceptedList(ApplicantMatch applicant,RecruiterRanking recruiterRanking,MatchResult matchResult){
         return false;
     }
 }
