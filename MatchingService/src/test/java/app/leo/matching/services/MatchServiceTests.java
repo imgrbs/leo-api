@@ -58,13 +58,13 @@ public class MatchServiceTests {
 
     @Test
     public void getApplicantMatchByMatchIdShouldReturnDataCorrectly() {
-        Mockito.when(applicantMatchRepository.getApplicantMatchByMatchId(this.match.getMatchId())).thenReturn(this.applicantMatchList);
+        Mockito.when(applicantMatchRepository.getApplicantMatchByMatchId(this.match.getId())).thenReturn(this.applicantMatchList);
 
-        List<ApplicantMatch> applicantMatches = matchService.getApplicantMatchByMatchId(this.match.getMatchId());
+        List<ApplicantMatch> applicantMatches = matchService.getApplicantMatchByMatchId(this.match.getId());
 
         Assert.assertEquals(1, applicantMatches.size());
         Assert.assertEquals(this.applicantMatch, applicantMatches.get(0));
-        Assert.assertEquals(this.applicantMatch.getApplicantMatchId(), applicantMatches.get(0).getApplicantMatchId());
+        Assert.assertEquals(this.applicantMatch.getId(), applicantMatches.get(0).getId());
     }
 
     @Test
