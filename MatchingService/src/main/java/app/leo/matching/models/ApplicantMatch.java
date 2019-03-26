@@ -1,6 +1,7 @@
 package app.leo.matching.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -17,19 +18,12 @@ public class ApplicantMatch {
     private Match match;
 
     @OneToMany
-    private ApplicantRanking applicantRanking;
+    private List<ApplicantRanking> applicantRanking;
 
     public ApplicantMatch(Long applicantMatchId, boolean isComfirmation, Match match) {
         this.applicantMatchId = applicantMatchId;
         this.isComfirmation = isComfirmation;
         this.match = match;
-    }
-
-    public ApplicantMatch(Long applicantMatchId, boolean isComfirmation, Match match, ApplicantRanking applicantRanking) {
-        this.applicantMatchId = applicantMatchId;
-        this.isComfirmation = isComfirmation;
-        this.match = match;
-        this.applicantRanking = applicantRanking;
     }
 
     public Long getApplicantMatchId() {
@@ -56,11 +50,11 @@ public class ApplicantMatch {
         this.match = match;
     }
 
-    public ApplicantRanking getApplicantRanking() {
+    public List<ApplicantRanking> getApplicantRanking() {
         return applicantRanking;
     }
 
-    public void setApplicantRanking(ApplicantRanking applicantRanking) {
+    public void setApplicantRanking(List<ApplicantRanking> applicantRanking) {
         this.applicantRanking = applicantRanking;
     }
 }
