@@ -29,10 +29,10 @@ public class MatchingService {
         return recruitersToMatch;
     }
 
-    public static MatchResult createResultMatch(List<Recruiter> recruiters){
-        Map<Recruiter,List<Applicant>> result = recruiters.stream().collect(Collectors.toMap(recruiter -> recruiter,Recruiter::getAcceptedApplicants));
-        MatchResult result1 = new MatchResult(result);
-        return result1;
+    public static MatchResult createResultMatch(List<Position> recruiters){
+        Map<Position,List<RecruiterRanking>> result = recruiters.stream().collect(Collectors.toMap(recruiter -> recruiter,Position::getRecruiterRankings));
+
+        return null;
     }
 
     public static boolean isAllMatched(List<ApplicantMatch> applicants){
@@ -56,12 +56,14 @@ public class MatchingService {
         return position.getCapacity()>0;
     }
 
-    public boolean isRankBetterThanAcceptedList(ApplicantMatch applicant,RecruiterRanking recruiterRanking,MatchResult matchResult){
-        ArrayList<ApplicantMatch> applicantsToCompare =new ArrayList<ApplicantMatch>( matchResult.getResult().get(recruiterRanking.getRecruiterMatch()));
-        return applicantsToCompare.get(applicantsToCompare.size() - 1 );
+    public boolean isRankBetterThanAcceptedList(ApplicantMatch applicant,Position position,MatchResult matchResult){
+        ArrayList<RecruiterRanking>   rankings = new ArrayList<RecruiterRanking>(position.getRecruiterRankings());
+        Map<Position, List<ApplicantMatch>> matchResult1 =  matchResult.getResult();
+        ArrayList<ApplicantMatch> applicantMatches = new ArrayList<ApplicantMatch>(matchResult1.get(position));
+        return rankings.get(rankings.indexOf(applicant)).getSequence() < rankings.get(rankings.indexOf(applicantMatches.get(applicantMatches.size()-1))).getSequence();
     }
 
-    public MatchResult addAcceptedApplicantAndRecruiterToMatchResult  (ApplicantMatch applicant,RecruiterMatch recruiter){
-
-    }
+//    public MatchResult addAcceptedApplicantAndRecruiterToMatchResult  (ApplicantMatch applicant,RecruiterMatch recruiter){
+//
+//    }
 }
