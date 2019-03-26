@@ -38,17 +38,16 @@ public class MatchingService {
     }
 
     public static boolean isAllMatched(List<ApplicantMatch> applicants){
-        for (ApplicantMatch a:
-             applicants) {
-            boolean result = applicants.getApplicantRankingList.size!=0 ||applicants.getApplicantRankingList.
-          if(!result)
+        for (ApplicantMatch applicantMatch: applicants) {
+            boolean isAllMatched = applicantMatch.getApplicantRanking().isEmpty();
+            if(!isAllMatched)
               continue;
-            return  result;
+            return isAllMatched;
         }
         return false;
     }
 
     public boolean isAcceptedByRecruiter(Applicant applicant){
-
+        return false;
     }
 }
