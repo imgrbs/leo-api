@@ -81,7 +81,9 @@ public class MatchService {
 
     public boolean isRecruiterHasFullCapacity(Position position, List<ApplicantMatch> applicantAccepted){
         int capacity = position.getCapacity();
-        return applicantAccepted.size() == capacity || capacity <= 0;
+        if(applicantAccepted != null)
+            return applicantAccepted.size() == capacity || capacity <= 0;
+        return capacity<=0;
     }
 
     public boolean isRankBetterThanPositionAccepted (int indexOfApplicant) {
