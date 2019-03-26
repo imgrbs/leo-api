@@ -38,6 +38,8 @@ public class ApplicantMatch implements Serializable {
         this.match = match;
     }
 
+
+
     public Long getId() {
         return id;
     }
@@ -76,5 +78,25 @@ public class ApplicantMatch implements Serializable {
 
     public void setApplicantId(long applicantId) {
         this.applicantId = applicantId;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ApplicantMatch){
+            ApplicantMatch applicantMatch = (ApplicantMatch) obj;
+            return applicantMatch.getId()==this.getId();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicantMatch{" +
+                "id=" + id +
+                ", isComfirmation=" + isComfirmation +
+                ", match=" + match +
+                ", applicantRanking=" + applicantRanking +
+                ", applicantId=" + applicantId +
+                '}';
     }
 }
