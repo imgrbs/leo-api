@@ -12,19 +12,19 @@ public class RecruiterRanking extends Ranking {
 
     @ManyToOne
     @JsonBackReference
-    private RecruiterMatch recruiterMatch;
+    private Position position;
 
     @ManyToOne
     @JoinColumn(name = "applicant_match_id")
     @JsonBackReference
     private ApplicantMatch applicantMatch;
 
-    public RecruiterMatch getRecruiterMatch() {
-        return recruiterMatch;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setRecruiterMatch(RecruiterMatch recruiterMatch) {
-        this.recruiterMatch = recruiterMatch;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public ApplicantMatch getApplicantMatch() {

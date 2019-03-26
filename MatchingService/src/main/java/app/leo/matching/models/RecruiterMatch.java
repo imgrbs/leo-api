@@ -26,7 +26,7 @@ public class RecruiterMatch  {
 
     @OneToMany(mappedBy = "recruiterMatch")
     @JsonManagedReference
-    private List<RecruiterRanking> recruiterRankings;
+    private List<Position> Position;
 
     public Long getId() {
         return id;
@@ -60,11 +60,11 @@ public class RecruiterMatch  {
         this.recruiterId = recruiterId;
     }
 
-    public List<RecruiterRanking> getRecruiterRankings() {
-        return recruiterRankings;
+    public List<app.leo.matching.models.Position> getPosition() {
+        return Position;
     }
 
-    public void setRecruiterRankings(List<RecruiterRanking> recruiterRankings) {
-        this.recruiterRankings = recruiterRankings;
+    public void setPosition(List<app.leo.matching.models.Position> position) {
+        Position = position;
     }
 }
