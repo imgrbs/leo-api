@@ -49,9 +49,9 @@ public class MatchServiceTests {
 
     @Test
     public void findByIdShouldReturnValidMatchWhenMatchIdIsCorrect() {
-        Mockito.when(matchRepository.getMatchByMatchId(this.match.getMatchId())).thenReturn(this.match);
+        Mockito.when(matchRepository.getMatchByMatchId(this.match.getId())).thenReturn(this.match);
 
-        Match matchMock = matchService.getMatchByMatchId(this.match.getMatchId());
+        Match matchMock = matchService.getMatchByMatchId(this.match.getId());
 
         Assert.assertEquals(this.match.getName(), matchMock.getName());
     }
