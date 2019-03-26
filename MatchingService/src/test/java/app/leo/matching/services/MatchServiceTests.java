@@ -101,9 +101,25 @@ public class MatchServiceTests {
     public void getApplicantMatchByInvalidMatchIdShouldReturnNull() {
         long matchId = 2;
         Mockito.when(applicantMatchRepository.getApplicantMatchByMatchId(matchId)).thenReturn(new ArrayList<>());
-
+        System.out.println(this.applicantMatch);
         List<ApplicantMatch> applicantMatches = matchService.getApplicantMatchByMatchId(matchId);
 
         Assert.assertEquals(0, applicantMatches.size());
     }
+
+    @Test
+    public void normalMatching(){
+        Mockito.when(applicantMatchRepository.getApplicantMatchByMatchId(this.match.getId())).thenReturn(this.applicantMatchList);
+        List<MatchResult> results =matchService.matching(this.match.getId());
+
+        Assert.assertEquals(1,results.size());
+    }
+
+    @Test
+    public void equalsTest(){
+        ApplicantMatch am = new ApplicantMatch(1L, true, this.match);
+        am.setApplicantRanking(this.applicantRankingList);
+        Assert.assertEquals(true,am.equals(this.applicantMatchList.get(0)));
+    }
+
 }
