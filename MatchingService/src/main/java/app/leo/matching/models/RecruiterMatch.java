@@ -28,6 +28,15 @@ public class RecruiterMatch  {
     @JsonManagedReference
     private List<Position> Position;
 
+    public RecruiterMatch() {
+    }
+
+    public RecruiterMatch( long recruiterId,Match match,boolean isComfirmation) {
+        this.isComfirmation = isComfirmation;
+        this.match = match;
+        this.recruiterId = recruiterId;
+    }
+
     public Long getId() {
         return id;
     }
