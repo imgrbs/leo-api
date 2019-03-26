@@ -52,16 +52,11 @@ public class MatchService {
                 } else {
                     int removalApplicantIndex = this.findRemovalApplicantInPositionRanking(position, applicant, positionAccepted);
                     if (this.isRankBetterThanPositionAccepted(removalApplicantIndex)) {
-                        // remove old applicant accepted
                         ApplicantMatch applicantMatch = acceptedApplicant.remove(removalApplicantIndex);
-                        // remove in match result
                         matchResults = this.removeAcceptedApplicantInMatchResult(matchResults, removalApplicantIndex);
-                        // add new accepted
                         positionAccepted.clear();
                         positionAccepted.put(position, acceptedApplicant);
-                        // add new match result
                         matchResults.add(new MatchResult(applicant, position));
-                        // add old accepted to applicantMatches with remove not accepted position
                         applicantMatches.add(applicantMatch);
                     } else {
                         matchResults.add(new MatchResult(applicant, null));
