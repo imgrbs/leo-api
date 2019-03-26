@@ -8,19 +8,19 @@ public class RecruiterMatch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long recruiterMatchId;
+    private Long id;
 
     private boolean isComfirmation;
 
     @OneToOne
     private Match match;
 
-    public Long getRecruiterMatchId() {
-        return recruiterMatchId;
+    public Long getId() {
+        return id;
     }
 
-    public void setRecruiterMatchId(Long recruiterMatchId) {
-        this.recruiterMatchId = recruiterMatchId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean isComfirmation() {
