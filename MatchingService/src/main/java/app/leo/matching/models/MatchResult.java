@@ -8,17 +8,17 @@ import java.util.Map;
 
 public class MatchResult {
 
-    private Map<RecruiterMatch, List<ApplicantMatch>> result;
+    private Map<Position, List<ApplicantMatch>> result;
 
-    public MatchResult(Map<RecruiterMatch, List<ApplicantMatch>> result) {
+    public MatchResult(Map<Position, List<ApplicantMatch>> result) {
         this.result = result;
     }
 
-    public Map<RecruiterMatch, List<ApplicantMatch>> getResult() {
+    public Map<Position, List<ApplicantMatch>> getResult() {
         return result;
     }
 
-    public void setResult(Map<RecruiterMatch, List<ApplicantMatch>> result) {
+    public void setResult(Map<Position, List<ApplicantMatch>> result) {
         this.result = result;
     }
 
