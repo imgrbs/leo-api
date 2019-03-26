@@ -1,8 +1,6 @@
 package app.leo.matching.services;
 
-import app.leo.matching.models.ApplicantMatch;
-import app.leo.matching.models.ApplicantRanking;
-import app.leo.matching.models.Match;
+import app.leo.matching.models.*;
 import app.leo.matching.repositories.ApplicantMatchRepository;
 import app.leo.matching.repositories.MatchRepository;
 
@@ -26,8 +24,13 @@ public class MatchServiceTests {
     private ApplicantMatch applicantMatch;
     private List<ApplicantMatch> applicantMatchList;
     private List<ApplicantRanking> applicantRankingList;
-
+    private List<RecruiterMatch> recruiterMatches;
+    private List<Position> positions;
+    private Position position;
     private MatchService matchService;
+    private ApplicantRanking applicantRanking;
+    private RecruiterRanking recruiterRanking;
+    private List<RecruiterRanking> recruiterRankingList;
 
     @Mock
     private MatchRepository matchRepository;
@@ -40,8 +43,35 @@ public class MatchServiceTests {
         this.match = new Match(1L, "SIT Career Day 2019");
         this.applicantMatch = new ApplicantMatch(1L, true, this.match);
         this.applicantMatchList = new ArrayList<ApplicantMatch>();
+        this.recruiterMatches = new ArrayList<RecruiterMatch>();
+        this.applicantRankingList = new ArrayList<ApplicantRanking>();
+        this.positions = new ArrayList<Position>();
+        this.recruiterRankingList = new ArrayList<RecruiterRanking>();
+        //first data
+        this.recruiterMatches.add(new RecruiterMatch(1L,this.match,true));
+        this.position = new Position("Data Engineer", 1,this.recruiterMatches.get(0));
+        this.applicantRanking = new ApplicantRanking(1,this.match,this.applicantMatch,position);
+        this.applicantRankingList.add(this.applicantRanking);
+        this.applicantMatch.setApplicantRanking(this.applicantRankingList);
         applicantMatchList.add(this.applicantMatch);
+        this.recruiterRanking = new RecruiterRanking(1,this.match,this.position,applicantMatch);
+        this.recruiterRankingList.add(recruiterRanking);
+        this.position.setRecruiterRankings(recruiterRankingList);
 
+        //second data
+        this.recruiterRankingList =new ArrayList<RecruiterRanking>();
+        this.position = new Position("Front-End Developer", 1 , this.recruiterMatches.get(0));
+        this.applicantMatch = new ApplicantMatch(2L, true, this.match);
+        this.applicantRanking = new ApplicantRanking(1,this.match,this.applicantMatch,position);
+        this.applicantRankingList.add(this.applicantRanking);
+        this.applicantMatch.setApplicantRanking(this.applicantRankingList);
+        applicantMatchList.add(this.applicantMatch);
+        this.recruiterRanking = new RecruiterRanking(2,this.match,this.position,applicantMatch);
+        this.recruiterRankingList.add(recruiterRanking);
+        this.position.setRecruiterRankings(recruiterRankingList);
+
+
+        this.match.setApplicantMatches(this.applicantMatchList);
         this.matchRepository = Mockito.mock(MatchRepository.class);
         this.applicantMatchRepository = Mockito.mock(ApplicantMatchRepository.class);
         this.matchService = new MatchService(this.matchRepository, this.applicantMatchRepository);
