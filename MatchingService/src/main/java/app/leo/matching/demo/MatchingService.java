@@ -1,11 +1,17 @@
 package app.leo.matching.demo;
 
+import app.leo.matching.models.Match;
+import app.leo.matching.models.MatchResult;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MatchingService {
 
     public static List<Recruiter> matching(List<Applicant> applicantsToMatch, List<Recruiter> recruitersToMatch) {
+
         while (!applicantsToMatch.isEmpty()) {
             Applicant applicant = applicantsToMatch.remove(0);
             List<Recruiter> preferredRecruiters = new ArrayList<>(applicant.getPreferredRecruiters());
@@ -22,5 +28,11 @@ public class MatchingService {
             }
         }
         return recruitersToMatch;
+    }
+
+    public static MatchResult createResultMatch(List<Recruiter> recruiters){
+        Map<Recruiter,List<Applicant>> result = recruiters.stream().collect(Collectors.toMap(recruiter -> recruiter,Recruiter::getAcceptedApplicants));
+        MatchResult result1 = new MatchResult(result);
+        return result1;
     }
 }
