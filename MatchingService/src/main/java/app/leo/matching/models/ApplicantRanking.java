@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -22,6 +23,12 @@ public class ApplicantRanking extends Ranking {
     private Position position;
 
     public ApplicantRanking() {
+    }
+
+    public ApplicantRanking(@NotNull int sequence, Match match, ApplicantMatch applicantMatch, Position position) {
+        super(sequence, match);
+        this.applicantMatch = applicantMatch;
+        this.position = position;
     }
 
     public ApplicantRanking(ApplicantMatch applicantMatch, Position position) {
