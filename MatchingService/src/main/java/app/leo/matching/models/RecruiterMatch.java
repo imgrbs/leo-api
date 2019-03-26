@@ -1,8 +1,10 @@
 package app.leo.matching.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "recruiter_matches")
@@ -20,6 +22,11 @@ public class RecruiterMatch  {
     private Match match;
 
     private long recruiterId;
+
+
+    @OneToMany(mappedBy = "recruiterMatch")
+    @JsonManagedReference
+    private List<RecruiterRanking> recruiterRankings;
 
     public Long getId() {
         return id;
@@ -51,5 +58,13 @@ public class RecruiterMatch  {
 
     public void setRecruiterId(long recruiterId) {
         this.recruiterId = recruiterId;
+    }
+
+    public List<RecruiterRanking> getRecruiterRankings() {
+        return recruiterRankings;
+    }
+
+    public void setRecruiterRankings(List<RecruiterRanking> recruiterRankings) {
+        this.recruiterRankings = recruiterRankings;
     }
 }
