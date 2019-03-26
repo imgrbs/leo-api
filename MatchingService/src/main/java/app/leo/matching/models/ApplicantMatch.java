@@ -1,6 +1,7 @@
 package app.leo.matching.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
