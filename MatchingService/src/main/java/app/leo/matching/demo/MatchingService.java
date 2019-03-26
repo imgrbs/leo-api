@@ -57,6 +57,11 @@ public class MatchingService {
     }
 
     public boolean isRankBetterThanAcceptedList(ApplicantMatch applicant,RecruiterRanking recruiterRanking,MatchResult matchResult){
-        return false;
+        ArrayList<ApplicantMatch> applicantsToCompare =new ArrayList<ApplicantMatch>( matchResult.getResult().get(recruiterRanking.getRecruiterMatch()));
+        return applicantsToCompare.get(applicantsToCompare.size() - 1 );
+    }
+
+    public MatchResult addAcceptedApplicantAndRecruiterToMatchResult  (ApplicantMatch applicant,RecruiterMatch recruiter){
+
     }
 }
