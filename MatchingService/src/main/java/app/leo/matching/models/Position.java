@@ -26,7 +26,12 @@ public class Position implements Serializable {
     private int capacity;
 
     @OneToMany(mappedBy = "position")
+    @JsonBackReference
     private List<ApplicantRanking> applicants;
+
+    @ManyToOne
+    @JoinColumn(name = "recruiter_match_id")
+    private RecruiterMatch recruiterMatch;
 
     public Position() {
     }
@@ -61,5 +66,13 @@ public class Position implements Serializable {
 
     public void setApplicants(List<ApplicantRanking> applicants) {
         this.applicants = applicants;
+    }
+
+    public RecruiterMatch getRecruiterMatch() {
+        return recruiterMatch;
+    }
+
+    public void setRecruiterMatch(RecruiterMatch recruiterMatch) {
+        this.recruiterMatch = recruiterMatch;
     }
 }
