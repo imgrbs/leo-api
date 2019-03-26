@@ -12,7 +12,8 @@ public class RecruiterMatch {
 
     private boolean isComfirmation;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "match_id")
     private Match match;
 
     private long recruiterId;

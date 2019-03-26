@@ -1,5 +1,7 @@
 package app.leo.matching.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 
@@ -7,10 +9,15 @@ import javax.persistence.*;
 @Table(name = "applicant_rankings")
 public class ApplicantRanking extends Ranking {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "applicant_match_id")
+    @JsonBackReference
     private ApplicantMatch applicantMatch;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
+    @JsonBackReference
     private Position position;
 
     public ApplicantMatch getApplicantMatch() {

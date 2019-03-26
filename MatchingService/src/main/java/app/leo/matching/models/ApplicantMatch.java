@@ -1,12 +1,15 @@
 package app.leo.matching.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 
 @Entity
 @Table(name = "applicant_matches")
-public class ApplicantMatch {
+public class ApplicantMatch implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +17,12 @@ public class ApplicantMatch {
 
     private boolean isComfirmation;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "match_id")
+    @JsonBackReference
     private Match match;
 
-    @OneToMany
+    @OneToMany(mappedBy = "applicantMatch")
     private List<ApplicantRanking> applicantRanking;
 
     private long applicantId;

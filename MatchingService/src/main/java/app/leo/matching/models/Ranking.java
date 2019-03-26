@@ -1,5 +1,7 @@
 package app.leo.matching.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +15,10 @@ public class Ranking {
     @NotNull
     private int sequence;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "match_id")
+    @JsonBackReference
     private Match match;
 
     public Long getId() {

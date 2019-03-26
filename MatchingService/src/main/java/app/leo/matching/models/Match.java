@@ -1,19 +1,22 @@
 package app.leo.matching.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "matches")
-public class Match {
+public class Match implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    private List<ApplicantMatch> applicantMatchList;
+    @OneToMany(mappedBy = "match")
+    private List<ApplicantMatch> applicants;
 
     public Match() {
     }
@@ -42,11 +45,11 @@ public class Match {
         this.name = name;
     }
 
-    public List<ApplicantMatch> getApplicantMatchList() {
-        return applicantMatchList;
+    public List<ApplicantMatch> getApplicants() {
+        return applicants;
     }
 
-    public void setApplicantMatchList(List<ApplicantMatch> applicantMatchList) {
-        this.applicantMatchList = applicantMatchList;
+    public void setApplicants(List<ApplicantMatch> applicants) {
+        this.applicants = applicants;
     }
 }
