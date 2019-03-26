@@ -10,19 +10,33 @@ public class ApplicantMatch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long applicantMatchId;
+    private Long id;
 
     private boolean isComfirmation;
 
-    @OneToOne
+    @ManyToOne
     private Match match;
 
-    public Long getApplicantMatchId() {
-        return applicantMatchId;
+    @OneToMany
+    private List<ApplicantRanking> applicantRanking;
+
+    private long applicantId;
+
+    public ApplicantMatch() {
     }
 
-    public void setApplicantMatchId(Long applicantMatchId) {
-        this.applicantMatchId = applicantMatchId;
+    public ApplicantMatch(Long id, boolean isComfirmation, Match match) {
+        this.id = id;
+        this.isComfirmation = isComfirmation;
+        this.match = match;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean isComfirmation() {
@@ -39,5 +53,21 @@ public class ApplicantMatch {
 
     public void setMatch(Match match) {
         this.match = match;
+    }
+
+    public List<ApplicantRanking> getApplicantRanking() {
+        return applicantRanking;
+    }
+
+    public void setApplicantRanking(List<ApplicantRanking> applicantRanking) {
+        this.applicantRanking = applicantRanking;
+    }
+
+    public long getApplicantId() {
+        return applicantId;
+    }
+
+    public void setApplicantId(long applicantId) {
+        this.applicantId = applicantId;
     }
 }

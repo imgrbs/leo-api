@@ -10,7 +10,7 @@ public class Position {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long positionId;
+    private Long id;
 
     @NotBlank
     private String name;
@@ -18,12 +18,12 @@ public class Position {
     @NotNull
     private int capacity;
 
-    public Long getPositionId() {
-        return positionId;
+    public Long getId() {
+        return id;
     }
 
-    public void setPositionId(Long positionId) {
-        this.positionId = positionId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
