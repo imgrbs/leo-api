@@ -15,6 +15,8 @@ public class RecruiterMatch {
     @OneToOne
     private Match match;
 
+    private long recruiterId;
+
     public Long getId() {
         return id;
     }
@@ -37,5 +39,13 @@ public class RecruiterMatch {
 
     public void setMatch(Match match) {
         this.match = match;
+    }
+
+    public long getRecruiterId() {
+        return recruiterId;
+    }
+
+    public void setRecruiterId(long recruiterId) {
+        this.recruiterId = recruiterId;
     }
 }

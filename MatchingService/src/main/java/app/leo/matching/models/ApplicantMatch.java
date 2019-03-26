@@ -20,6 +20,8 @@ public class ApplicantMatch {
     @OneToMany
     private List<ApplicantRanking> applicantRanking;
 
+    private long applicantId;
+
     public ApplicantMatch() {
     }
 
@@ -59,5 +61,13 @@ public class ApplicantMatch {
 
     public void setApplicantRanking(List<ApplicantRanking> applicantRanking) {
         this.applicantRanking = applicantRanking;
+    }
+
+    public long getApplicantId() {
+        return applicantId;
+    }
+
+    public void setApplicantId(long applicantId) {
+        this.applicantId = applicantId;
     }
 }
