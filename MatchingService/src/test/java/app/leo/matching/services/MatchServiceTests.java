@@ -54,6 +54,7 @@ public class MatchServiceTests {
         this.applicantRankingList.add(this.applicantRanking);
         this.applicantMatch.setApplicantRanking(this.applicantRankingList);
         applicantMatchList.add(this.applicantMatch);
+        positions.add(position);
         this.recruiterRanking = new RecruiterRanking(1,this.match,this.position,applicantMatch);
         this.recruiterRankingList.add(recruiterRanking);
         this.position.setRecruiterRankings(recruiterRankingList);
@@ -66,6 +67,7 @@ public class MatchServiceTests {
         this.applicantRankingList.add(this.applicantRanking);
         this.applicantMatch.setApplicantRanking(this.applicantRankingList);
         applicantMatchList.add(this.applicantMatch);
+        positions.add(position);
         this.recruiterRanking = new RecruiterRanking(2,this.match,this.position,applicantMatch);
         this.recruiterRankingList.add(recruiterRanking);
         this.position.setRecruiterRankings(recruiterRankingList);
@@ -92,9 +94,9 @@ public class MatchServiceTests {
 
         List<ApplicantMatch> applicantMatches = matchService.getApplicantMatchByMatchId(this.match.getId());
 
-        Assert.assertEquals(1, applicantMatches.size());
-        Assert.assertEquals(this.applicantMatch, applicantMatches.get(0));
-        Assert.assertEquals(this.applicantMatch.getId(), applicantMatches.get(0).getId());
+        Assert.assertEquals(2, applicantMatches.size());
+        Assert.assertEquals(this.applicantMatch, applicantMatches.get(1));
+        Assert.assertEquals(this.applicantMatch.getId(), applicantMatches.get(1).getId());
     }
 
     @Test
@@ -110,9 +112,16 @@ public class MatchServiceTests {
     @Test
     public void normalMatching(){
         Mockito.when(applicantMatchRepository.getApplicantMatchByMatchId(this.match.getId())).thenReturn(this.applicantMatchList);
-        List<MatchResult> results =matchService.matching(this.match.getId());
-
-        Assert.assertEquals(1,results.size());
+        MatchResult matchResult1 = new MatchResult(this.applicantMatchList.get(0),positions.get(0));
+        MatchResult matchResult2 = new MatchResult(this.applicantMatchList.get(1),positions.get(1));
+        List<MatchResult> assertTestcase = new ArrayList<MatchResult>();
+        assertTestcase.add(matchResult1);
+        assertTestcase.add(matchResult2);
+        List<MatchResult> results = matchService.matching(this.match.getId());
+        System.out.println(results);
+        System.out.println(assertTestcase);
+        Assert.assertEquals(2,results.size());
+        Assert.assertEquals(true,assertTestcase.equals(results));
     }
 
     @Test
