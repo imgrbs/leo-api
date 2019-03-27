@@ -39,6 +39,14 @@ public class MatchServiceTests {
     private List<ApplicantMatch> applicantMatchListCase2;
 
 
+    private Match match3;
+    private List<ApplicantMatch> applicantMatchListCase3;
+
+    private Match match4;
+    private List<ApplicantMatch> applicantMatchListCase4;
+
+    private Match match5;
+    private List<ApplicantMatch> applicantMatchListCase5;
     @Before
     public void setUp() throws Exception {
         this.match1 = new Match(1L, "SIT Career Day 2019");
@@ -55,6 +63,19 @@ public class MatchServiceTests {
         this.applicantMatchListCase2.add(applicant2Match2);
         this.match2.setApplicantMatches(applicantMatchListCase2);
 
+        this.match3 = new Match(3L,"Gacha Fest.");
+        this.applicantMatchListCase3 = ApplicantMatchGenerator.generateApplicantMatchForAtCapacityNoSwap(match3,"Data Engineer","Back-End Developer",1,1);
+        match3.setApplicantMatches(applicantMatchListCase3);
+
+        this.match4 = new Match(4L,"Food Lift fest.");
+        this.applicantMatchListCase4 = ApplicantMatchGenerator.generateApplicantMatchForAtCapacityNoSwap(match4,"Data Engineer","Back-End Developer",1,1);
+        match4.setApplicantMatches(applicantMatchListCase4);
+
+        this.match5 = new Match(5L,"Génial! Leo");
+        this.applicantMatch1 = ApplicantMatchGenerator.generateApplicationMatchForNoMatchWereMade(match5,"Maréchal",1);
+        this.applicantMatchListCase5=new ArrayList<ApplicantMatch>();
+        this.applicantMatchListCase5.add(applicantMatch1);
+        match5.setApplicantMatches(applicantMatchListCase5);
         this.matchRepository = Mockito.mock(MatchRepository.class);
         this.applicantMatchRepository = Mockito.mock(ApplicantMatchRepository.class);
         this.matchService = new MatchService(this.matchRepository, this.applicantMatchRepository);
@@ -104,6 +125,7 @@ public class MatchServiceTests {
         MatchResult matchResult1 = new MatchResult(applicant1, applicant1Rank1);
         // arrange Applicant 2
         ApplicantMatch applicant2 = this.applicantMatchListCase2.get(1);
+        System.out.println(applicant2);
         Position applicant2Rank1 = applicant2.getApplicantRanking().get(0).getPosition();
         MatchResult matchResult2 = new MatchResult(applicant2, applicant2Rank1);
         // arrange Applicant 1
@@ -119,6 +141,54 @@ public class MatchServiceTests {
         // assert
         Assert.assertEquals(2, actMatchResults.size());
         Assert.assertEquals(true, matchResults.equals(actMatchResults));
+    }
+
+    @Test
+    public void testMatchWhenPositionAtCapacityShouldReturnMatchResult(){
+        Mockito.when(applicantMatchRepository.getApplicantMatchByMatchId(this.match3.getId())).thenReturn(this.applicantMatchListCase3);
+        MatchResult matchResult1 = new MatchResult(this.applicantMatchListCase3.get(0),this.applicantMatchListCase3.get(0).getApplicantRanking().get(0).getPosition());
+        MatchResult matchResult2 = new MatchResult(this.applicantMatchListCase3.get(1),this.applicantMatchListCase3.get(1).getApplicantRanking().get(1).getPosition());
+        List<MatchResult> matchResults = new ArrayList<MatchResult>();
+        matchResults.add(matchResult1);
+        matchResults.add(matchResult2);
+
+        List<ApplicantMatch> applicantMatches = matchService.getApplicantMatchByMatchId(this.match3.getId());
+
+        List<MatchResult> actMatchResults = matchService.matching(applicantMatches);
+
+        Assert.assertEquals(2,actMatchResults.size());
+        Assert.assertEquals(true,matchResults.equals(actMatchResults));
+
+    }
+
+    @Test
+    public void testMatchWhenRankisBetterShouldReturnMatchResult(){
+        Mockito.when(applicantMatchRepository.getApplicantMatchByMatchId(this.match4.getId())).thenReturn(this.applicantMatchListCase4);
+        MatchResult matchResult1 = new MatchResult(this.applicantMatchListCase4.get(0),this.applicantMatchListCase3.get(0).getApplicantRanking().get(1).getPosition());
+        MatchResult matchResult2 = new MatchResult(this.applicantMatchListCase4.get(1),this.applicantMatchListCase3.get(1).getApplicantRanking().get(0).getPosition());
+        List<MatchResult> matchResults = new ArrayList<MatchResult>();
+        matchResults.add(matchResult1);
+        matchResults.add(matchResult2);
+
+
+        List<ApplicantMatch> applicantMatches = matchService.getApplicantMatchByMatchId(this.match4.getId());
+
+        List<MatchResult> actMatchResults = matchService.matching(applicantMatches);
+
+        Assert.assertEquals(2,actMatchResults.size());
+        Assert.assertEquals(true,matchResults.equals(actMatchResults));
+    }
+
+    @Test
+    public void testMatchWhenNoMatchWereMadeShouldReturnNull(){
+        Mockito.when(applicantMatchRepository.getApplicantMatchByMatchId(this.match5.getId())).thenReturn(this.applicantMatchListCase5);
+
+        List<ApplicantMatch> applicantMatches = matchService.getApplicantMatchByMatchId(this.match5.getId());
+
+        List<MatchResult> actMatchResults = matchService.matching(applicantMatches);
+
+        Assert.assertEquals(2,actMatchResults.size());
+        Assert.assertEquals(null,actMatchResults);
     }
 
 }
