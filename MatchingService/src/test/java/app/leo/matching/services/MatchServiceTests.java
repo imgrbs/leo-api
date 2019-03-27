@@ -111,8 +111,10 @@ public class MatchServiceTests {
         matchResults.add(matchResult1);
         matchResults.add(matchResult2);
 
+        List<ApplicantMatch> applicantMatches = matchService.getApplicantMatchByMatchId(this.match2.getId());
+
         // act
-        List<MatchResult> actMatchResults = matchService.matching(this.match2.getId());
+        List<MatchResult> actMatchResults = matchService.matching(applicantMatches);
 
         // assert
         Assert.assertEquals(2, actMatchResults.size());
