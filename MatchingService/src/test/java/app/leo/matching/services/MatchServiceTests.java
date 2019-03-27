@@ -103,7 +103,7 @@ public class MatchServiceTests {
         Position applicant1Rank1 = applicant1.getApplicantRanking().get(0).getPosition();
         MatchResult matchResult1 = new MatchResult(applicant1, applicant1Rank1);
         // arrange Applicant 2
-        ApplicantMatch applicant2 = this.applicantMatchListCase2.get(0);
+        ApplicantMatch applicant2 = this.applicantMatchListCase2.get(1);
         Position applicant2Rank1 = applicant2.getApplicantRanking().get(0).getPosition();
         MatchResult matchResult2 = new MatchResult(applicant2, applicant2Rank1);
         // arrange Applicant 1
