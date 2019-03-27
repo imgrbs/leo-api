@@ -42,26 +42,32 @@ public class MatchService {
             while (!applicantRanking.isEmpty()) {
                 Position position = applicantRanking.remove(0).getPosition();
                 List<ApplicantMatch> acceptedApplicant = positionAccepted.get(position);
-                if ((!this.isRecruiterHasFullCapacity(position, acceptedApplicant)) && this.isRecruiterAccepted(applicant, position.getRecruiterRankings())) {
-                    matchResults.add(new MatchResult(applicant, position));
-                    if (acceptedApplicant==null||acceptedApplicant.isEmpty()) {
-                        acceptedApplicant = new ArrayList<>();
-                        acceptedApplicant.add(applicant);
-                    }
-                    positionAccepted.put(position, acceptedApplicant);
-                    break;
-                } else {
-                    int removalApplicantIndex = this.findRemovalApplicantInPositionRanking(position, applicant, positionAccepted);
-                    if (this.isRankBetterThanPositionAccepted(removalApplicantIndex)) {
-                        ApplicantMatch applicantMatch = acceptedApplicant.remove(removalApplicantIndex);
-                        matchResults = this.removeAcceptedApplicantInMatchResult(matchResults, removalApplicantIndex);
-                        positionAccepted.clear();
-                        positionAccepted.put(position, acceptedApplicant);
-                        matchResults.add(new MatchResult(applicant, position));
-                        applicantMatches.add(applicantMatch);
+                if (acceptedApplicant == null) {
+                    acceptedApplicant = new ArrayList<ApplicantMatch>();
+                }
+                if (this.isRecruiterAccepted(applicant, position.getRecruiterRankings())) {
+                    if ((this.isRecruiterHasFullCapacity(position, acceptedApplicant))) {
+                        int removalApplicantIndex = this.findRemovalApplicantInPositionRanking(position, applicant, positionAccepted);
+                        if (this.isRankBetterThanPositionAccepted(removalApplicantIndex)) {
+                            ApplicantMatch applicantMatch = acceptedApplicant.remove(removalApplicantIndex);
+                            matchResults = this.removeAcceptedApplicantInMatchResult(matchResults, removalApplicantIndex);
+                            positionAccepted.remove(position);
+                            positionAccepted.put(position, acceptedApplicant);
+                            matchResults.add(new MatchResult(applicant, position));
+                            applicantMatches.add(applicantMatch);
+                        } else if(applicantRanking.isEmpty()) {
+                            matchResults.add(new MatchResult(applicant, null));
+                            break;
+                        }
                     } else {
-                        matchResults.add(new MatchResult(applicant, null));
+                        matchResults.add(new MatchResult(applicant, position));
+                        acceptedApplicant.add(applicant);
+                        positionAccepted.put(position, acceptedApplicant);
+                        break;
                     }
+                } else if(applicantRanking.isEmpty()) {
+                    matchResults.add(new MatchResult(applicant, null));
+                    break;
                 }
             }
         }
