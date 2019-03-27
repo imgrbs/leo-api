@@ -93,18 +93,26 @@ public class MatchService {
         return  indexOfApplicant > -1;
     }
 
+    public boolean isIndexAvalible (int indexOfApplicant) {
+        return  indexOfApplicant > -1;
+    }
+
     public int findRemovalApplicantInPositionRanking(Position position, ApplicantMatch applicant, Map<Position, List<ApplicantMatch>> positionAccepted){
         int indexOfRemovalApplicant = -1;
         List<RecruiterRanking> recruiterRankings = new ArrayList<RecruiterRanking>(position.getRecruiterRankings());
-        List<ApplicantMatch> applicantAccepted = new ArrayList<ApplicantMatch>(positionAccepted.get(position));
-        int indexOfNewApplicant = recruiterRankings.indexOf(applicant);
-        int newApplicantSequence = recruiterRankings.get(indexOfNewApplicant).getSequence();
-        for (ApplicantMatch applicantMatch: applicantAccepted) {
-            int indexOfOldApplicant = recruiterRankings.indexOf(applicantMatch);
-            int oldApplicantSequence = recruiterRankings.get(indexOfOldApplicant).getSequence();
-            if (oldApplicantSequence < newApplicantSequence) {
-                indexOfRemovalApplicant = indexOfOldApplicant;
-                break;
+        if (positionAccepted.get(position) != null) {
+            List<ApplicantMatch> applicantAccepted = new ArrayList<ApplicantMatch>(positionAccepted.get(position));
+            int indexOfNewApplicant = recruiterRankings.indexOf(applicant);
+            if (this.isIndexAvalible(indexOfNewApplicant)) {
+                int newApplicantSequence = recruiterRankings.get(indexOfNewApplicant).getSequence();
+                for (ApplicantMatch applicantMatch: applicantAccepted) {
+                    int indexOfOldApplicant = recruiterRankings.indexOf(applicantMatch);
+                    int oldApplicantSequence = recruiterRankings.get(indexOfOldApplicant).getSequence();
+                    if (oldApplicantSequence < newApplicantSequence) {
+                        indexOfRemovalApplicant = indexOfOldApplicant;
+                        break;
+                    }
+                }
             }
         }
         return indexOfRemovalApplicant ;
