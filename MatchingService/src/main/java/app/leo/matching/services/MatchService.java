@@ -74,22 +74,22 @@ public class MatchService {
         return matchResults;
     }
 
-    public boolean allApplicantMatched(List<ApplicantMatch> applicants){
+    private boolean allApplicantMatched(List<ApplicantMatch> applicants){
         return applicants.isEmpty();
     }
 
 
-    public boolean isRecruiterAccepted(ApplicantMatch applicant, List<RecruiterRanking> recruiterRanking){
+    private boolean isRecruiterAccepted(ApplicantMatch applicant, List<RecruiterRanking> recruiterRanking){
         RecruiterRanking ranking = new RecruiterRanking(applicant);
         return recruiterRanking.contains(ranking);
     }
 
-    public boolean isRecruiterHasFullCapacity(Position position, List<ApplicantMatch> applicantAccepted){
+    private boolean isRecruiterHasFullCapacity(Position position, List<ApplicantMatch> applicantAccepted){
         int capacity = position.getCapacity();
         return applicantAccepted.size() == capacity || capacity == 0;
     }
 
-    public boolean isRankBetterThanPositionAccepted (int indexOfApplicant) {
+    private boolean isRankBetterThanPositionAccepted (int indexOfApplicant) {
         return  indexOfApplicant > -1;
     }
 
@@ -97,13 +97,13 @@ public class MatchService {
         return  indexOfApplicant > -1;
     }
 
-    public int findRemovalApplicantInPositionRanking(Position position, ApplicantMatch applicant, Map<Position, List<ApplicantMatch>> positionAccepted){
+    private int findRemovalApplicantInPositionRanking(Position position, ApplicantMatch applicant, Map<Position, List<ApplicantMatch>> positionAccepted){
         int indexOfRemovalApplicant = -1;
         List<RecruiterRanking> recruiterRankings = new ArrayList<RecruiterRanking>(position.getRecruiterRankings());
         if (positionAccepted.get(position) != null) {
             List<ApplicantMatch> applicantAccepted = new ArrayList<ApplicantMatch>(positionAccepted.get(position));
             int indexOfNewApplicant = recruiterRankings.indexOf(applicant);
-            if (this.isIndexAvalible(indexOfNewApplicant)) {
+            if (this.isIndexCorrected(indexOfNewApplicant)) {
                 int newApplicantSequence = recruiterRankings.get(indexOfNewApplicant).getSequence();
                 for (ApplicantMatch applicantMatch: applicantAccepted) {
                     int indexOfOldApplicant = recruiterRankings.indexOf(applicantMatch);
@@ -115,10 +115,10 @@ public class MatchService {
                 }
             }
         }
-        return indexOfRemovalApplicant ;
+        return indexOfRemovalApplicant;
     }
 
-    public List<MatchResult> removeAcceptedApplicantInMatchResult(List<MatchResult> matchResults, int removalApplicantIndex) {
+    private List<MatchResult> removeAcceptedApplicantInMatchResult(List<MatchResult> matchResults, int removalApplicantIndex) {
         matchResults.remove(removalApplicantIndex);
         return matchResults;
     }
