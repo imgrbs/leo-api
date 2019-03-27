@@ -93,7 +93,7 @@ public class MatchService {
         return  indexOfApplicant > -1;
     }
 
-    public boolean isIndexAvalible (int indexOfApplicant) {
+    private boolean isIndexCorrected(int indexOfApplicant) {
         return  indexOfApplicant > -1;
     }
 
