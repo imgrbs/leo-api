@@ -44,11 +44,12 @@ public class MatchService {
                 List<ApplicantMatch> acceptedApplicant = positionAccepted.get(position);
                 if ((!this.isRecruiterHasFullCapacity(position, acceptedApplicant)) && this.isRecruiterAccepted(applicant, position.getRecruiterRankings())) {
                     matchResults.add(new MatchResult(applicant, position));
-                    if (acceptedApplicant.isEmpty()) {
+                    if (acceptedApplicant==null||acceptedApplicant.isEmpty()) {
                         acceptedApplicant = new ArrayList<>();
                         acceptedApplicant.add(applicant);
                     }
                     positionAccepted.put(position, acceptedApplicant);
+                    break;
                 } else {
                     int removalApplicantIndex = this.findRemovalApplicantInPositionRanking(position, applicant, positionAccepted);
                     if (this.isRankBetterThanPositionAccepted(removalApplicantIndex)) {
@@ -73,7 +74,8 @@ public class MatchService {
 
 
     public boolean isRecruiterAccepted(ApplicantMatch applicant, List<RecruiterRanking> recruiterRanking){
-        if (recruiterRanking.contains(applicant)) {
+        RecruiterRanking ranking = new RecruiterRanking(applicant);
+        if (recruiterRanking.contains(ranking)) {
             return true;
         }
         return false;
