@@ -32,8 +32,14 @@ public class MatchService {
         return this.applicantMatchRepository.getApplicantMatchByMatchId(matchId);
     }
 
-    public List<MatchResult> matching(long matchId) {
+    public List<MatchResult> matchingByMatchId(long matchId) {
         List<ApplicantMatch> applicantMatches = this.getApplicantMatchByMatchId(matchId);
+        List<MatchResult> matchResults = this.matching(applicantMatches);
+        // save to database
+        return matchResults;
+    }
+
+    public List<MatchResult> matching(List<ApplicantMatch> applicantMatches) {
         List<MatchResult> matchResults = new ArrayList<MatchResult>();
         Map<Position, List<ApplicantMatch>> positionAccepted = new HashMap<Position, List<ApplicantMatch>>();
         while (!this.allApplicantMatched(applicantMatches)) {
