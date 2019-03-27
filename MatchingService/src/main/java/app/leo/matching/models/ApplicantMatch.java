@@ -30,6 +30,13 @@ public class ApplicantMatch implements Serializable {
     private long applicantId;
 
     public ApplicantMatch() {
+
+    }
+
+
+    public ApplicantMatch(boolean isComfirmation, Match match) {
+        this.isComfirmation = isComfirmation;
+        this.match = match;
     }
 
     public ApplicantMatch(Long id, boolean isComfirmation, Match match) {
@@ -37,8 +44,6 @@ public class ApplicantMatch implements Serializable {
         this.isComfirmation = isComfirmation;
         this.match = match;
     }
-
-
 
     public Long getId() {
         return id;
@@ -80,11 +85,19 @@ public class ApplicantMatch implements Serializable {
         this.applicantId = applicantId;
     }
 
+    public boolean isIdEqual(ApplicantMatch applicantMatch){
+        return applicantMatch.getId() == this.getId();
+    }
+
+    public boolean isSameMatchId(ApplicantMatch applicantMatch){
+        return applicantMatch.getMatch().getId() == this.getMatch().getId();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof ApplicantMatch){
             ApplicantMatch applicantMatch = (ApplicantMatch) obj;
-            return applicantMatch.getId()==this.getId()&&applicantMatch.getMatch().getId() == this.getMatch().getId();
+            return this.isIdEqual(applicantMatch) && this.isSameMatchId(applicantMatch);
         }
         return false;
     }

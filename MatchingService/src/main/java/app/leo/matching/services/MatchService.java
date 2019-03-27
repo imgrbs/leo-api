@@ -110,6 +110,7 @@ public class MatchService {
     }
 
     public List<MatchResult> removeAcceptedApplicantInMatchResult(List<MatchResult> matchResults, int removalApplicantIndex) {
+        matchResults.remove(removalApplicantIndex);
         return matchResults;
     }
 
