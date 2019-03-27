@@ -84,7 +84,7 @@ public class ApplicantMatch implements Serializable {
     public boolean equals(Object obj) {
         if(obj instanceof ApplicantMatch){
             ApplicantMatch applicantMatch = (ApplicantMatch) obj;
-            return applicantMatch.getId()==this.getId();
+            return applicantMatch.getId()==this.getId()&&applicantMatch.getMatch().getId() == this.getMatch().getId();
         }
         return false;
     }
