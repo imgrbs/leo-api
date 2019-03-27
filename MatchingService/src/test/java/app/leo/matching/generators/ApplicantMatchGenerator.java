@@ -8,12 +8,20 @@ import java.util.ListResourceBundle;
 
 public class ApplicantMatchGenerator {
 
-    public static long count =0;
+    public static long normalCount = 1;
+
+    public static long noSwapCount = 1;
+
+    public static long rankBetterCount = 1;
+
+    public static long noMatchCount = 1;
+
+
     public static ApplicantMatch generateApplicantMatch(Match match, String positionName, int capacity) {
         RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match,true);
         Position position = new Position(positionName, capacity, recruiter);
 
-        ApplicantMatch applicant = new ApplicantMatch(++count,true, match);
+        ApplicantMatch applicant = new ApplicantMatch(normalCount,true, match);
         ApplicantRanking applicantRank1 = new ApplicantRanking(1, match, applicant, position);
         List<ApplicantRanking> applicantRankingList = new ArrayList<ApplicantRanking>();
         applicantRankingList.add(applicantRank1);
@@ -24,6 +32,7 @@ public class ApplicantMatchGenerator {
         recruiterRankingList.add(recruiterRank1);
         position.setRecruiterRankings(recruiterRankingList);
 
+        normalCount++;
         return applicant;
     }
 
@@ -33,22 +42,24 @@ public class ApplicantMatchGenerator {
         Position position2 = new Position(position2Name, capacity2,recruiter);
 
         //applicants 1
-        ApplicantMatch applicant1 = new ApplicantMatch(++count, true,match );
+        ApplicantMatch applicant1 = new ApplicantMatch(noSwapCount, true,match );
         ApplicantRanking applicant1Ranking1 = new ApplicantRanking(1,match,applicant1,position1);
         ApplicantRanking applicant1Ranking2 = new ApplicantRanking(2,match,applicant1,position2);
         List<ApplicantRanking> applicantRankingList = new ArrayList<ApplicantRanking>();
         applicantRankingList.add(applicant1Ranking1);
         applicantRankingList.add(applicant1Ranking2);
         applicant1.setApplicantRanking(applicantRankingList);
+        noSwapCount++;
 
 
-        ApplicantMatch applicant2 = new ApplicantMatch(++count, true,match );
+        ApplicantMatch applicant2 = new ApplicantMatch(noSwapCount, true,match );
         ApplicantRanking applicant2Ranking1 = new ApplicantRanking(1,match,applicant2,position1);
         ApplicantRanking applicant2Ranking2 = new ApplicantRanking(2,match,applicant2,position2);
          applicantRankingList = new ArrayList<ApplicantRanking>();
         applicantRankingList.add(applicant1Ranking1);
         applicantRankingList.add(applicant1Ranking2);
         applicant2.setApplicantRanking(applicantRankingList);
+        noSwapCount++;
 
         //position1 Ranking
         RecruiterRanking recruiter1Ranking1 = new RecruiterRanking(1,match,position1,applicant1);
@@ -69,6 +80,7 @@ public class ApplicantMatchGenerator {
         List<ApplicantMatch> applicantMatchList = new ArrayList<ApplicantMatch>();
         applicantMatchList.add(applicant1);
         applicantMatchList.add(applicant2);
+
         return applicantMatchList;
 
     }
@@ -79,7 +91,7 @@ public class ApplicantMatchGenerator {
         Position position2 = new Position(position2Name, capacity2,recruiter);
 
         //applicants 1
-        ApplicantMatch applicant1 = new ApplicantMatch(++count, true,match );
+        ApplicantMatch applicant1 = new ApplicantMatch(rankBetterCount, true,match );
         ApplicantRanking applicant1Ranking1 = new ApplicantRanking(1,match,applicant1,position1);
         ApplicantRanking applicant1Ranking2 = new ApplicantRanking(2,match,applicant1,position2);
         List<ApplicantRanking> applicantRankingList = new ArrayList<ApplicantRanking>();
@@ -87,14 +99,18 @@ public class ApplicantMatchGenerator {
         applicantRankingList.add(applicant1Ranking2);
         applicant1.setApplicantRanking(applicantRankingList);
 
+        rankBetterCount++;
 
-        ApplicantMatch applicant2 = new ApplicantMatch(++count, true,match );
+
+        ApplicantMatch applicant2 = new ApplicantMatch(rankBetterCount, true,match );
         ApplicantRanking applicant2Ranking1 = new ApplicantRanking(1,match,applicant2,position1);
         ApplicantRanking applicant2Ranking2 = new ApplicantRanking(2,match,applicant2,position2);
         applicantRankingList = new ArrayList<ApplicantRanking>();
         applicantRankingList.add(applicant1Ranking1);
         applicantRankingList.add(applicant1Ranking2);
         applicant2.setApplicantRanking(applicantRankingList);
+
+        rankBetterCount++;
 
         //position1 Ranking
         RecruiterRanking recruiter1Ranking1 = new RecruiterRanking(2,match,position1,applicant1);
@@ -123,16 +139,16 @@ public class ApplicantMatchGenerator {
         RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match,true);
         Position position = new Position(positionName, capacity, recruiter);
 
-        ApplicantMatch applicant = new ApplicantMatch(++count,true, match);
+        ApplicantMatch applicant = new ApplicantMatch(noMatchCount ,true, match);
         ApplicantRanking applicantRank1 = new ApplicantRanking(1, match, applicant, position);
         List<ApplicantRanking> applicantRankingList = new ArrayList<ApplicantRanking>();
         applicantRankingList.add(applicantRank1);
         applicant.setApplicantRanking(applicantRankingList);
 
-//        RecruiterRanking recruiterRank1 = new RecruiterRanking(1, match, position, applicant);
-//        List<RecruiterRanking> recruiterRankingList = new ArrayList<>();
-//        recruiterRankingList.add(recruiterRank1);
-//        position.setRecruiterRankings(recruiterRankingList);
+        noMatchCount++;
+
+        List<RecruiterRanking> recruiterRankingList = new ArrayList<>();
+        position.setRecruiterRankings(recruiterRankingList);
 
         return applicant;
     }
