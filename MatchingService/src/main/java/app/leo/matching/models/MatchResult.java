@@ -32,10 +32,16 @@ public class MatchResult {
     @Override
     public boolean equals(Object obj) {
         MatchResult matchResult = (MatchResult) obj;
-        if(matchResult.applicantMatch.equals(this.applicantMatch)&&matchResult.getPosition().equals(matchResult.getPosition())){
-            return true;
+
+        boolean isSameApplicant = matchResult.getApplicantMatch().equals(this.applicantMatch);
+
+        boolean isSamePosition = true;
+
+        if(this.getPosition() != null) {
+            isSamePosition = matchResult.getPosition().equals(this.getPosition());
         }
-        return false;
+
+        return isSameApplicant && isSamePosition;
     }
 
     @Override
