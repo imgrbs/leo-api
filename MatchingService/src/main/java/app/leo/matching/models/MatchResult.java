@@ -28,4 +28,21 @@ public class MatchResult {
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        MatchResult matchResult = (MatchResult) obj;
+        if(matchResult.applicantMatch.equals(this.applicantMatch)&&matchResult.getPosition().equals(matchResult.getPosition())){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "MatchResult{" +
+                "applicantMatch=" + applicantMatch +
+                ", position=" + position +
+                '}';
+    }
 }
