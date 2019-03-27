@@ -31,7 +31,7 @@ public class RecruiterMatch  {
     public RecruiterMatch() {
     }
 
-    public RecruiterMatch( long recruiterId,Match match,boolean isComfirmation) {
+    public RecruiterMatch(long recruiterId, Match match, boolean isComfirmation) {
         this.isComfirmation = isComfirmation;
         this.match = match;
         this.recruiterId = recruiterId;
