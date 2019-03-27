@@ -81,17 +81,12 @@ public class MatchService {
 
     public boolean isRecruiterAccepted(ApplicantMatch applicant, List<RecruiterRanking> recruiterRanking){
         RecruiterRanking ranking = new RecruiterRanking(applicant);
-        if (recruiterRanking.contains(ranking)) {
-            return true;
-        }
-        return false;
+        return recruiterRanking.contains(ranking);
     }
 
     public boolean isRecruiterHasFullCapacity(Position position, List<ApplicantMatch> applicantAccepted){
         int capacity = position.getCapacity();
-        if(applicantAccepted != null)
-            return applicantAccepted.size() == capacity || capacity <= 0;
-        return capacity<=0;
+        return applicantAccepted.size() == capacity || capacity == 0;
     }
 
     public boolean isRankBetterThanPositionAccepted (int indexOfApplicant) {
