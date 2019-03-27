@@ -34,6 +34,10 @@ public class RecruiterRanking extends Ranking {
         this.applicantMatch = applicantMatch;
     }
 
+    public RecruiterRanking(ApplicantMatch applicantMatch) {
+        this.applicantMatch = applicantMatch;
+    }
+
     public Position getPosition() {
         return position;
     }
@@ -56,20 +60,15 @@ public class RecruiterRanking extends Ranking {
 
     @Override
     public boolean equals(Object o) {
-        if(o instanceof ApplicantMatch) {
-            ApplicantMatch applicantMatch = (ApplicantMatch)o;
-            System.out.println("Shappy");
+        if(o instanceof RecruiterRanking) {
+            RecruiterRanking recruiterRanking = (RecruiterRanking) o;
+            ApplicantMatch applicantMatch = recruiterRanking.getApplicantMatch();
             return this.applicantMatch.equals(this.getApplicantMatch());
         }
         return false;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
-        return hash;
-    }
+
 
     @Override
     public String toString() {
