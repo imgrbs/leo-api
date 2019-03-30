@@ -5,6 +5,7 @@ import app.leo.matching.models.*;
 import app.leo.matching.repositories.ApplicantMatchRepository;
 import app.leo.matching.repositories.MatchRepository;
 
+import app.leo.matching.repositories.PositionRepository;
 import org.junit.Assert;
 
 import org.junit.Before;
@@ -25,12 +26,17 @@ public class MatchServiceTests {
     private MatchRepository matchRepository;
     @Mock
     private ApplicantMatchRepository applicantMatchRepository;
+    @Mock
+    private PositionRepository positionRepository;
 
     private MatchService matchService;
+
+    private PositionService positionService;
 
     private ApplicantMatch applicantMatch1;
     private Match match1;
     private List<ApplicantMatch> applicantMatchListCase1;
+    private List<Position> positionsListCase1;
 
 
     private ApplicantMatch applicant1Match2;
@@ -54,6 +60,7 @@ public class MatchServiceTests {
         this.applicantMatchListCase1 = new ArrayList<ApplicantMatch>();
         this.applicantMatchListCase1.add(applicantMatch1);
         this.match1.setApplicantMatches(this.applicantMatchListCase1);
+        this.positionsListCase1 = ApplicantMatchGenerator.getAllPositionsFromMatch(this.match1);
 
         this.match2 = new Match(2L, "KMUTT Job Fair");
         this.applicant1Match2 = ApplicantMatchGenerator.generateApplicantMatch(match2, "Frontend-Developer", 1);
@@ -80,7 +87,9 @@ public class MatchServiceTests {
 
         this.matchRepository = Mockito.mock(MatchRepository.class);
         this.applicantMatchRepository = Mockito.mock(ApplicantMatchRepository.class);
+        this.positionRepository = Mockito.mock(PositionRepository.class);
         this.matchService = new MatchService(this.matchRepository, this.applicantMatchRepository);
+        this.positionService = new PositionService(this.positionRepository);
     }
 
     @Test
@@ -194,4 +203,15 @@ public class MatchServiceTests {
         Assert.assertEquals(1,actMatchResults.size());
     }
 
+
+    @Test
+    public void findPositionByMatchIdShouldReturnPosition(){
+        Mockito.when(positionRepository.findAllByMatchId(this.match1.getId())).thenReturn(this.positionsListCase1);
+
+        List<Position> positions = positionService.getPositionByMatchId(this.match1.getId());
+
+        Assert.assertEquals(1, positions.size());
+        Assert.assertEquals(this.positionsListCase1.get(0), positions.get(0));
+        Assert.assertEquals(this.positionsListCase1.get(0).getId(), positions.get(0).getId());
+    }
 }
