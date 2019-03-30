@@ -152,4 +152,26 @@ public class ApplicantMatchGenerator {
 
         return applicant;
     }
+
+    public static List<Position> getAllPositionsFromMatch(Match match){
+        List<ApplicantMatch> applicantMatches=match.getApplicantMatches();
+        List<Position> positions = new ArrayList<Position>();
+
+        for(ApplicantMatch applicantMatch:applicantMatches){
+            List<ApplicantRanking> applicantRankingList =applicantMatch.getApplicantRanking();
+
+            for(ApplicantRanking applicantRanking:applicantRankingList){
+
+                Position position = applicantRanking.getPosition();
+
+                if(positions.contains(position)){
+                    continue;
+                }
+
+                positions.add(position);
+            }
+        }
+
+        return positions;
+    }
 }
