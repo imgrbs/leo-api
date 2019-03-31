@@ -11,4 +11,6 @@ import java.util.List;
 public interface PositionRepository extends JpaRepository<Position,Long> {
 
     public List<Position> findAllByMatchId(long matchId);
+
+    public Position findPositionById(long Id);
 }
