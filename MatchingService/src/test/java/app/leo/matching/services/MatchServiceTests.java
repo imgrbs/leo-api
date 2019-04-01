@@ -3,6 +3,7 @@ package app.leo.matching.services;
 import app.leo.matching.generators.ApplicantMatchGenerator;
 import app.leo.matching.models.*;
 import app.leo.matching.repositories.ApplicantMatchRepository;
+import app.leo.matching.repositories.ApplicantRankingRepository;
 import app.leo.matching.repositories.MatchRepository;
 
 import app.leo.matching.repositories.PositionRepository;
@@ -19,6 +20,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @RunWith(MockitoJUnitRunner.class)
 public class MatchServiceTests {
 
@@ -27,8 +30,12 @@ public class MatchServiceTests {
     @Mock
     private ApplicantMatchRepository applicantMatchRepository;
     @Mock
+    private ApplicantRankingRepository applicantRankingRepository;
+    @Mock
     private PositionRepository positionRepository;
 
+
+    private ApplicantRankingService applicantRankingService;
     private MatchService matchService;
 
     private PositionService positionService;
@@ -53,6 +60,12 @@ public class MatchServiceTests {
 
     private Match match5;
     private List<ApplicantMatch> applicantMatchListCase5;
+
+    private Match match6;
+    private List<ApplicantMatch> applicantMatchListCase6;
+    private Position position6;
+
+
     @Before
     public void setUp() throws Exception {
         this.match1 = new Match(1L, "SIT Career Day 2019");
@@ -84,12 +97,21 @@ public class MatchServiceTests {
         this.applicantMatchListCase5.add(applicantMatch1);
         match5.setApplicantMatches(applicantMatchListCase5);
 
+        this.match6 = new Match(6L,"Create Ranking");
+        this.applicantMatch1 = ApplicantMatchGenerator.generateApplicantMatch(match6, "Programmer", 1);
+        this.applicantMatchListCase6 = new ArrayList<ApplicantMatch>();
+        this.applicantMatchListCase6.add(applicantMatch1);
+        this.position6 = new Position("Programmer", 1, null);
+        match6.setApplicantMatches(applicantMatchListCase6);
 
+        this.applicantRankingRepository = Mockito.mock(ApplicantRankingRepository.class);
         this.matchRepository = Mockito.mock(MatchRepository.class);
         this.applicantMatchRepository = Mockito.mock(ApplicantMatchRepository.class);
         this.positionRepository = Mockito.mock(PositionRepository.class);
         this.matchService = new MatchService(this.matchRepository, this.applicantMatchRepository);
         this.positionService = new PositionService(this.positionRepository);
+        this.applicantRankingService = new ApplicantRankingService(this.matchService,this.applicantMatchRepository,this.positionRepository,this.applicantRankingRepository);
+
     }
 
     @Test
@@ -213,5 +235,22 @@ public class MatchServiceTests {
         Assert.assertEquals(1, positions.size());
         Assert.assertEquals(this.positionsListCase1.get(0), positions.get(0));
         Assert.assertEquals(this.positionsListCase1.get(0).getId(), positions.get(0).getId());
+
+    }
+
+
+    @Test
+    public void createApplicantRankingShouldReturnApplicantRanking(){
+        ApplicantRanking applicantRanking = new ApplicantRanking(3,this.match6,this.applicantMatchListCase6.get(0),this.position6);
+        Mockito.when(this.applicantMatchRepository.getApplicantMatchById(this.applicantMatchListCase6.get(0).getId())).thenReturn(this.applicantMatchListCase6.get(0));
+        Mockito.when(this.positionRepository.findPositionById(6L)).thenReturn(this.position6);
+        Mockito.when(this.matchService.getMatchByMatchId(6L)).thenReturn(this.match6);
+        Mockito.when(this.applicantRankingRepository.save(any(ApplicantRanking.class))).thenReturn(applicantRanking);
+
+
+        ApplicantRanking applicantRanking1 = this.applicantRankingService.createApplicantRanking(this.match6.getId(),this.applicantMatchListCase6.get(0).getId(),6L,3);
+
+
+        Assert.assertEquals(applicantRanking,applicantRanking1);
     }
 }
