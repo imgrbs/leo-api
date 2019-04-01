@@ -29,7 +29,12 @@ public class ApplicantRankingService {
     public ApplicantRankingService() {
     }
 
-    public ApplicantRankingService(MatchService matchService,ApplicantMatchRepository applicantMatchRepository,PositionRepository positionRepository,ApplicantRankingRepository applicantRankingRepository){
+    public ApplicantRankingService(
+            MatchService matchService,
+            ApplicantMatchRepository applicantMatchRepository,
+            PositionRepository positionRepository,
+            ApplicantRankingRepository applicantRankingRepository
+    ){
         this.matchService = matchService;
         this.applicantMatchRepository = applicantMatchRepository;
         this.positionRepository = positionRepository;
@@ -41,6 +46,7 @@ public class ApplicantRankingService {
         ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchById(userId);
         Position position = positionRepository.findPositionById(positionId);
         ApplicantRanking applicantRanking = new ApplicantRanking(sequence,match,applicantMatch,position);
-        return applicantRankingRepository.save(applicantRanking);
+        ApplicantRanking savedRanking = applicantRankingRepository.save(applicantRanking);
+        return savedRanking;
     }
 }
