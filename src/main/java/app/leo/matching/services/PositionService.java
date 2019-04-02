@@ -20,6 +20,6 @@ public class PositionService {
     }
 
     public List<Position> getPositionByMatchId(long matchId){
-       return positionRepository.findAllByMatchId(matchId);
+       return positionRepository.getPositionByMatchId(matchId);
     }
 }

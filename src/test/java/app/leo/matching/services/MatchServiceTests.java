@@ -228,7 +228,7 @@ public class MatchServiceTests {
 
     @Test
     public void findPositionByMatchIdShouldReturnPosition(){
-        Mockito.when(positionRepository.findAllByMatchId(this.match1.getId())).thenReturn(this.positionsListCase1);
+        Mockito.when(positionRepository.getPositionByMatchId(this.match1.getId())).thenReturn(this.positionsListCase1);
 
         List<Position> positions = positionService.getPositionByMatchId(this.match1.getId());
 
