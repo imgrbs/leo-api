@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  run-unit-test:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
@@ -37,5 +37,35 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
-      # run tests!
+    # run tests!
       - run: mvn test
+
+  build-docker-image:
+    machine: true
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: mvn clean package
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: docker image build -t imgrbs/$IMAGE_NAME .
+      - run: docker push imgrbs/$IMAGE_NAME
+
+  deploy-docker-image:
+    machine: true
+    working_directory: ~/repo
+    steps:
+    - checkout
+    # - run: |
+    #     ssh $OS_USER@$OD_IP \
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - run-unit-test
+    - build-docker-image:
+        requires:
+        - run-unit-test
+    - deploy-docker-image:
+        requires:
+        - build-docker-image
