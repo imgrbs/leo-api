@@ -55,8 +55,12 @@ jobs:
     working_directory: ~/repo
     steps:
     - checkout
-    # - run: |
-    #     ssh $OS_USER@$OD_IP \
+    - add_ssh_keys:
+        fingerprints:
+          - $fingerprint
+    - run: |
+        ssh $OS_USER@$OS_IP \
+        'exit \'
 
 workflows:
   version: 2
