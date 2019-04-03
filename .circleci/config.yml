@@ -61,7 +61,7 @@ jobs:
     - run: |
         ssh $OS_USER@$OS_IP \
           'echo "Deploying" && \
-          sudo docker pull imgrbs/$IMAGE_NAME && \'
+          sudo docker pull imgrbs/sit-leo-matching-api'
 
 workflows:
   version: 2
