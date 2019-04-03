@@ -49,4 +49,8 @@ public class ApplicantRankingService {
         ApplicantRanking savedRanking = applicantRankingRepository.save(applicantRanking);
         return savedRanking;
     }
+
+    public ApplicantRanking updateApplicantRanking(ApplicantRanking applicantRanking){
+        return  applicantRankingRepository.save(applicantRanking);
+    }
 }
