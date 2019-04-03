@@ -46,7 +46,7 @@ jobs:
     - run:
         name: Deploying by Pull Docker Image Over SSH
         environment:
-          COMMAND: 'export IMAGE_NAME=leo && echo $IMAGE_NAME'
+          COMMAND: 'export CONTAINER_NAME=$CONTAINER_NAME && echo $CONTAINER_NAME'
         command: |
           ssh $OS_USER@$OS_IP $COMMAND
 
