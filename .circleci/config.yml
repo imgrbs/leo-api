@@ -45,10 +45,9 @@ jobs:
           - $fingerprint
     - run:
         name: Deploying by Pull Docker Image Over SSH
-        environment:
-          COMMAND: 'export CONTAINER_NAME=$CONTAINER_NAME && echo $CONTAINER_NAME'
         command: |
-          ssh $OS_USER@$OS_IP $COMMAND
+          ssh $OS_USER@$OS_IP /bin/bash << EOF
+            'echo $CONTAINER_NAME'
 
 workflows:
   version: 2
