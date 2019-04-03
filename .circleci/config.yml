@@ -44,10 +44,9 @@ jobs:
         fingerprints:
           - $fingerprint
     - run:
-        name: Deploying by Pull Docker Image
+        name: Deploying by Pull Docker Image Over SSH
         command: |
           ssh $OS_USER@$OS_IP \
-
             export CONTAINER_NAME=$CONTAINER_NAME && \
             export IMAGE_NAME=$IMAGE_NAME && \
             export PORT=$PORT && \
