@@ -46,11 +46,9 @@ jobs:
     - run:
         name: Deploying by Pull Docker Image Over SSH
         environment:
-          IMAGE_NAME: sit-leo-matching-api
+          COMMAND: 'export IMAGE_NAME=leo && echo $IMAGE_NAME'
         command: |
-          ssh $OS_USER@$OS_IP \
-            'export IMAGE_NAME=leo && \
-            echo $IMAGE_NAME'
+          ssh $OS_USER@$OS_IP $COMMAND
 
 workflows:
   version: 2
