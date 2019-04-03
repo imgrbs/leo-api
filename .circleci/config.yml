@@ -60,8 +60,8 @@ jobs:
           - $fingerprint
     - run: |
         ssh $OS_USER@$OS_IP \
-        'sudo docker pull imgrbs/$IMAGE_NAME && \
-        exit \'
+          'echo "Deploying" && \
+          sudo docker pull imgrbs/$IMAGE_NAME && \'
 
 workflows:
   version: 2
