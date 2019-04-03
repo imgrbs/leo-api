@@ -6,13 +6,7 @@ version: 2
 jobs:
   run-unit-test:
     docker:
-      # specify the version you desire here
       - image: circleci/openjdk:8-jdk
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
     working_directory: ~/repo
 
@@ -22,22 +16,16 @@ jobs:
 
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
-            # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       - run: mvn dependency:go-offline
-
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-
-    # run tests!
       - run: mvn test
 
   build-docker-image:
@@ -59,9 +47,18 @@ jobs:
         fingerprints:
           - $fingerprint
     - run: |
-        ssh $OS_USER@$OS_IP \
-          'echo "Deploying" && \
-          sudo docker pull imgrbs/sit-leo-matching-api'
+        name: Deploying by Pull Docker Image
+        command: |
+          ssh $OS_USER@$OS_IP \
+          sudo docker pull imgrbs/$IMAGE_NAME && \
+          sudo docker system prune -f && \
+          sudo docker container rm -f leo-match || true && \
+          sudo docker container run --name leo-match \
+            -e PORT=$PORT \
+            -e DB_SOURCE=$DB_SOURCE \
+            -e DB_USER=$DB_USER \
+            -e DB_PASS=$DB_PASS \
+            --rm -ditp 8081:8080 imgrbs/$IMAGE_NAME
 
 workflows:
   version: 2
