@@ -45,6 +45,8 @@ jobs:
           - $fingerprint
     - run:
         name: Deploying by Pull Docker Image Over SSH
+        environment:
+          IMAGE_NAME: sit-leo-matching-api
         command: |
           ssh $OS_USER@$OS_IP \
             'echo $IMAGE_NAME'
