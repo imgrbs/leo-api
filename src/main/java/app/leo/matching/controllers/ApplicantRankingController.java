@@ -22,4 +22,9 @@ public class ApplicantRankingController {
                 long userId = 1;
                 return applicantRankingService.createApplicantRanking(matchId,userId,applicantRankingRequest.getPositionId(),applicantRankingRequest.getSequence());
     }
+
+    @PutMapping(path  = "/matches/{matchId:[\\d]}/ranking")
+    public ApplicantRanking  updateApplicantRanking(@PathVariable long matchId,@Valid @RequestBody ApplicantRanking applicantRanking){
+        return applicantRankingService.updateApplicantRanking(applicantRanking);
+    }
 }
