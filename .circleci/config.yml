@@ -48,12 +48,12 @@ jobs:
         command: |
           ssh $OS_USER@$OS_IP \
 
-            export CONTAINER_NAME=$CONTAINER_NAME \
-            export IMAGE_NAME=$IMAGE_NAME \
-            export PORT=$PORT \
-            export DB_SOURCE=$DB_SOURCE \
-            export DB_USER=$DB_USER \
-            export DB_PASS=$DB_PASS \
+            export CONTAINER_NAME=$CONTAINER_NAME && \
+            export IMAGE_NAME=$IMAGE_NAME && \
+            export PORT=$PORT && \
+            export DB_SOURCE=$DB_SOURCE && \
+            export DB_USER=$DB_USER && \
+            export DB_PASS=$DB_PASS && \
 
             'sudo docker pull imgrbs/$IMAGE_NAME && \
             sudo docker system prune -f && \
