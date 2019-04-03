@@ -47,15 +47,15 @@ jobs:
         name: Deploying by Pull Docker Image Over SSH
         command: |
           ssh $OS_USER@$OS_IP /bin/bash << EOF \
-            'sudo docker pull imgrbs/${IMAGE_NAME} && \
+            'sudo docker pull imgrbs/$IMAGE_NAME && \
             sudo docker system prune -f && \
-            sudo docker container rm -f ${CONTAINER_NAME} || true && \
-            sudo docker container run --name ${CONTAINER_NAME} \
-              -e PORT=${PORT} \
-              -e DB_SOURCE=${DB_SOURCE} \
-              -e DB_USER=${DB_USER} \
-              -e DB_PASS=${DB_PASS} \
-              --rm -ditp 8081:${PORT} imgrbs/${IMAGE_NAME}'
+            sudo docker container rm -f $CONTAINER_NAME || true && \
+            sudo docker container run --name $CONTAINER_NAME \
+              -e PORT=$PORT \
+              -e DB_SOURCE=$DB_SOURCE \
+              -e DB_USER=$DB_USER \
+              -e DB_PASS=$DB_PASS \
+              --rm -ditp 8081:${PORT} imgrbs/$IMAGE_NAME'
 
 workflows:
   version: 2
