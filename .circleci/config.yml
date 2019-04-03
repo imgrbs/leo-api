@@ -46,16 +46,13 @@ jobs:
     - run:
         name: Deploying by Pull Docker Image Over SSH
         command: |
-          ssh $OS_USER@$OS_IP /bin/bash << EOF \
-            'sudo docker pull imgrbs/$IMAGE_NAME && \
+          ssh $OS_USER@$OS_IP \
+            'sudo docker pull imgrbs/sit-leo-matching-api && \
             sudo docker system prune -f && \
-            sudo docker container rm -f $CONTAINER_NAME || true && \
-            sudo docker container run --name $CONTAINER_NAME \
-              -e PORT=$PORT \
-              -e DB_SOURCE=$DB_SOURCE \
-              -e DB_USER=$DB_USER \
-              -e DB_PASS=$DB_PASS \
-              --rm -ditp 8081:${PORT} imgrbs/$IMAGE_NAME'
+            sudo docker container rm -f leo.match || true && \
+            sudo docker container run --name leo.match \
+              --env-file /app/env/leo.match.env
+              --rm -ditp 8081:8080 imgrbs/sit-leo-matching-api'
 
 workflows:
   version: 2
