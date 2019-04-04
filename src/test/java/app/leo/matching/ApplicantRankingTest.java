@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicantRankingTest {
@@ -58,10 +59,10 @@ public class ApplicantRankingTest {
         this.position = this.applicantMatchListCase.get(0).getApplicantRanking().get(0).getPosition();
         match.setApplicantMatches(applicantMatchListCase);
 
-        this.applicantRankingRepository = Mockito.mock(ApplicantRankingRepository.class);
-        this.matchRepository = Mockito.mock(MatchRepository.class);
-        this.applicantMatchRepository = Mockito.mock(ApplicantMatchRepository.class);
-        this.positionRepository = Mockito.mock(PositionRepository.class);
+        this.applicantRankingRepository = mock(ApplicantRankingRepository.class);
+        this.matchRepository = mock(MatchRepository.class);
+        this.applicantMatchRepository = mock(ApplicantMatchRepository.class);
+        this.positionRepository = mock(PositionRepository.class);
         this.matchService = new MatchService(this.matchRepository, this.applicantMatchRepository);
         this.positionService = new PositionService(this.positionRepository);
         this.applicantRankingService = new ApplicantRankingService(this.matchService,this.applicantMatchRepository,this.positionRepository,this.applicantRankingRepository);
@@ -93,5 +94,13 @@ public class ApplicantRankingTest {
         ApplicantRanking applicantRanking  = this.applicantRankingService.updateApplicantRanking(afterApplicantRanking);
 
         Assert.assertNotEquals(beforeApplicantRanking.getSequence(),applicantRanking.getSequence());
+    }
+
+    @Test
+    public void deleteApplicantRanking(){
+
+        this.applicantRankingService.deleteApplicantRanking(1L);
+        verify(applicantRankingRepository,times(1)).deleteById(anyLong());
+
     }
 }
