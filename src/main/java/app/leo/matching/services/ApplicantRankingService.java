@@ -53,4 +53,9 @@ public class ApplicantRankingService {
     public ApplicantRanking updateApplicantRanking(ApplicantRanking applicantRanking){
         return  applicantRankingRepository.save(applicantRanking);
     }
+
+
+    public void deleteApplicantRanking(Long id) {
+        applicantRankingRepository.deleteById(id);
+    }
 }
