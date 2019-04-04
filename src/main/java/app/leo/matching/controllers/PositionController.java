@@ -21,7 +21,7 @@ public class PositionController {
         return new Date();
     }
 
-    @GetMapping(path= "match/{matchId:[\\d]}/position")
+    @GetMapping(path= "matches/{matchId:[\\d]}/positions")
     public List<Position> getPositionsByMatchId(@PathVariable long matchId){
         return positionService.getPositionByMatchId(matchId);
     }
