@@ -53,6 +53,9 @@ jobs:
             sudo docker container run --name leo.match \
               --env-file /app/env/leo.match.env \
               --rm -ditp 8081:8080 imgrbs/sit-leo-matching-api'
+    - run:
+        name: Sent Line Notification
+        command: $NOTIFY_COMMAND
 
 workflows:
   version: 2
