@@ -12,6 +12,9 @@ jobs:
       # Customize the JVM maximum heap limit
       MAVEN_OPTS: -Xmx3200m
     steps:
+      - run:
+          name: Sent Line Notification
+          command: $NOTIFY_WORKFLOW_START
       - checkout
       - restore_cache:
           keys:
@@ -55,7 +58,7 @@ jobs:
               --rm -ditp 8081:8080 imgrbs/sit-leo-matching-api'
     - run:
         name: Sent Line Notification
-        command: $NOTIFY_COMMAND
+        command: $NOTIFY_WORKFLOW_SUCCESS
 
 workflows:
   version: 2
