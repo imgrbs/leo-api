@@ -27,4 +27,9 @@ public class ApplicantRankingController {
     public ApplicantRanking  updateApplicantRanking(@PathVariable long matchId,@Valid @RequestBody ApplicantRanking applicantRanking){
         return applicantRankingService.updateApplicantRanking(applicantRanking);
     }
+
+    @DeleteMapping(path = "/matches/{matchId:[\\d]}/ranking")
+    public void deleteApplicantRanking(@PathVariable long matchId,@Valid @RequestBody ApplicantRanking applicantRanking){
+        applicantRankingService.deleteApplicantRanking(applicantRanking.getId());
+    }
 }
