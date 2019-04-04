@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -15,6 +16,10 @@ public class PositionController {
     @Autowired
     private PositionService positionService;
 
+    @GetMapping(path = "/healthcheck")
+    public Date getDate(){
+        return new Date();
+    }
 
     @GetMapping(path= "match/{matchId:[\\d]}/position")
     public List<Position> getPositionsByMatchId(@PathVariable long matchId){

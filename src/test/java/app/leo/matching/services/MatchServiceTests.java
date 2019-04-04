@@ -97,12 +97,6 @@ public class MatchServiceTests {
         this.applicantMatchListCase5.add(applicantMatch1);
         match5.setApplicantMatches(applicantMatchListCase5);
 
-        this.match6 = new Match(6L,"Create Ranking");
-        this.applicantMatch1 = ApplicantMatchGenerator.generateApplicantMatch(match6, "Programmer", 1);
-        this.applicantMatchListCase6 = new ArrayList<ApplicantMatch>();
-        this.applicantMatchListCase6.add(applicantMatch1);
-        this.position6 = new Position("Programmer", 1, null);
-        match6.setApplicantMatches(applicantMatchListCase6);
 
         this.applicantRankingRepository = Mockito.mock(ApplicantRankingRepository.class);
         this.matchRepository = Mockito.mock(MatchRepository.class);
@@ -239,18 +233,5 @@ public class MatchServiceTests {
     }
 
 
-    @Test
-    public void createApplicantRankingShouldReturnApplicantRanking(){
-        ApplicantRanking applicantRanking = new ApplicantRanking(3,this.match6,this.applicantMatchListCase6.get(0),this.position6);
-        Mockito.when(this.applicantMatchRepository.getApplicantMatchById(this.applicantMatchListCase6.get(0).getId())).thenReturn(this.applicantMatchListCase6.get(0));
-        Mockito.when(this.positionRepository.findPositionById(6L)).thenReturn(this.position6);
-        Mockito.when(this.matchService.getMatchByMatchId(6L)).thenReturn(this.match6);
-        Mockito.when(this.applicantRankingRepository.save(any(ApplicantRanking.class))).thenReturn(applicantRanking);
 
-
-        ApplicantRanking applicantRanking1 = this.applicantRankingService.createApplicantRanking(this.match6.getId(),this.applicantMatchListCase6.get(0).getId(),6L,3);
-
-
-        Assert.assertEquals(applicantRanking,applicantRanking1);
-    }
 }
