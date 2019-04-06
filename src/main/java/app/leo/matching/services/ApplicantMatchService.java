@@ -26,4 +26,7 @@ public class ApplicantMatchService {
         return applicantMatchRepository.getApplicantMatchByMatchIdandRecruiterId(matchId,recruiterMatch.getId());
     }
 
+    public ApplicantMatch getApplicantMatchByApplicantId(long id){
+        return applicantMatchRepository.getApplicantMatchById(id);
+    }
 }
