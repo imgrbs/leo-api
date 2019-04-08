@@ -33,7 +33,7 @@ public class RecruiterRankingService {
     }
 
 
-    public RecruiterRanking createRecruiterRanking(long matchId, long applicantMatchId, long positionId, int sequence){
+    public RecruiterRanking createRecruiterRanking(long matchId, long applicantMatchId, long positionId, int sequence) throws Exception {
         Match match =matchService.getMatchByMatchId(matchId);
         ApplicantMatch applicantMatch =applicantMatchService.getApplicantMatchByApplicantId(applicantMatchId);
         Position position = positionRepository.findPositionById(positionId);
