@@ -17,7 +17,7 @@ public class ApplicantRankingController {
     @Autowired
     private ApplicantRankingService applicantRankingService;
 
-    @PostMapping(name= "matches/{matchId}/ranking")
+    @PostMapping(name= "matches/{matchId:[\\d]}/ranking")
     public ApplicantRanking createApplicantRanking(@PathVariable long matchId,@Valid @RequestBody CreateApplicantRankingRequest applicantRankingRequest){
                 long userId = 1;
                 return applicantRankingService.createApplicantRanking(matchId,userId,applicantRankingRequest.getPositionId(),applicantRankingRequest.getSequence());
