@@ -11,6 +11,8 @@ import app.leo.matching.repositories.PositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ApplicantRankingService {
 
@@ -40,7 +42,7 @@ public class ApplicantRankingService {
         this.positionRepository = positionRepository;
         this.applicantRankingRepository = applicantRankingRepository;
     }
-    public ApplicantRanking createApplicantRanking(long matchId, long userId, long positionId, int sequence){
+    public ApplicantRanking createApplicantRanking(long matchId, long userId, long positionId, int sequence) throws Exception{
 
         Match match = matchService.getMatchByMatchId(matchId);
         ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchById(userId);
@@ -49,6 +51,7 @@ public class ApplicantRankingService {
         ApplicantRanking savedRanking = applicantRankingRepository.save(applicantRanking);
         return savedRanking;
     }
+
 
     public ApplicantRanking updateApplicantRanking(ApplicantRanking applicantRanking){
         return  applicantRankingRepository.save(applicantRanking);
