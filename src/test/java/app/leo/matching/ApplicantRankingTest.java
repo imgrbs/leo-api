@@ -77,11 +77,14 @@ public class ApplicantRankingTest {
         Mockito.when(this.matchService.getMatchByMatchId(6L)).thenReturn(this.match);
         Mockito.when(this.applicantRankingRepository.save(any(ApplicantRanking.class))).thenReturn(applicantRanking);
 
+        try {
+            ApplicantRanking applicantRanking1 = this.applicantRankingService.createApplicantRanking(this.match.getId(), this.applicantMatchListCase.get(0).getId(), 6L, 3);
+            Assert.assertEquals(applicantRanking, applicantRanking1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        ApplicantRanking applicantRanking1 = this.applicantRankingService.createApplicantRanking(this.match.getId(), this.applicantMatchListCase.get(0).getId(), 6L, 3);
 
-
-        Assert.assertEquals(applicantRanking, applicantRanking1);
     }
 
     @Test
