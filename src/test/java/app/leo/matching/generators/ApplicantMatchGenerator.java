@@ -18,7 +18,7 @@ public class ApplicantMatchGenerator {
 
 
     public static ApplicantMatch generateApplicantMatch(Match match, String positionName, int capacity) {
-        RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match,true);
+        RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match);
         Position position = new Position(positionName, capacity, recruiter);
 
         ApplicantMatch applicant = new ApplicantMatch(normalCount,true, match);
@@ -37,7 +37,7 @@ public class ApplicantMatchGenerator {
     }
 
     public static List<ApplicantMatch> generateApplicantMatchForAtCapacityNoSwap(Match match,String position1Name , String position2Name, int capacity1, int capacity2){
-        RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match,true);
+        RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match);
         Position position1 = new Position(position1Name, capacity1, recruiter);
         Position position2 = new Position(position2Name, capacity2,recruiter);
 
@@ -86,7 +86,7 @@ public class ApplicantMatchGenerator {
     }
 
     public static List<ApplicantMatch> generateApplicantMatchForRankisBetter(Match match,String position1Name , String position2Name, int capacity1, int capacity2){
-        RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match,true);
+        RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match);
         Position position1 = new Position(position1Name, capacity1, recruiter);
         Position position2 = new Position(position2Name, capacity2,recruiter);
 
@@ -136,7 +136,7 @@ public class ApplicantMatchGenerator {
     }
 
     public static ApplicantMatch generateApplicationMatchForNoMatchWereMade(Match match, String positionName, int capacity){
-        RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match,true);
+        RecruiterMatch recruiter = new RecruiterMatch(match.getId(), match);
         Position position = new Position(positionName, capacity, recruiter);
 
         ApplicantMatch applicant = new ApplicantMatch(noMatchCount ,true, match);
