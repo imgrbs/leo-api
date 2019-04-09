@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 public class RecruiterRanking extends Ranking {
 
     @ManyToOne
+    @JoinColumn(name = "position_id")
     @JsonBackReference
     private Position position;
 
