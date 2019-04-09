@@ -101,8 +101,15 @@ public class ApplicantRankingTest {
 
     @Test
     public void deleteApplicantRanking(){
+        applicantRankingService.deleteApplicantRanking(this.applicantMatchListCase.get(0).getApplicantRanking().get(0));
 
-        this.applicantRankingService.deleteApplicantRanking(1L);
+        verify(applicantRankingRepository,times(1)).delete(any(ApplicantRanking.class));
+    }
+
+    @Test
+    public void deleteApplicantRankingById(){
+
+        this.applicantRankingService.deleteApplicantRankingById(1L);
         verify(applicantRankingRepository,times(1)).deleteById(anyLong());
 
     }
