@@ -22,4 +22,10 @@ public class PositionService {
     public List<Position> getPositionByMatchId(long matchId){
        return positionRepository.getPositionByMatchId(matchId);
     }
+
+    public void putRecruiterToUnclarify(long positionId) throws Exception{
+        Position position = positionRepository.findPositionById(positionId);
+        position.setIs_confirmation(false);
+        positionRepository.save(position);
+    }
 }
