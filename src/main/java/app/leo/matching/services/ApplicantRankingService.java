@@ -57,8 +57,13 @@ public class ApplicantRankingService {
         return  applicantRankingRepository.save(applicantRanking);
     }
 
+    public ApplicantRanking getApplicantRankingByApplicantIdandPositionId(long applicantId , long positionId){
+        return applicantRankingRepository.getApplicantRankingByApplicantIdandPositionId(applicantId,positionId);
+    }
 
-    public void deleteApplicantRanking(Long id) {
+
+    public void deleteApplicantRanking(ApplicantRanking applicantRanking){ applicantRankingRepository.delete(applicantRanking);}
+    public void deleteApplicantRankingById(Long id) {
         applicantRankingRepository.deleteById(id);
     }
 }
