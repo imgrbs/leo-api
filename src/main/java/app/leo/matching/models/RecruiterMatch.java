@@ -14,7 +14,6 @@ public class RecruiterMatch  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean isComfirmation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "match_id")
@@ -31,8 +30,8 @@ public class RecruiterMatch  {
     public RecruiterMatch() {
     }
 
-    public RecruiterMatch(long recruiterId, Match match, boolean isComfirmation) {
-        this.isComfirmation = isComfirmation;
+    public RecruiterMatch(long recruiterId, Match match) {
+
         this.match = match;
         this.recruiterId = recruiterId;
     }
@@ -43,14 +42,6 @@ public class RecruiterMatch  {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public boolean isComfirmation() {
-        return isComfirmation;
-    }
-
-    public void setComfirmation(boolean comfirmation) {
-        isComfirmation = comfirmation;
     }
 
     public Match getMatch() {
