@@ -41,4 +41,12 @@ public class RecruiterRankingService {
         return recruiterRankingRepository.save(saveRecruiterRanking);
     }
 
+    public RecruiterRanking findRecruiterRankingByPositionIdandApplicantId(long positionId , long applicantId){
+        return recruiterRankingRepository.findRankingbyPositionIdandApplicantId(positionId,applicantId);
+    }
+
+    public void delectRecruiterRanking(RecruiterRanking recruiterRanking){
+        recruiterRankingRepository.delete(recruiterRanking);
+    }
+
 }
