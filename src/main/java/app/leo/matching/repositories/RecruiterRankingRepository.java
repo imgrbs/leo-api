@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RecruiterRankingRepository extends JpaRepository<RecruiterRanking,Long> {
 
-    @Query(name = "select rr from RecruiterRanking rr where rr.position_id = 1? and rr.applicant_match_id = 2?",nativeQuery = true)
-    public RecruiterRanking findRankingbyPositionIdandApplicantId(long positionId,long applicantMatchId);
+    @Query(value = "select rr.* from recruiter_rankings rr where rr.position_id = ?1 and rr.applicant_match_id = ?2",nativeQuery = true)
+    RecruiterRanking getRecruiterRankingbyPositionIdandApplicantMatchId(long positionId,long applicantMatchId);
 }

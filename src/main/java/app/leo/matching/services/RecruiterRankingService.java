@@ -42,7 +42,7 @@ public class RecruiterRankingService {
     }
 
     public RecruiterRanking findRecruiterRankingByPositionIdandApplicantId(long positionId , long applicantId){
-        return recruiterRankingRepository.findRankingbyPositionIdandApplicantId(positionId,applicantId);
+        return recruiterRankingRepository.getRecruiterRankingbyPositionIdandApplicantMatchId(positionId,applicantId);
     }
 
     public void delectRecruiterRanking(RecruiterRanking recruiterRanking){
