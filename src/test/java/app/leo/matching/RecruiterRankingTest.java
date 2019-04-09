@@ -26,6 +26,8 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
+import static org.springframework.test.web.client.ExpectedCount.times;
+
 @RunWith(MockitoJUnitRunner.class)
 public class RecruiterRankingTest {
 
@@ -81,5 +83,14 @@ public class RecruiterRankingTest {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void deleteRecruiterRankingTest() {
+
+        recruiterRankingRepository.delete(this.position.getRecruiterRankings().get(0));
+
+        Mockito.verify(recruiterRankingRepository,Mockito.times(1)).delete(any(RecruiterRanking.class));
+
     }
 }
