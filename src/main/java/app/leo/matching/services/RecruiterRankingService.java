@@ -6,8 +6,11 @@ import app.leo.matching.models.Position;
 import app.leo.matching.models.RecruiterRanking;
 import app.leo.matching.repositories.PositionRepository;
 import app.leo.matching.repositories.RecruiterRankingRepository;
+import app.leo.matching.validator.PutRecruiterRankingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RecruiterRankingService {
@@ -33,7 +36,7 @@ public class RecruiterRankingService {
     }
 
 
-    public RecruiterRanking createRecruiterRanking(long matchId, long applicantMatchId, long positionId, int sequence) throws Exception {
+    public RecruiterRanking createRecruiterRanking(long matchId, long applicantMatchId, long positionId, int sequence)  {
         Match match =matchService.getMatchByMatchId(matchId);
         ApplicantMatch applicantMatch =applicantMatchService.getApplicantMatchByApplicantId(applicantMatchId);
         Position position = positionRepository.findPositionById(positionId);
@@ -49,4 +52,14 @@ public class RecruiterRankingService {
         recruiterRankingRepository.delete(recruiterRanking);
     }
 
+    public void updateRecuiterRankingByMatchIdAndPositionId(long matchId, long positionId, List<PutRecruiterRankingRequest> putRecruiterRankingRequestList){
+        recruiterRankingRepository.deleteRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
+        for(PutRecruiterRankingRequest putRecruiterRankingRequest:putRecruiterRankingRequestList){
+            this.createRecruiterRanking(matchId,putRecruiterRankingRequest.getApplicantId(),positionId,putRecruiterRankingRequest.getSequence());
+        }
+    }
+
+    public List<RecruiterRanking> getRecruiterRankingByMatchIdAndPositionId(long matchId,long positionId){
+        return recruiterRankingRepository.getRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
+    }
 }
