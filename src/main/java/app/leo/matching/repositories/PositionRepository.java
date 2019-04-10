@@ -15,4 +15,6 @@ public interface PositionRepository extends JpaRepository<Position,Long> {
     public List<Position> getPositionByMatchId(long matchId);
 
     public Position findPositionById(long Id);
+
+    List<Position> getPositionsByRecruiterMatchIdAndMatchId(long recruiterMatchId,long matchId);
 }
