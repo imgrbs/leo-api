@@ -22,7 +22,7 @@ public class ApplicantRankingController {
     @Autowired
     private ApplicantRankingService applicantRankingService;
 
-    @PostMapping(path= "/matches/{matchId:[\\d+]}/ranking")
+    @PostMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
     public ResponseEntity<List<CreateApplicantRankingRequest>> createApplicantRanking(@Valid @PathVariable("matchId") Long matchId, @Valid @RequestBody List<CreateApplicantRankingRequest> applicantRankingRequest){
         long userId = 1;
         for(CreateApplicantRankingRequest applicantRanking : applicantRankingRequest){
