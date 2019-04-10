@@ -34,28 +34,14 @@ public class ApplicantRankingController {
     @GetMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
     public ResponseEntity<List<ApplicantRanking>> getApplicantRanking(@Valid @PathVariable("matchId") Long matchId){
         long userId = 1;
-        return new ResponseEntity<List<ApplicantRanking>>(applicantRankingService.getApplicantRankingByApplicantId(userId), HttpStatus.OK);
+        return new ResponseEntity<List<ApplicantRanking>>(applicantRankingService.getApplicantRankingByMatchIdAndApplicantId(matchId, userId), HttpStatus.OK);
     }
 
     @PutMapping(path  = "/matches/{matchId:[\\d]}/applicants/ranking")
-    public List<ApplicantRanking> updateApplicantRanking(@PathVariable long matchId, @Valid @RequestBody List<PutApplicantRankingRequest> putApplicantRankingRequestList) {
+    public ResponseEntity<List<PutApplicantRankingRequest>> updateApplicantRanking(@PathVariable long matchId, @Valid @RequestBody List<PutApplicantRankingRequest> putApplicantRankingRequestList) {
         long applicantId = 1;
-        List<ApplicantRanking> putApplicantRanking = new ArrayList<ApplicantRanking>();
-        for(PutApplicantRankingRequest putApplicantRankingRequest:putApplicantRankingRequestList) {
-            ApplicantRanking applicantRanking = applicantRankingService.getApplicantRankingByApplicantIdandPositionId(applicantId, putApplicantRankingRequest.getPositionId());
-            if (applicantRanking != null) {
-                applicantRankingService.deleteApplicantRanking(applicantRanking);
-            } else {
-                continue;
-            }
-            try {
-                applicantRanking = applicantRankingService.createApplicantRanking(matchId, applicantId, putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequece());
-                putApplicantRanking.add(applicantRanking);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return putApplicantRanking;
+        applicantRankingService.updateApplicantRankingByMatchIdAndApplicantId(matchId, applicantId, putApplicantRankingRequestList);
+        return new ResponseEntity<List<PutApplicantRankingRequest>>(putApplicantRankingRequestList, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(path = "/matches/{matchId:[\\d]}/ranking")

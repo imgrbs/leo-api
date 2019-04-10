@@ -8,6 +8,7 @@ import app.leo.matching.models.Position;
 import app.leo.matching.repositories.ApplicantMatchRepository;
 import app.leo.matching.repositories.ApplicantRankingRepository;
 import app.leo.matching.repositories.PositionRepository;
+import app.leo.matching.validator.PutApplicantRankingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,12 @@ public class ApplicantRankingService {
         return savedRanking;
     }
 
+    public void updateApplicantRankingByMatchIdAndApplicantId(long matchId, long applicantId, List<PutApplicantRankingRequest> applicantRankings) {
+        applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchId(matchId, applicantId);
+        for(PutApplicantRankingRequest putApplicantRankingRequest : applicantRankings) {
+            this.createApplicantRanking(matchId, applicantId, putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequence());
+        }
+    }
 
     public ApplicantRanking updateApplicantRanking(ApplicantRanking applicantRanking){
         return  applicantRankingRepository.save(applicantRanking);
@@ -66,7 +73,7 @@ public class ApplicantRankingService {
         applicantRankingRepository.deleteById(id);
     }
 
-    public List<ApplicantRanking> getApplicantRankingByApplicantId(long applicantId){
-        return applicantRankingRepository.getApplicantRankingByApplicantMatchId(applicantId);
+    public List<ApplicantRanking> getApplicantRankingByMatchIdAndApplicantId(long matchId, long applicantId){
+        return applicantRankingRepository.getApplicantRankingByMatchIdAndApplicantMatchId(matchId, applicantId);
     }
 }
