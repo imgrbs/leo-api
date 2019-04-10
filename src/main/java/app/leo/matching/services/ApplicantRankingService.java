@@ -42,8 +42,7 @@ public class ApplicantRankingService {
         this.positionRepository = positionRepository;
         this.applicantRankingRepository = applicantRankingRepository;
     }
-    public ApplicantRanking createApplicantRanking(long matchId, long userId, long positionId, int sequence) throws Exception{
-
+    public ApplicantRanking createApplicantRanking(long matchId, long userId, long positionId, int sequence) {
         Match match = matchService.getMatchByMatchId(matchId);
         ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchById(userId);
         Position position = positionRepository.findPositionById(positionId);

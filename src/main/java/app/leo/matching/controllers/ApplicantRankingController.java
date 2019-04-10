@@ -6,6 +6,8 @@ import app.leo.matching.services.ApplicantRankingService;
 import app.leo.matching.validator.CreateApplicantRankingRequest;
 import app.leo.matching.validator.PutApplicantRankingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,24 +23,14 @@ public class ApplicantRankingController {
     private ApplicantRankingService applicantRankingService;
 
     @PostMapping(path= "/matches/{matchId:[\\d+]}/ranking")
-    public void createApplicantRanking(@Valid @PathVariable("matchId") Long matchId,@Valid @RequestBody List<CreateApplicantRankingRequest> applicantRankingRequest){
-                long userId = 1;
-                createApplicantRankingusingRequestList(matchId,userId,applicantRankingRequest);
+    public ResponseEntity<List<CreateApplicantRankingRequest>> createApplicantRanking(@Valid @PathVariable("matchId") Long matchId, @Valid @RequestBody List<CreateApplicantRankingRequest> applicantRankingRequest){
+        long userId = 1;
+        for(CreateApplicantRankingRequest applicantRanking : applicantRankingRequest){
+            applicantRankingService.createApplicantRanking(matchId, userId, applicantRanking.getPositionId(), applicantRanking.getSequence());
+        }
+        return new ResponseEntity<List<CreateApplicantRankingRequest>>(applicantRankingRequest, HttpStatus.CREATED);
     }
 
-    private List<ApplicantRanking> createApplicantRankingusingRequestList(long matchId,long userId,List<CreateApplicantRankingRequest> applicantRankingRequestList){
-        List<ApplicantRanking> applicantRankingList = new ArrayList<ApplicantRanking>();
-        for(CreateApplicantRankingRequest applicantRankingRequest:applicantRankingRequestList){
-            try {
-                ApplicantRanking applicantRanking = applicantRankingService.createApplicantRanking(matchId,userId,applicantRankingRequest.getPositionId(),applicantRankingRequest.getSequence());
-                applicantRankingList.add(applicantRanking);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            return applicantRankingList;
-        }
-        return applicantRankingList;
-    }
     @PutMapping(path  = "/matches/{matchId:[\\d]}/applicants/ranking")
     public List<ApplicantRanking> updateApplicantRanking(@PathVariable long matchId, @Valid @RequestBody List<PutApplicantRankingRequest> putApplicantRankingRequestList) {
         long applicantId = 1;
