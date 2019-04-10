@@ -2,14 +2,14 @@ package app.leo.matching.validator;
 
 public class PutApplicantRankingRequest {
     private long positionId;
-    private int sequece;
+    private int sequence;
 
     public PutApplicantRankingRequest() {
     }
 
     public PutApplicantRankingRequest(long positionId, int sequece) {
         this.positionId = positionId;
-        this.sequece = sequece;
+        this.sequence = sequece;
     }
 
     public long getPositionId() {
@@ -20,11 +20,11 @@ public class PutApplicantRankingRequest {
         this.positionId = positionId;
     }
 
-    public int getSequece() {
-        return sequece;
+    public int getSequence() {
+        return sequence;
     }
 
-    public void setSequece(int sequece) {
-        this.sequece = sequece;
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
     }
 }
