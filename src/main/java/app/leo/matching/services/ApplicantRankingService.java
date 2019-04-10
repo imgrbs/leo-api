@@ -65,4 +65,8 @@ public class ApplicantRankingService {
     public void deleteApplicantRankingById(Long id) {
         applicantRankingRepository.deleteById(id);
     }
+
+    public List<ApplicantRanking> getApplicantRankingByApplicantId(long applicantId){
+        return applicantRankingRepository.getApplicantRankingByApplicantMatchId(applicantId);
+    }
 }

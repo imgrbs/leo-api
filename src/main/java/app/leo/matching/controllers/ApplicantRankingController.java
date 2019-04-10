@@ -31,6 +31,12 @@ public class ApplicantRankingController {
         return new ResponseEntity<List<CreateApplicantRankingRequest>>(applicantRankingRequest, HttpStatus.CREATED);
     }
 
+    @GetMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
+    public ResponseEntity<List<ApplicantRanking>> getApplicantRanking(@Valid @PathVariable("matchId") Long matchId){
+        long userId = 1;
+        return new ResponseEntity<List<ApplicantRanking>>(applicantRankingService.getApplicantRankingByApplicantId(userId), HttpStatus.OK);
+    }
+
     @PutMapping(path  = "/matches/{matchId:[\\d]}/applicants/ranking")
     public List<ApplicantRanking> updateApplicantRanking(@PathVariable long matchId, @Valid @RequestBody List<PutApplicantRankingRequest> putApplicantRankingRequestList) {
         long applicantId = 1;
