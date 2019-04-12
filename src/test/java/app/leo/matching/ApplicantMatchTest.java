@@ -23,7 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicantMatchTest {
@@ -52,18 +52,16 @@ public class ApplicantMatchTest {
         match.setApplicantMatches(applicantMatchListCase);
 
         this.applicantMatchRepository = mock(ApplicantMatchRepository.class);
-        this.applicantMatchService = new ApplicantMatchService(applicantMatchRepository);
+        this.applicantMatchService = mock(ApplicantMatchService.class);
     }
 
     @Test
-    public void getApplicantMatchesByMatchIdandRecuiterIdShouldReturnListofApplicantMatch(){
-        List<ApplicantMatch> applicantMatches = new ArrayList<ApplicantMatch>();
-        applicantMatches.add(this.applicantMatch);
-        Mockito.when(this.applicantMatchRepository.getApplicantMatchByMatchIdandRecruiterId(this.match.getId(),this.position.getRecruiterMatch().getId())).thenReturn(applicantMatches);
+    public void getApplicantsByPositionIdShouldReturnApplicantList(){
+        Mockito.when(applicantMatchRepository.getApplicantMatchByMatchIdAndPositionId(this.match.getId(),1L)).thenReturn(this.applicantMatchListCase);
 
-        List<ApplicantMatch> applicantMatchList =this.applicantMatchService.getApplicantMatchesByMatchIdandRecruiterMatchId(this.match.getId(),this.position.getRecruiterMatch());
+        List<ApplicantMatch> applicantMatchList =applicantMatchService.getApplicantMatchesByMatchIdandPositionId(this.match.getId(),1L);
 
-        Assert.assertEquals(1,applicantMatchList.size());
         Assert.assertNotNull(applicantMatchList);
     }
+
 }

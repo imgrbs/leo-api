@@ -9,11 +9,10 @@ import java.util.List;
 
 @Repository
 public interface ApplicantMatchRepository extends JpaRepository<ApplicantMatch, Long> {
-    public List<ApplicantMatch> getApplicantMatchByMatchId(long matchId);
+    List<ApplicantMatch> getApplicantMatchByMatchId(long matchId);
 
-    public ApplicantMatch getApplicantMatchById(long id);
+    ApplicantMatch getApplicantMatchById(long id);
 
-    @Query(value = "select a.* from applicant_matches a join applicant_rankings ar on a.id = ar.applicant_match_id" +
-            "join positions p on p.id = ar.position_id where a.match_id = ?1 and p.recruiter_match_id = ?2", nativeQuery = true)
-    public List<ApplicantMatch> getApplicantMatchByMatchIdandRecruiterId(Long matchId,Long recruiterMatchId);
+    @Query(value = "select a.id , a.applicant_id from applicant_matches a inner join applicant_rankings ar on a.id = ar.applicant_match_id where a.match_id = ?1 and ar.position_id = ?2" , nativeQuery = true)
+    List<ApplicantMatch> getApplicantMatchByMatchIdAndPositionId(Long matchId,Long positionId);
 }

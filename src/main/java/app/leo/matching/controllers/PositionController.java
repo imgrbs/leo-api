@@ -40,7 +40,7 @@ public class PositionController {
         return positionService.getPositionByMatchId(matchId);
     }
 
-    @GetMapping(path="/matches/{matchId:[\\d]}/recruiter/position")
+    @GetMapping(path="/matches/{matchId:[\\d]}/recruiters/positions")
     public ResponseEntity<getPositionsByRecruiterIdResponse> getPositionsByRecruiterIdAndMatchId(@PathVariable long matchId){
         long recruiterId = 1;
         List<Position> positionList = positionService.getPositionByMatchIdAndRecruiterId(recruiterId,matchId);

@@ -19,5 +19,4 @@ public interface RecruiterRankingRepository extends JpaRepository<RecruiterRanki
 
     List<RecruiterRanking> getRecruiterRankingByMatchIdAndPositionId(long matchId,long positionId);
 
-
 }

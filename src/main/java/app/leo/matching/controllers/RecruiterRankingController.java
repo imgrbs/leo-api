@@ -1,6 +1,7 @@
 package app.leo.matching.controllers;
 
 
+import app.leo.matching.models.RecruiterRanking;
 import app.leo.matching.services.RecruiterRankingService;
 import app.leo.matching.validator.CreateRecruiterRankingRequest;
 import app.leo.matching.validator.PutRecruiterRankingRequest;
@@ -19,21 +20,22 @@ public class RecruiterRankingController {
     @Autowired
     private RecruiterRankingService recruiterRankingService;
 
-    @PostMapping("/matches/{matchId:[\\d]}/recruiters/ranking")
-    public ResponseEntity<List<CreateRecruiterRankingRequest>>createRecruiterRanking(@PathVariable long matchId, @Valid @RequestBody List<CreateRecruiterRankingRequest>createRecruiterRankingRequestList){
-        long positionId = 1;
+    @PostMapping("/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/ranking")
+    public ResponseEntity<List<CreateRecruiterRankingRequest>>createRecruiterRanking(@PathVariable long matchId,@PathVariable long positionId,@Valid @RequestBody List<CreateRecruiterRankingRequest>createRecruiterRankingRequestList){
         for(CreateRecruiterRankingRequest recruiterRankingRequest:createRecruiterRankingRequestList) {
             recruiterRankingService.createRecruiterRanking(matchId,recruiterRankingRequest.getApplicantId(),positionId,recruiterRankingRequest.getSequence());
         }
         return  new ResponseEntity<>(createRecruiterRankingRequestList,HttpStatus.CREATED);
     }
 
-    @PutMapping(path ="/matches/{matchId:[\\d]}/recruiters/ranking")
-    public ResponseEntity<List<PutRecruiterRankingRequest>> updateRecruiterRanking(@PathVariable long matchId, @Valid @RequestBody List<PutRecruiterRankingRequest> recruiterRankingRequestList){
-        long positionId = 1;
+    @PutMapping(path ="/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/ranking")
+    public ResponseEntity<List<PutRecruiterRankingRequest>> updateRecruiterRanking(@PathVariable long matchId,@PathVariable long positionId ,@Valid @RequestBody List<PutRecruiterRankingRequest> recruiterRankingRequestList){
         recruiterRankingService.updateRecuiterRankingByMatchIdAndPositionId(matchId,positionId,recruiterRankingRequestList);
       return new ResponseEntity<>(recruiterRankingRequestList,HttpStatus.ACCEPTED);
     }
 
-
+    @GetMapping(path = "/matches/{matchId:[\\d]}/recruiters/positions/{positionId:[\\d]}/ranking")
+    public ResponseEntity<List<RecruiterRanking>> getPositionRankingByPositionId (@PathVariable long matchId,@PathVariable long positionId){
+       return new ResponseEntity<>(recruiterRankingService.getRecruiterRankingByMatchIdAndPositionId(matchId,positionId),HttpStatus.OK);
+    }
 }
