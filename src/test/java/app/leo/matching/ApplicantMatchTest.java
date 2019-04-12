@@ -55,15 +55,5 @@ public class ApplicantMatchTest {
         this.applicantMatchService = new ApplicantMatchService(applicantMatchRepository);
     }
 
-    @Test
-    public void getApplicantMatchesByMatchIdandRecuiterIdShouldReturnListofApplicantMatch(){
-        List<ApplicantMatch> applicantMatches = new ArrayList<ApplicantMatch>();
-        applicantMatches.add(this.applicantMatch);
-        Mockito.when(this.applicantMatchRepository.getApplicantMatchByMatchIdandRecruiterId(this.match.getId(),this.position.getRecruiterMatch().getId())).thenReturn(applicantMatches);
 
-        List<ApplicantMatch> applicantMatchList =this.applicantMatchService.getApplicantMatchesByMatchIdandRecruiterMatchId(this.match.getId(),this.position.getRecruiterMatch());
-
-        Assert.assertEquals(1,applicantMatchList.size());
-        Assert.assertNotNull(applicantMatchList);
-    }
 }
