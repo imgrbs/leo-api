@@ -23,7 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicantMatchTest {
@@ -52,8 +52,16 @@ public class ApplicantMatchTest {
         match.setApplicantMatches(applicantMatchListCase);
 
         this.applicantMatchRepository = mock(ApplicantMatchRepository.class);
-        this.applicantMatchService = new ApplicantMatchService(applicantMatchRepository);
+        this.applicantMatchService = mock(ApplicantMatchService.class);
     }
 
+    @Test
+    public void getApplicantsByPositionIdShouldReturnApplicantList(){
+        Mockito.when(applicantMatchRepository.getApplicantMatchByMatchIdAndPositionId(this.match.getId(),1L)).thenReturn(this.applicantMatchListCase);
+
+        List<ApplicantMatch> applicantMatchList =applicantMatchService.getApplicantMatchesByMatchIdandPositionId(this.match.getId(),1L);
+
+        Assert.assertNotNull(applicantMatchList);
+    }
 
 }
