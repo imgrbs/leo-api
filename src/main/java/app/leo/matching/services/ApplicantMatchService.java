@@ -22,8 +22,8 @@ public class ApplicantMatchService {
         this.applicantMatchRepository =applicantMatchRepository;
     }
 
-    public List<ApplicantMatch> getApplicantMatchesByMatchIdandRecruiterMatchId(long matchId, RecruiterMatch recruiterMatch){
-        return applicantMatchRepository.getApplicantMatchByMatchIdandRecruiterId(matchId,recruiterMatch.getId());
+    public List<ApplicantMatch> getApplicantMatchesByMatchIdandPositionId(long matchId, long positionId){
+        return applicantMatchRepository.getApplicantMatchByMatchIdAndPositionId(matchId,positionId);
     }
 
     public ApplicantMatch getApplicantMatchByApplicantId(long id){
