@@ -25,7 +25,7 @@ public class PositionService {
 
     public void putRecruiterToUnclarify(long positionId) {
         Position position = positionRepository.findPositionById(positionId);
-        position.setIs_confirmation(false);
+        //position.setIs_confirmation(false);
         positionRepository.save(position);
     }
 
