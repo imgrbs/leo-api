@@ -41,9 +41,9 @@ public class PositionController {
     }
 
     @GetMapping(path="/matches/{matchId:[\\d]}/recruiters/positions")
-    public ResponseEntity<getPositionsByRecruiterIdResponse> getPositionsByRecruiterIdAndMatchId(@PathVariable long matchId){
+    public ResponseEntity<List<Position>> getPositionsByRecruiterIdAndMatchId(@PathVariable long matchId){
         long recruiterId = 1;
-        List<Position> positionList = positionService.getPositionByMatchIdAndRecruiterId(recruiterId,matchId);
-        return new ResponseEntity<>(new getPositionsByRecruiterIdResponse(matchId,recruiterId,positionList), HttpStatus.OK);
+        List<Position> positions = positionService.getPositionByMatchIdAndRecruiterId(recruiterId, matchId);
+        return new ResponseEntity<>(positions, HttpStatus.OK);
     }
 }
