@@ -67,7 +67,6 @@ public class ApplicantRankingService {
         return applicantRankingRepository.getApplicantRankingByApplicantIdandPositionId(applicantId,positionId);
     }
 
-
     public void deleteApplicantRanking(ApplicantRanking applicantRanking){ applicantRankingRepository.delete(applicantRanking);}
     public void deleteApplicantRankingById(Long id) {
         applicantRankingRepository.deleteById(id);
