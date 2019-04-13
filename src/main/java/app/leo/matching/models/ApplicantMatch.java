@@ -36,8 +36,9 @@ public class ApplicantMatch implements Serializable {
     }
 
     public ApplicantMatch(long applicantId,Match match) {
-        this.match = match;
+        this.id = applicantId;
         this.applicantId = applicantId;
+        this.match = match;
     }
 
     public Long getId() {
@@ -88,6 +89,5 @@ public class ApplicantMatch implements Serializable {
         }
         return false;
     }
-
 
 }
