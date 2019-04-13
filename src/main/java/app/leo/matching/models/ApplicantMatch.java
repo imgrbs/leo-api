@@ -16,8 +16,6 @@ public class ApplicantMatch implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean isComfirmation;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "match_id")
     @JsonBackReference
@@ -33,16 +31,13 @@ public class ApplicantMatch implements Serializable {
 
     }
 
-
-    public ApplicantMatch(boolean isComfirmation, Match match) {
-        this.isComfirmation = isComfirmation;
+    public ApplicantMatch(Match match) {
         this.match = match;
     }
 
-    public ApplicantMatch(Long id, boolean isComfirmation, Match match) {
-        this.id = id;
-        this.isComfirmation = isComfirmation;
+    public ApplicantMatch(long applicantId,Match match) {
         this.match = match;
+        this.applicantId = applicantId;
     }
 
     public Long getId() {
@@ -51,14 +46,6 @@ public class ApplicantMatch implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public boolean isComfirmation() {
-        return isComfirmation;
-    }
-
-    public void setComfirmation(boolean comfirmation) {
-        isComfirmation = comfirmation;
     }
 
     public Match getMatch() {
@@ -102,14 +89,5 @@ public class ApplicantMatch implements Serializable {
         return false;
     }
 
-    @Override
-    public String toString() {
-        return "ApplicantMatch{" +
-                "id=" + id +
-                ", isComfirmation=" + isComfirmation +
-                ", match=" + match +
-                ", applicantRanking=" + applicantRanking +
-                ", applicantId=" + applicantId +
-                '}';
-    }
+
 }
