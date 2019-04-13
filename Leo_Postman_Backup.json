@@ -1,0 +1,375 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+			"name": "Leo-API",
+			"description": "",
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"38ed5bd6-8e70-4175-b66f-15eca025c323",
+				"3de951a3-7c66-492b-9cb3-303852ace630",
+				"aae3e9e2-26a2-44ef-b518-133584321e96",
+				"d6e984b2-3c57-4e0c-bbfb-d3d93f6b0033",
+				"68e07705-b635-4e85-982b-e5296d103fed",
+				"e4d48698-c33d-48ad-b4b3-bb8a185f3744",
+				"d1b1c852-3283-40a6-b92d-1cdebdad1b49",
+				"000e0018-2afc-40e2-a020-30fe77ed7d2b",
+				"00a8bc10-7741-4456-bd0f-175606254d31",
+				"c3e027df-3766-4dde-b90e-3b4e8010debf",
+				"c64df069-9330-4850-b683-a50220da4ae6",
+				"8cdbcd4e-9571-46fb-abaa-cb5b931474a3",
+				"547d65fb-6053-474a-b369-61c7a8764ee8"
+			],
+			"folders_order": [],
+			"folders": [],
+			"requests": [
+				{
+					"id": "000e0018-2afc-40e2-a020-30fe77ed7d2b",
+					"name": "get Match",
+					"url": "{{API_URL}}/matches/1",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "00a8bc10-7741-4456-bd0f-175606254d31",
+					"name": "get Position by Match Id",
+					"url": "{{API_URL}}/matches/1/positions",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "38ed5bd6-8e70-4175-b66f-15eca025c323",
+					"name": "get Applicants who rank position by matchId and positionId",
+					"url": "{{API_URL}}/matches/1/positions/1/applicants",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "3de951a3-7c66-492b-9cb3-303852ace630",
+					"name": "get Positions by matchId",
+					"url": "{{API_URL}}/matches/1/positions",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "547d65fb-6053-474a-b369-61c7a8764ee8",
+					"name": "get Position Ranking ",
+					"url": "{{API_URL}}/matches/1/recruiters/positions/1/ranking",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "68e07705-b635-4e85-982b-e5296d103fed",
+					"name": "get Applicant by Match Id",
+					"url": "{{API_URL}}/matches/1/applicants",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "8cdbcd4e-9571-46fb-abaa-cb5b931474a3",
+					"name": "put Recruiter Ranking",
+					"url": "{{API_URL}}/matches/1/positions/1/ranking",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"method": "PUT",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"rawModeData": "[\n    {\n        \"applicantId\": \"1\",\n        \"sequence\": \"3\"\n    }\n]",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "aae3e9e2-26a2-44ef-b518-133584321e96",
+					"name": "get Applicant Ranking ",
+					"url": "{{API_URL}}/matches/1/applicants/ranking",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "c3e027df-3766-4dde-b90e-3b4e8010debf",
+					"name": "get Position by Recruiter Id and Match Id",
+					"url": "{{API_URL}}/matches/1/recruiters/positions",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "c64df069-9330-4850-b683-a50220da4ae6",
+					"name": "create Recruiter Ranking",
+					"url": "{{API_URL}}/matches/1/positions/1/ranking",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"rawModeData": "[{\n\t\"applicantId\":\"1\",\n\t\"sequence\":\"3\"\n}]",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "d1b1c852-3283-40a6-b92d-1cdebdad1b49",
+					"name": "put Applicant Ranking",
+					"url": "{{API_URL}}/matches/1/applicants/ranking",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"method": "PUT",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"rawModeData": "[{\n\t\"sequence\":\"1\",\n\t\"positionId\":\"1\"\n}]",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "d6e984b2-3c57-4e0c-bbfb-d3d93f6b0033",
+					"name": "get Positions by Recruiter Id and Match id",
+					"url": "{{API_URL}}/matches/1/recruiters/positions",
+					"description": "",
+					"data": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "e4d48698-c33d-48ad-b4b3-bb8a185f3744",
+					"name": "create Applicant Ranking",
+					"url": "{{API_URL}}/matches/1/applicants/ranking",
+					"description": "",
+					"data": [],
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [],
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "e20a4633-f107-4d94-b5ef-c753fc61d93a",
+					"rawModeData": "[{\n\t\"sequence\":\"3\",\n\t\"positionId\":\"1\"\n}]",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [
+		{
+			"id": "43c900d2-33b9-48b8-a2e7-7881259499da",
+			"name": "Leo-API",
+			"values": [
+				{
+					"key": "API_URL",
+					"value": "localhost:3306",
+					"type": "text",
+					"description": "",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "a8678f3e-c825-49d2-a31a-a74fc00e09d8",
+			"name": "ProjectPlanner",
+			"values": [
+				{
+					"key": "API_URL",
+					"value": "http://localhost:7000",
+					"type": "text",
+					"description": "",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "c4527355-d90c-4c5c-90fe-387281ab3c89",
+			"name": "ProjectPlanner",
+			"values": [
+				{
+					"key": "API_URL",
+					"value": "http://localhost:7000",
+					"description": "",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "94521ccd-07b6-485d-8680-e552639781cd",
+			"name": "My Workspace - globals",
+			"values": []
+		}
+	],
+	"headerPresets": [],
+	"globals": []
+}
