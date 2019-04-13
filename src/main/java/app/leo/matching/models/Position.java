@@ -33,8 +33,6 @@ public class Position implements Serializable {
     @JsonManagedReference
     private List<RecruiterRanking> recruiterRankings;
 
-    private boolean is_confirmation;
-
     @ManyToOne
     @JoinColumn(name = "recruiter_match_id")
     @JsonBackReference
@@ -88,14 +86,6 @@ public class Position implements Serializable {
 
     public void setMatch(Match match) {
         this.match = match;
-    }
-
-    public boolean isIs_confirmation() {
-        return is_confirmation;
-    }
-
-    public void setIs_confirmation(boolean is_confirmation) {
-        this.is_confirmation = is_confirmation;
     }
 
     public RecruiterMatch getRecruiterMatch() {
