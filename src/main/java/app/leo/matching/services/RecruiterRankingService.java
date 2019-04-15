@@ -47,7 +47,7 @@ public class RecruiterRankingService {
     public void updateRecuiterRankingByMatchIdAndPositionId(long matchId, long positionId, List<PutRecruiterRankingRequest> putRecruiterRankingRequestList){
         recruiterRankingRepository.deleteRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
         for(PutRecruiterRankingRequest putRecruiterRankingRequest:putRecruiterRankingRequestList){
-            this.createRecruiterRanking(matchId,putRecruiterRankingRequest.getApplicantId(),positionId,putRecruiterRankingRequest.getSequence());
+            this.createRecruiterRanking(matchId,putRecruiterRankingRequest.getApplicantMatchId(),positionId,putRecruiterRankingRequest.getSequence());
         }
     }
 
