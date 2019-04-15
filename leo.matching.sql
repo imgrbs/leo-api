@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Mar 27, 2019 at 08:01 AM
+-- Generation Time: Apr 15, 2019 at 03:27 PM
 -- Server version: 10.2.17-MariaDB-1:10.2.17+maria~bionic
 -- PHP Version: 7.2.13
 
@@ -67,15 +67,10 @@ CREATE TABLE `applicant_rankings` (
 --
 
 INSERT INTO `applicant_rankings` (`id`, `sequence`, `match_id`, `applicant_match_id`, `position_id`) VALUES
-(1, 1, 1, 1, 1),
-(2, 1, 1, 2, 2),
-(3, 1, 1, 3, 3),
-(4, 1, 1, 4, 1),
-(5, 2, 1, 4, 4),
-(6, 1, 1, 5, 4),
-(7, 2, 1, 5, 1),
-(8, 1, 1, 6, 4),
-(9, 1, 1, 7, 1);
+(17, 3, 1, 1, 3),
+(16, 2, 1, 1, 4),
+(15, 1, 1, 1, 1),
+(18, 1, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -105,18 +100,20 @@ CREATE TABLE `positions` (
   `id` bigint(20) NOT NULL,
   `capacity` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `recruiter_match_id` bigint(20) DEFAULT NULL
+  `recruiter_match_id` bigint(20) DEFAULT NULL,
+  `match_id` bigint(20) DEFAULT NULL,
+  `is_confirmation` bit(1) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `positions`
 --
 
-INSERT INTO `positions` (`id`, `capacity`, `name`, `recruiter_match_id`) VALUES
-(1, 1, 'Developer', 1),
-(2, 1, 'Designer', 2),
-(3, 1, 'Data Engineer', 3),
-(4, 2, 'Software Engineer', 4);
+INSERT INTO `positions` (`id`, `capacity`, `name`, `recruiter_match_id`, `match_id`, `is_confirmation`) VALUES
+(1, 1, 'Developer', 1, 1, b'0'),
+(2, 1, 'Designer', 2, 1, b'0'),
+(3, 1, 'Data Engineer', 3, 1, b'0'),
+(4, 2, 'Software Engineer', 4, 1, b'0');
 
 -- --------------------------------------------------------
 
@@ -160,13 +157,13 @@ CREATE TABLE `recruiter_rankings` (
 --
 
 INSERT INTO `recruiter_rankings` (`id`, `sequence`, `match_id`, `applicant_match_id`, `position_id`) VALUES
-(1, 1, 1, 1, 1),
+(14, 2, 1, 1, 1),
 (2, 1, 1, 2, 2),
 (3, 1, 1, 3, 3),
 (4, 1, 1, 4, 4),
 (5, 2, 1, 5, 4),
 (6, 3, 1, 6, 4),
-(7, 2, 1, 7, 1);
+(13, 1, 1, 2, 1);
 
 --
 -- Indexes for dumped tables
@@ -199,6 +196,7 @@ ALTER TABLE `matches`
 --
 ALTER TABLE `positions`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `FKqygl7i4slg8bypjqgchpbud3b` (`match_id`),
   ADD KEY `FKkru74vep3ko68i05y8hqfj09j` (`recruiter_match_id`);
 
 --
@@ -231,7 +229,7 @@ ALTER TABLE `applicant_matches`
 -- AUTO_INCREMENT for table `applicant_rankings`
 --
 ALTER TABLE `applicant_rankings`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `matches`
@@ -255,7 +253,7 @@ ALTER TABLE `recruiter_matches`
 -- AUTO_INCREMENT for table `recruiter_rankings`
 --
 ALTER TABLE `recruiter_rankings`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
