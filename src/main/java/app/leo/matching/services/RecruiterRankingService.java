@@ -52,6 +52,6 @@ public class RecruiterRankingService {
     }
 
     public List<RecruiterRanking> getRecruiterRankingByMatchIdAndPositionId(long matchId,long positionId){
-        return recruiterRankingRepository.getRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
+        return recruiterRankingRepository.getRecruiterRankingByMatchIdAndPositionIdOrderBySequenceAsc(matchId,positionId);
     }
 }

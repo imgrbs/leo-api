@@ -17,5 +17,5 @@ public interface RecruiterRankingRepository extends JpaRepository<RecruiterRanki
     @Transactional
     void deleteRecruiterRankingByMatchIdAndPositionId(long matchId, long positionId);
 
-    List<RecruiterRanking> getRecruiterRankingByMatchIdAndPositionId(long matchId,long positionId);
+    List<RecruiterRanking> getRecruiterRankingByMatchIdAndPositionIdOrderBySequenceAsc(long matchId,long positionId);
 }
