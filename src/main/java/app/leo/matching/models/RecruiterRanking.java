@@ -69,8 +69,6 @@ public class RecruiterRanking extends Ranking {
         return false;
     }
 
-
-
     @Override
     public String toString() {
         return "RecruiterRanking{" +

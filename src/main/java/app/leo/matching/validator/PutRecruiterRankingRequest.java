@@ -1,7 +1,6 @@
 package app.leo.matching.validator;
 
 public class PutRecruiterRankingRequest {
-
     private long applicantId;
     private int sequence;
 

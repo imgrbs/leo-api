@@ -31,7 +31,6 @@ public class RecruiterMatch  {
     }
 
     public RecruiterMatch(long recruiterId, Match match) {
-
         this.match = match;
         this.recruiterId = recruiterId;
     }

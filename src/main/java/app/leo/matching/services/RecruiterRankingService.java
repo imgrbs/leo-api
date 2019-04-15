@@ -44,14 +44,6 @@ public class RecruiterRankingService {
         return recruiterRankingRepository.save(saveRecruiterRanking);
     }
 
-    public RecruiterRanking findRecruiterRankingByPositionIdandApplicantId(long positionId , long applicantId){
-        return recruiterRankingRepository.getRecruiterRankingbyPositionIdandApplicantMatchId(positionId,applicantId);
-    }
-
-    public void delectRecruiterRanking(RecruiterRanking recruiterRanking){
-        recruiterRankingRepository.delete(recruiterRanking);
-    }
-
     public void updateRecuiterRankingByMatchIdAndPositionId(long matchId, long positionId, List<PutRecruiterRankingRequest> putRecruiterRankingRequestList){
         recruiterRankingRepository.deleteRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
         for(PutRecruiterRankingRequest putRecruiterRankingRequest:putRecruiterRankingRequestList){

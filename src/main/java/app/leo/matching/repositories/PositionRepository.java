@@ -12,9 +12,9 @@ import java.util.List;
 public interface PositionRepository extends JpaRepository<Position,Long> {
 
     @Query(name = "select * from positions p where p.match_id = ?1 ", nativeQuery = true)
-    public List<Position> getPositionByMatchId(long matchId);
+    List<Position> getPositionByMatchId(long matchId);
 
-    public Position findPositionById(long Id);
+    Position findPositionById(long Id);
 
     List<Position> getPositionsByRecruiterMatchIdAndMatchId(long recruiterMatchId,long matchId);
 }

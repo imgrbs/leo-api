@@ -48,6 +48,4 @@ public class ApplicantRankingController {
     public void deleteApplicantRanking(@PathVariable long matchId,@Valid @RequestBody ApplicantRanking applicantRanking){
         applicantRankingService.deleteApplicantRankingById(applicantRanking.getId());
     }
-
-
 }

@@ -19,17 +19,6 @@ public class PositionController {
     @Autowired
     private PositionService positionService;
 
-
-
-    @PutMapping(path = "/matches/{matchId:[\\d]}/recruiters")
-    public void putRecruiterToUnclarify(@PathVariable long matchId,@Valid @RequestBody Long positionId) {
-        try {
-            positionService.putRecruiterToUnclarify(positionId);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
     @GetMapping(path = "/healthcheck")
     public Date getDate(){
         return new Date();

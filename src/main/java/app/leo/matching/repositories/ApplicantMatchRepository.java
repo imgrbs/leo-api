@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ApplicantMatchRepository extends JpaRepository<ApplicantMatch, Long> {
+
     List<ApplicantMatch> getApplicantMatchByMatchId(long matchId);
 
     ApplicantMatch getApplicantMatchById(long id);

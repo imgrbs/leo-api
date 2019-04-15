@@ -23,12 +23,6 @@ public class PositionService {
        return positionRepository.getPositionByMatchId(matchId);
     }
 
-    public void putRecruiterToUnclarify(long positionId) {
-        Position position = positionRepository.findPositionById(positionId);
-        //position.setIs_confirmation(false);
-        positionRepository.save(position);
-    }
-
     public List<Position> getPositionByMatchIdAndRecruiterId(long recruiterId,long matchId){
         return positionRepository.getPositionsByRecruiterMatchIdAndMatchId(recruiterId,matchId);
     }

@@ -231,7 +231,4 @@ public class MatchServiceTests {
         Assert.assertEquals(this.positionsListCase1.get(0).getId(), positions.get(0).getId());
 
     }
-
-
-
 }

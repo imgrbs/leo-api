@@ -16,9 +16,9 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 public class MatchController {
+
     @Autowired
     private MatchService matchService;
-
 
     @GetMapping(path = "matches/{matchId:[\\d]}")
     public ResponseEntity<Match> getProductsByShopId(@PathVariable Long matchId) {
