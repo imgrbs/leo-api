@@ -4,15 +4,15 @@ import app.leo.matching.models.Position;
 
 import java.util.List;
 
-public class getPositionsByRecruiterIdResponse {
+public class GetPositionsByRecruiterIdResponse {
     private long matchId;
     private long recruiterId;
     private List<Position> positionList;
 
-    public getPositionsByRecruiterIdResponse() {
+    public GetPositionsByRecruiterIdResponse() {
     }
 
-    public getPositionsByRecruiterIdResponse(long matchId, long recruiterId, List<Position> positionList) {
+    public GetPositionsByRecruiterIdResponse(long matchId, long recruiterId, List<Position> positionList) {
         this.matchId = matchId;
         this.recruiterId = recruiterId;
         this.positionList = positionList;
