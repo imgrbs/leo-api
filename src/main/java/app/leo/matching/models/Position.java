@@ -38,6 +38,8 @@ public class Position implements Serializable {
     @JsonBackReference
     private RecruiterMatch recruiterMatch;
 
+    private String money;
+
     public Position() {
     }
 
@@ -96,4 +98,11 @@ public class Position implements Serializable {
         this.recruiterMatch = recruiterMatch;
     }
 
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
 }
