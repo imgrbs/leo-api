@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "recruiter_matches")
-public class RecruiterMatch  {
+public class RecruiterMatch implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,7 @@ public class RecruiterMatch  {
 
     @OneToMany(mappedBy = "recruiterMatch")
     @JsonManagedReference
-    private List<Position> Position;
+    private List<Position> positions;
 
     public RecruiterMatch() {
     }
@@ -59,11 +60,11 @@ public class RecruiterMatch  {
         this.recruiterId = recruiterId;
     }
 
-    public List<app.leo.matching.models.Position> getPosition() {
-        return Position;
+    public List<app.leo.matching.models.Position> getPositions() {
+        return positions;
     }
 
-    public void setPosition(List<app.leo.matching.models.Position> position) {
-        Position = position;
+    public void setPositions(List<app.leo.matching.models.Position> position) {
+        positions = position;
     }
 }

@@ -1,8 +1,6 @@
 package app.leo.matching.DTO;
 
-import app.leo.matching.models.Position;
 
-import java.util.List;
 
 public class GetPositionsByMatchIdResponse {
     private long id;

@@ -14,7 +14,7 @@ public interface PositionRepository extends JpaRepository<Position,Long> {
     @Query(name = "select * from positions p where p.match_id = ?1 ", nativeQuery = true)
     List<Position> getPositionByMatchId(long matchId);
 
-    Position findPositionById(long Id);
+    Position findPositionById(long id);
 
     List<Position> getPositionsByRecruiterMatchIdAndMatchId(long recruiterMatchId,long matchId);
 }

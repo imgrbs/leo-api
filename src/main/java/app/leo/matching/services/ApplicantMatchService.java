@@ -2,7 +2,6 @@ package app.leo.matching.services;
 
 
 import app.leo.matching.models.ApplicantMatch;
-import app.leo.matching.models.RecruiterMatch;
 import app.leo.matching.repositories.ApplicantMatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -34,14 +34,12 @@ public class MatchService {
 
     public List<MatchResult> matchingByMatchId(long matchId) {
         List<ApplicantMatch> applicantMatches = this.getApplicantMatchByMatchId(matchId);
-        List<MatchResult> matchResults = this.matching(applicantMatches);
-        // save to database
-        return matchResults;
+        return this.matching(applicantMatches);
     }
 
     public List<MatchResult> matching(List<ApplicantMatch> applicantMatches) {
-        List<MatchResult> matchResults = new ArrayList<MatchResult>();
-        Map<Position, List<ApplicantMatch>> positionAccepted = new HashMap<Position, List<ApplicantMatch>>();
+        List<MatchResult> matchResults = new ArrayList<>();
+        Map<Position, List<ApplicantMatch>> positionAccepted = new HashMap<>();
         while (!this.allApplicantMatched(applicantMatches)) {
             ApplicantMatch applicant = applicantMatches.remove(0);
             List<ApplicantRanking> applicantRanking = applicant.getApplicantRanking();
@@ -49,7 +47,7 @@ public class MatchService {
                 Position position = applicantRanking.remove(0).getPosition();
                 List<ApplicantMatch> acceptedApplicant = positionAccepted.get(position);
                 if (acceptedApplicant == null) {
-                    acceptedApplicant = new ArrayList<ApplicantMatch>();
+                    acceptedApplicant = new ArrayList<>();
                 }
                 if (this.isRecruiterAccepted(applicant, position.getRecruiterRankings())) {
                     if ((this.isRecruiterHasFullCapacity(position, acceptedApplicant))) {
@@ -105,9 +103,9 @@ public class MatchService {
 
     private int findRemovalApplicantInPositionRanking(Position position, ApplicantMatch applicant, Map<Position, List<ApplicantMatch>> positionAccepted){
         int indexOfRemovalApplicant = -1;
-        List<RecruiterRanking> recruiterRankings = new ArrayList<RecruiterRanking>(position.getRecruiterRankings());
+        List<RecruiterRanking> recruiterRankings = new ArrayList<>(position.getRecruiterRankings());
         if (positionAccepted.get(position) != null) {
-            List<ApplicantMatch> applicantAccepted = new ArrayList<ApplicantMatch>(positionAccepted.get(position));
+            List<ApplicantMatch> applicantAccepted = new ArrayList<>(positionAccepted.get(position));
             int indexOfNewApplicant = recruiterRankings.indexOf(applicant);
             if (this.isIndexCorrected(indexOfNewApplicant)) {
                 int newApplicantSequence = recruiterRankings.get(indexOfNewApplicant).getSequence();

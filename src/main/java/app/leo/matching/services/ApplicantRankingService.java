@@ -48,8 +48,7 @@ public class ApplicantRankingService {
         ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchById(userId);
         Position position = positionRepository.findPositionById(positionId);
         ApplicantRanking applicantRanking = new ApplicantRanking(sequence,match,applicantMatch,position);
-        ApplicantRanking savedRanking = applicantRankingRepository.save(applicantRanking);
-        return savedRanking;
+        return applicantRankingRepository.save(applicantRanking);
     }
 
     public void updateApplicantRankingByMatchIdAndApplicantId(long matchId, long applicantId, List<PutApplicantRankingRequest> applicantRankings) {

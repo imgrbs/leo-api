@@ -30,7 +30,7 @@ public class MatchResult {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj){
         MatchResult matchResult = (MatchResult) obj;
 
         boolean isSameApplicant = matchResult.getApplicantMatch().equals(this.applicantMatch);

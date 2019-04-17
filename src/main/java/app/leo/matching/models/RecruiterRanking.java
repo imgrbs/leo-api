@@ -2,7 +2,6 @@ package app.leo.matching.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -63,8 +62,8 @@ public class RecruiterRanking extends Ranking {
     public boolean equals(Object o) {
         if(o instanceof RecruiterRanking) {
             RecruiterRanking recruiterRanking = (RecruiterRanking) o;
-            ApplicantMatch applicantMatch = recruiterRanking.getApplicantMatch();
-            return this.applicantMatch.equals(this.getApplicantMatch());
+            ApplicantMatch applicant = recruiterRanking.getApplicantMatch();
+            return applicant.equals(this.getApplicantMatch());
         }
         return false;
     }

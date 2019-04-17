@@ -22,11 +22,11 @@ public class MatchController {
 
     @GetMapping(path = "matches/{matchId:[\\d]}")
     public ResponseEntity<Match> getProductsByShopId(@PathVariable Long matchId) {
-        return new ResponseEntity<Match>(this.matchService.getMatchByMatchId(matchId), HttpStatus.OK);
+        return new ResponseEntity<>(this.matchService.getMatchByMatchId(matchId), HttpStatus.OK);
     }
 
     @GetMapping(path = "matches/{matchId:[\\d]}/applicants")
     public ResponseEntity<List<ApplicantMatch>> getApplicantMatchByMatchId(@PathVariable Long matchId) {
-        return new ResponseEntity<List<ApplicantMatch>>(this.matchService.getApplicantMatchByMatchId(matchId), HttpStatus.OK);
+        return new ResponseEntity<>(this.matchService.getApplicantMatchByMatchId(matchId), HttpStatus.OK);
     }
 }

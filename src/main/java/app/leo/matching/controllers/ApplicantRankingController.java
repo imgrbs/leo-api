@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,20 +27,20 @@ public class ApplicantRankingController {
         for(CreateApplicantRankingRequest applicantRanking : applicantRankingRequest){
             applicantRankingService.createApplicantRanking(matchId, userId, applicantRanking.getPositionId(), applicantRanking.getSequence());
         }
-        return new ResponseEntity<List<CreateApplicantRankingRequest>>(applicantRankingRequest, HttpStatus.CREATED);
+        return new ResponseEntity<>(applicantRankingRequest, HttpStatus.CREATED);
     }
 
     @GetMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
     public ResponseEntity<List<ApplicantRanking>> getApplicantRanking(@Valid @PathVariable("matchId") Long matchId){
         long userId = 1;
-        return new ResponseEntity<List<ApplicantRanking>>(applicantRankingService.getApplicantRankingByMatchIdAndApplicantId(matchId, userId), HttpStatus.OK);
+        return new ResponseEntity<>(applicantRankingService.getApplicantRankingByMatchIdAndApplicantId(matchId, userId), HttpStatus.OK);
     }
 
     @PutMapping(path  = "/matches/{matchId:[\\d]}/applicants/ranking")
     public ResponseEntity<List<PutApplicantRankingRequest>> updateApplicantRanking(@PathVariable long matchId, @Valid @RequestBody List<PutApplicantRankingRequest> putApplicantRankingRequestList) {
         long applicantId = 1;
         applicantRankingService.updateApplicantRankingByMatchIdAndApplicantId(matchId, applicantId, putApplicantRankingRequestList);
-        return new ResponseEntity<List<PutApplicantRankingRequest>>(putApplicantRankingRequestList, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(putApplicantRankingRequestList, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(path = "/matches/{matchId:[\\d]}/ranking")
