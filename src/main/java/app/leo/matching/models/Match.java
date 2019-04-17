@@ -19,6 +19,9 @@ public class Match implements Serializable {
     @JsonManagedReference
     private List<ApplicantMatch> applicantMatches;
 
+    @NotBlank
+    private String name;
+
     public Match() {
     }
 
@@ -26,9 +29,6 @@ public class Match implements Serializable {
         this.id = id;
         this.name = name;
     }
-
-    @NotBlank
-    private String name;
 
     public Long getId() {
         return id;
