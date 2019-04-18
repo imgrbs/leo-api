@@ -7,8 +7,7 @@ public class GetPositionsByMatchIdResponse {
     private String name;
     private String money;
     private int capacity;
-    private String recruiterName;
-    private String recruiterLocation;
+    private Recruiter recruiter;
 
     public GetPositionsByMatchIdResponse() {
     }
@@ -20,13 +19,12 @@ public class GetPositionsByMatchIdResponse {
         this.capacity = capacity;
     }
 
-    public GetPositionsByMatchIdResponse(long id, String name, String money, int capacity, String recruiterName, String recruiterLocation) {
+    public GetPositionsByMatchIdResponse(long id, String name, String money, int capacity,Recruiter recruiter) {
         this.id = id;
         this.name = name;
         this.money = money;
         this.capacity = capacity;
-        this.recruiterName = recruiterName;
-        this.recruiterLocation = recruiterLocation;
+        this.recruiter = recruiter;
     }
 
     public long getId() {
@@ -61,19 +59,11 @@ public class GetPositionsByMatchIdResponse {
         this.capacity = capacity;
     }
 
-    public String getRecruiterName() {
-        return recruiterName;
+    public Recruiter getRecruiter() {
+        return recruiter;
     }
 
-    public void setRecruiterName(String recruiterName) {
-        this.recruiterName = recruiterName;
-    }
-
-    public String getRecruiterLocation() {
-        return recruiterLocation;
-    }
-
-    public void setRecruiterLocation(String recruiterLocation) {
-        this.recruiterLocation = recruiterLocation;
+    public void setRecruiter(Recruiter recruiter) {
+        this.recruiter = recruiter;
     }
 }
