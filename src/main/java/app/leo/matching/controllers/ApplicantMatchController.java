@@ -23,4 +23,9 @@ public class ApplicantMatchController {
     public ResponseEntity<List<ApplicantMatch>> getApplicantMatchesByPositionId(@PathVariable long matchId, @PathVariable long positionId){
         return new ResponseEntity<>(applicantMatchService.getApplicantMatchesByMatchIdandPositionId(matchId,positionId), HttpStatus.OK);
     }
+
+    @GetMapping(path = "matches/{matchId:[\\d]}/applicants")
+    public ResponseEntity<List<ApplicantMatch>> getApplicantMatchByMatchId(@PathVariable Long matchId) {
+        return new ResponseEntity<>(this.applicantMatchService.getApplicantMatchByMatchId(matchId), HttpStatus.OK);
+    }
 }
