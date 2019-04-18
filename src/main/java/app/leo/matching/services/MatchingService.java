@@ -2,7 +2,6 @@ package app.leo.matching.services;
 
 import app.leo.matching.models.*;
 import app.leo.matching.repositories.ApplicantMatchRepository;
-import app.leo.matching.repositories.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,28 +11,17 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MatchService {
-    @Autowired
-    private MatchRepository matchRepository;
+public class MatchingService {
 
     @Autowired
     private ApplicantMatchRepository applicantMatchRepository;
 
-    public MatchService(MatchRepository matchRepository, ApplicantMatchRepository applicantMatchRepository) {
-        this.matchRepository = matchRepository;
+    public MatchingService(ApplicantMatchRepository applicantMatchRepository) {
         this.applicantMatchRepository = applicantMatchRepository;
     }
 
-    public Match getMatchByMatchId(long id) {
-        return this.matchRepository.getMatchById(id);
-    }
-
-    public List<ApplicantMatch> getApplicantMatchByMatchId(long matchId) {
-        return this.applicantMatchRepository.getApplicantMatchByMatchId(matchId);
-    }
-
     public List<MatchResult> matchingByMatchId(long matchId) {
-        List<ApplicantMatch> applicantMatches = this.getApplicantMatchByMatchId(matchId);
+        List<ApplicantMatch> applicantMatches = applicantMatchRepository.getApplicantMatchByMatchId(matchId);
         return this.matching(applicantMatches);
     }
 
