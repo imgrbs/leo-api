@@ -14,19 +14,14 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PositionTest {
     @Mock
     private PositionRepository positionRepository;
 
-    private PositionService positionService;
-
     private RecruiterMatch recruiter;
     private Position position;
-    private RecruiterRanking recruiterRanking;
-    private ApplicantMatch applicantMatch;
 
     @Before
     public void setUp() throws Exception {
@@ -35,7 +30,6 @@ public class PositionTest {
         position.setId(1l);
 
         positionRepository = mock(PositionRepository.class);
-        positionService = new PositionService(positionRepository);
     }
 
     @Test
