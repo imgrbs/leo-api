@@ -1,31 +1,22 @@
-package app.leo.matching.models;
+package app.leo.matching.DTO;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import app.leo.matching.models.ApplicantMatch;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
-@Table(name = "matches")
 public class Match implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "match")
-    @JsonManagedReference
     private List<ApplicantMatch> applicantMatches;
 
-    @NotBlank
     private String name;
 
     public Match() {
     }
 
-    public Match(Long id, @NotBlank String name) {
+    public Match(Long id,String name) {
         this.id = id;
         this.name = name;
     }
