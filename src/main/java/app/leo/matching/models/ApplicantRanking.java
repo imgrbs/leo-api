@@ -25,8 +25,8 @@ public class ApplicantRanking extends Ranking {
     public ApplicantRanking() {
     }
 
-    public ApplicantRanking(@NotNull int sequence, Match match, ApplicantMatch applicantMatch, Position position) {
-        super(sequence, match);
+    public ApplicantRanking(@NotNull int sequence, long matchId, ApplicantMatch applicantMatch, Position position) {
+        super(sequence, matchId);
         this.applicantMatch = applicantMatch;
         this.position = position;
     }

@@ -1,7 +1,5 @@
 package app.leo.matching.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -16,17 +14,14 @@ public class Ranking implements Serializable {
     @NotNull
     private int sequence;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "match_id")
-    @JsonBackReference
-    private Match match;
+    private long matchId;
 
     public Ranking() {
     }
 
-    public Ranking(@NotNull int sequence, Match match) {
+    public Ranking(@NotNull int sequence, long matchId) {
         this.sequence = sequence;
-        this.match = match;
+        this.matchId = matchId;
     }
 
     public Long getId() {
@@ -45,11 +40,11 @@ public class Ranking implements Serializable {
         this.sequence = sequence;
     }
 
-    public Match getMatch() {
-        return match;
+    public long getMatchId() {
+        return matchId;
     }
 
-    public void setMatch(Match match) {
-        this.match = match;
+    public void setMatchId(long matchId) {
+        this.matchId = matchId;
     }
 }

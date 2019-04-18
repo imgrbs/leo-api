@@ -1,6 +1,5 @@
 package app.leo.matching.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -15,11 +14,7 @@ public class RecruiterMatch implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "match_id")
-    @JsonBackReference
-    private Match match;
+    private long matchId;
 
     private long recruiterId;
 
@@ -31,8 +26,8 @@ public class RecruiterMatch implements Serializable {
     public RecruiterMatch() {
     }
 
-    public RecruiterMatch(long recruiterId, Match match) {
-        this.match = match;
+    public RecruiterMatch(long recruiterId, long matchId) {
+        this.matchId = matchId;
         this.recruiterId = recruiterId;
     }
 
@@ -44,12 +39,12 @@ public class RecruiterMatch implements Serializable {
         this.id = id;
     }
 
-    public Match getMatch() {
-        return match;
+    public long getMatchId() {
+        return matchId;
     }
 
-    public void setMatch(Match match) {
-        this.match = match;
+    public void setMatchId(long matchId) {
+        this.matchId = matchId;
     }
 
     public long getRecruiterId() {

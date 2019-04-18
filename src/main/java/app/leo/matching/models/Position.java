@@ -1,7 +1,6 @@
 package app.leo.matching.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -24,10 +23,7 @@ public class Position implements Serializable {
     @NotNull
     private int capacity;
 
-    @ManyToOne
-    @JoinColumn(name = "match_id")
-    @JsonIgnore
-    private Match match;
+    private long matchId;
 
     @OneToMany(mappedBy = "position")
     @JsonManagedReference
@@ -82,12 +78,12 @@ public class Position implements Serializable {
         this.recruiterRankings = recruiterRankings;
     }
 
-    public Match getMatch() {
-        return match;
+    public long getMatchId() {
+        return matchId;
     }
 
-    public void setMatch(Match match) {
-        this.match = match;
+    public void setMatchId(long matchId) {
+        this.matchId = matchId;
     }
 
     public RecruiterMatch getRecruiterMatch() {

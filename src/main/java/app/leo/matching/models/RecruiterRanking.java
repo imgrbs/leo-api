@@ -28,8 +28,8 @@ public class RecruiterRanking extends Ranking {
         this.applicantMatch = applicantMatch;
     }
 
-    public RecruiterRanking(@NotNull int sequence, Match match, Position position, ApplicantMatch applicantMatch) {
-        super(sequence, match);
+    public RecruiterRanking(@NotNull int sequence,long matchId, Position position, ApplicantMatch applicantMatch) {
+        super(sequence, matchId);
         this.position = position;
         this.applicantMatch = applicantMatch;
     }

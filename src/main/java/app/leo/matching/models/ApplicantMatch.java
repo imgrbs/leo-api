@@ -1,9 +1,9 @@
 package app.leo.matching.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,10 +16,8 @@ public class ApplicantMatch implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "match_id")
-    @JsonBackReference
-    private Match match;
+    @NotNull
+    private Long matchId;
 
     @OneToMany(mappedBy = "applicantMatch")
     @JsonManagedReference
@@ -31,14 +29,12 @@ public class ApplicantMatch implements Serializable {
 
     }
 
-    public ApplicantMatch(Match match) {
-        this.match = match;
-    }
 
-    public ApplicantMatch(long applicantId,Match match) {
+    public ApplicantMatch(long applicantId,long matchId) {
         this.id = applicantId;
         this.applicantId = applicantId;
-        this.match = match;
+        this.matchId= matchId;
+
     }
 
     public Long getId() {
@@ -49,12 +45,12 @@ public class ApplicantMatch implements Serializable {
         this.id = id;
     }
 
-    public Match getMatch() {
-        return match;
+    public Long getMatchId() {
+        return matchId;
     }
 
-    public void setMatch(Match match) {
-        this.match = match;
+    public void setMatchId(Long matchId) {
+        this.matchId = matchId;
     }
 
     public List<ApplicantRanking> getApplicantRanking() {
@@ -78,7 +74,7 @@ public class ApplicantMatch implements Serializable {
     }
 
     public boolean isSameMatchId(ApplicantMatch applicantMatch){
-        return applicantMatch.getMatch().getId() == this.getMatch().getId();
+        return applicantMatch.matchId == this.matchId;
     }
 
     @Override
