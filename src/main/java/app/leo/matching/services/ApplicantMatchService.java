@@ -28,4 +28,9 @@ public class ApplicantMatchService {
     public ApplicantMatch getApplicantMatchByApplicantId(long id){
         return applicantMatchRepository.getApplicantMatchById(id);
     }
+
+    public List<ApplicantMatch> getApplicantMatchByMatchId(long matchId) {
+        return this.applicantMatchRepository.getApplicantMatchByMatchId(matchId);
+    }
+
 }

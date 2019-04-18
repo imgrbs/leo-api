@@ -3,7 +3,7 @@ package app.leo.matching.services;
 
 import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.models.ApplicantRanking;
-import app.leo.matching.models.Match;
+import app.leo.matching.DTO.Match;
 import app.leo.matching.models.Position;
 import app.leo.matching.repositories.ApplicantMatchRepository;
 import app.leo.matching.repositories.ApplicantRankingRepository;
@@ -18,9 +18,6 @@ import java.util.List;
 public class ApplicantRankingService {
 
     @Autowired
-    private MatchService matchService;
-
-    @Autowired
     private ApplicantMatchRepository applicantMatchRepository;
 
     @Autowired
@@ -33,21 +30,18 @@ public class ApplicantRankingService {
     }
 
     public ApplicantRankingService(
-            MatchService matchService,
             ApplicantMatchRepository applicantMatchRepository,
             PositionRepository positionRepository,
             ApplicantRankingRepository applicantRankingRepository
     ){
-        this.matchService = matchService;
         this.applicantMatchRepository = applicantMatchRepository;
         this.positionRepository = positionRepository;
         this.applicantRankingRepository = applicantRankingRepository;
     }
     public ApplicantRanking createApplicantRanking(long matchId, long userId, long positionId, int sequence) {
-        Match match = matchService.getMatchByMatchId(matchId);
         ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchById(userId);
         Position position = positionRepository.findPositionById(positionId);
-        ApplicantRanking applicantRanking = new ApplicantRanking(sequence,match,applicantMatch,position);
+        ApplicantRanking applicantRanking = new ApplicantRanking(sequence,matchId,applicantMatch,position);
         return applicantRankingRepository.save(applicantRanking);
     }
 
