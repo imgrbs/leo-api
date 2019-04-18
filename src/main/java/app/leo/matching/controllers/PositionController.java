@@ -1,6 +1,7 @@
 package app.leo.matching.controllers;
 
 import app.leo.matching.DTO.GetPositionsByMatchIdResponse;
+import app.leo.matching.DTO.Recruiter;
 import app.leo.matching.models.Position;
 import app.leo.matching.services.PositionService;
 import org.modelmapper.ModelMapper;
@@ -32,8 +33,8 @@ public class PositionController {
         List<GetPositionsByMatchIdResponse> responses = new ArrayList<>();
         for(Position position:positions){
             GetPositionsByMatchIdResponse response =modelMapper.map(position,GetPositionsByMatchIdResponse.class);
-            response.setRecruiterName("Microsoft Word");
-            response.setRecruiterLocation("Phayathai, BKK");
+            Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
+            response.setRecruiter(recruiter);
             responses.add(response);
         }
         return new ResponseEntity<>(responses, HttpStatus.OK);
