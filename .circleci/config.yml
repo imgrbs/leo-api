@@ -52,9 +52,9 @@ jobs:
           ssh $OS_USER@$OS_IP \
             'sudo docker pull imgrbs/sit-leo-matching-api && \
             sudo docker system prune -f && \
-            sudo docker container rm -f leo.match || true && \
-            sudo docker container run --name leo.match \
-              --env-file /app/env/leo.match.env \
+            sudo docker container rm -f leo.matching || true && \
+            sudo docker container run --name leo.matching \
+              --env-file /app/env/leo.matching.env \
               --rm -ditp 8081:8080 imgrbs/sit-leo-matching-api'
     - run:
         name: Sent Line Notification
