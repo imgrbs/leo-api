@@ -1,0 +1,712 @@
+{
+	"info": {
+		"_postman_id": "7b3df8d9-9b1a-4129-925f-9614ed99e7db",
+		"name": "Leo-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Match Management",
+			"item": [
+				{
+					"name": "get Match By matchId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c2072ede-7fac-41dd-9d85-0ccd69c73e96",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"first match is SIT Career day\", function () {",
+									"    var match = pm.response.json();",
+									"    pm.expect(match.name).to.eql(\"SIT Career Day\");",
+									"    pm.expect(match.description).to.eql(\"we're hiring IT guys.\");",
+									"    pm.expect(match.startDate).to.eql(\"2019-01-01T00:00:00.000+0000\");",
+									"    pm.expect(match.applicantRankingEndDate).to.eql(\"2019-02-02T00:00:00.000+0000\");",
+									"    pm.expect(match.recruiterRankingEndDate).to.eql(\"2019-02-16T00:00:00.000+0000\");",
+									"    pm.expect(match.summaryRankingEndDate).to.eql(\"2019-02-28T00:00:00.000+0000\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{MATCH_API}}/matches/1",
+							"host": [
+								"{{MATCH_API}}"
+							],
+							"path": [
+								"matches",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "711333db-508b-4b8b-80e8-a70a54b9e634",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "052e027b-be04-4231-9d0f-33a4221fa4e7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Matching",
+			"item": [
+				{
+					"name": "Positions in Match",
+					"item": [
+						{
+							"name": "get Applicants who rank position by matchId and positionId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "466b1da1-7ac4-4c56-96ae-1773e5a69312",
+										"exec": [
+											"pm.test(\"response is ok\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"number of applicants is two\", function(){\r",
+											"    pm.expect(pm.response.json().length).to.eq(2);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"first applicant is Tae Keerati\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    var applicantMatch = jsonData[0];\r",
+											"    pm.expect(applicantMatch.id).to.eql(1);\r",
+											"    pm.expect(applicantMatch.applicantId).to.eql(1);\r",
+											"    pm.expect(applicantMatch.applicant.name).to.eql(\"Tae Keerati\");\r",
+											"    pm.expect(applicantMatch.applicant.educations[0].gpax).to.eql(\"4.00\");\r",
+											"    pm.expect(applicantMatch.applicant.educations[0].educationName).to.eql(\"School of Information Technology\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"second applicant is Volk Natchanon\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    var applicantMatch = jsonData[1];\r",
+											"    pm.expect(applicantMatch.id).to.eql(2);\r",
+											"    pm.expect(applicantMatch.applicantId).to.eql(2);\r",
+											"    pm.expect(applicantMatch.applicant.name).to.eql(\"Volk Natchanon\");\r",
+											"    pm.expect(applicantMatch.applicant.educations[0].gpax).to.eql(\"4.00\");\r",
+											"    pm.expect(applicantMatch.applicant.educations[0].educationName).to.eql(\"School of Information Technology\");\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/positions/1/applicants",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"positions",
+										"1",
+										"applicants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Position by Match Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "adb5edf5-0ce4-4779-862f-959c76381c28",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Software Engineer is id= 1 , money= ฿10,000-฿15,000\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].name).to.eql(\"Software Engineer\");",
+											"    pm.expect(jsonData[0].money).to.eql(\"฿30,000-฿45,000\");",
+											"    pm.expect(jsonData[0].recruiter.name).to.eql(\"Microsoft word co., Ltd\");",
+											"    pm.expect(jsonData[0].recruiter.location).to.eql(\"Phayathai, BKK\");",
+											"});",
+											"",
+											"pm.test(\"Developer is id= 2 , money= ฿10,000-฿15,000\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[1].name).to.eql(\"Developer\");",
+											"    pm.expect(jsonData[1].money).to.eql(\"฿10,000-฿15,000\");",
+											"    pm.expect(jsonData[1].recruiter.name).to.eql(\"Microsoft word co., Ltd\");",
+											"    pm.expect(jsonData[1].recruiter.location).to.eql(\"Phayathai, BKK\");",
+											"});",
+											"var schema =  [{",
+											"        \"id\": \"integer\",",
+											"        \"name\": \"String\",",
+											"        \"money\": \"String\",",
+											"        \"capacity\": \"integer\",",
+											"        \"recruiter\": {",
+											"            \"id\": \"integer\",",
+											"            \"name\": \"String\",",
+											"            \"location\": \"String\"",
+											"        }",
+											"    }];",
+											"",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/positions",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"positions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "put Recruiter Ranking",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b9a1a77b-7136-434b-82bd-ffddc0aed160",
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    {\n        \"applicantMatchId\": \"2\",\n        \"sequence\": \"1\"\n    },\n    {\n        \"applicantMatchId\": \"1\",\n        \"sequence\": \"2\"\n    }\n]"
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/positions/1/ranking",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"positions",
+										"1",
+										"ranking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Recruiter Ranking",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0cbed30a-bfa4-4267-9d23-4b6010ccb512",
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    {\n        \"applicantMatchId\": \"1\",\n        \"sequence\": \"1\"\n    },\n    {\n        \"applicantMatchId\": \"2\",\n        \"sequence\": \"2\"\n    }\n]"
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/positions/1/ranking",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"positions",
+										"1",
+										"ranking"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "40354e61-92d6-4b9e-bde1-41c5b5214634",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e76d11a-a197-44b1-a3e9-96df11ea83d0",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Applicants in Match",
+					"item": [
+						{
+							"name": "get Applicant Ranking ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "08b6b145-9eae-4d60-beb9-f7e36c64fddb",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"First rank is seqeunce 1 and position name is Software Engineer\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].position.name).to.eql(\"Software Engineer\");",
+											"    pm.expect(jsonData[0].position.capacity).to.eql(2);",
+											"});",
+											"",
+											"pm.test(\"Second rank is seqeunce 1 and position name is Software Engineer\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[1].position.name).to.eql(\"Developer\");",
+											"    pm.expect(jsonData[1].position.capacity).to.eql(1);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/applicants/ranking",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"applicants",
+										"ranking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Applicant by Match Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ee8aaa25-7847-4ca9-bc25-df649d0f9a72",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"first applicant is Tae Keerati\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var applicantMatch = jsonData[0];",
+											"    pm.expect(applicantMatch.id).to.eql(1);",
+											"    pm.expect(applicantMatch.applicantId).to.eql(1);",
+											"    pm.expect(applicantMatch.applicant.name).to.eql(\"Tae Keerati\");",
+											"    pm.expect(applicantMatch.applicant.educations[0].gpax).to.eql(\"4.00\");",
+											"    pm.expect(applicantMatch.applicant.educations[0].educationName).to.eql(\"School of Information Technology\");",
+											"});",
+											"",
+											"pm.test(\"second applicant is Volk Natchanon\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var applicantMatch = jsonData[1];",
+											"    pm.expect(applicantMatch.id).to.eql(2);",
+											"    pm.expect(applicantMatch.applicantId).to.eql(2);",
+											"    pm.expect(applicantMatch.applicant.name).to.eql(\"Volk Natchanon\");",
+											"    pm.expect(applicantMatch.applicant.educations[0].gpax).to.eql(\"4.00\");",
+											"    pm.expect(applicantMatch.applicant.educations[0].educationName).to.eql(\"School of Information Technology\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/applicants",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"applicants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "put Applicant Ranking",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "64a760fb-6eec-419c-ae90-b9145565ffdf",
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {",
+											"    pm.response.to.have.status(202);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[{\n\t\"sequence\":\"1\",\n\t\"positionId\":\"1\"\n}]"
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/applicants/ranking",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"applicants",
+										"ranking"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Applicant Ranking",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "13138b50-f2d1-4a18-8e3c-179b333d38d4",
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[{\n\t\"sequence\":\"3\",\n\t\"positionId\":\"1\"\n}]"
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/applicants/ranking",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"applicants",
+										"ranking"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "26c63f75-495d-4e52-a8d1-ad6e952f873a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "4af8c146-1523-4e51-980d-0bbfd0c12bc5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Recruiters in Match",
+					"item": [
+						{
+							"name": "get Positions by Recruiter Id and Match id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a7575495-feed-4665-8eab-825a669c5d1d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Json length is equal 2\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.length).to.eql(2);",
+											"});",
+											"",
+											"pm.test(\"Software Engineer is id= 1 , money= ฿30,000-฿45,000\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].name).to.eql(\"Software Engineer\");",
+											"    pm.expect(jsonData[0].money).to.eql(\"฿30,000-฿45,000\");",
+											"    pm.expect(jsonData[0].recruiter.name).to.eql(\"Microsoft word co., Ltd\");",
+											"    pm.expect(jsonData[0].recruiter.location).to.eql(\"Phayathai, BKK\");",
+											"});",
+											"",
+											"pm.test(\"Developer is id= 2 , money= ฿10,000-฿15,000\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[1].name).to.eql(\"Developer\");",
+											"    pm.expect(jsonData[1].money).to.eql(\"฿10,000-฿15,000\");",
+											"    pm.expect(jsonData[1].recruiter.name).to.eql(\"Microsoft word co., Ltd\");",
+											"    pm.expect(jsonData[1].recruiter.location).to.eql(\"Phayathai, BKK\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/recruiters/positions",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"recruiters",
+										"positions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Position Ranking ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3e7757f8-8672-48ba-acaf-8ad3031b302d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"    ",
+											"pm.test(\"Test Recruiter Ranking sequence 1 should return applicant match id 1\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].sequence).to.eql(1);",
+											"    pm.expect(jsonData[0].applicantMatchId).to.eql(1);",
+											"});",
+											"",
+											"    ",
+											"pm.test(\"Test Recruiter Ranking sequence 2 should return applicant match id 2\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[1].sequence).to.eql(2);",
+											"    pm.expect(jsonData[1].applicantMatchId).to.eql(2);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/recruiters/positions/1/ranking",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"recruiters",
+										"positions",
+										"1",
+										"ranking"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "938c8d8d-f8b2-4b86-90c9-ecc1d6daca37",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "18acfbb7-f5c5-4b48-9e9b-99818685447a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	]
+}
