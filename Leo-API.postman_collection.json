@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7b3df8d9-9b1a-4129-925f-9614ed99e7db",
+		"_postman_id": "5bbd9790-9d10-41d5-bd47-ccb25de0a8df",
 		"name": "Leo-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -49,6 +49,63 @@
 							"path": [
 								"matches",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Match By applicant match ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd2db60b-c444-4232-8dd4-c0f8e2584055",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var query = {};",
+									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});",
+									"",
+									"if(query[\"status\"]== \"current\"){",
+									"    pm.test(\"return current match for applicant match Id 1\", function () {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(match.name).to.eql(\"SIT Career Day\");",
+									"        pm.expect(match.description).to.eql(\"we're hiring IT guys.\");",
+									"        pm.expect(match.startDate).to.eql(\"2019-01-01T00:00:00.000+0000\");",
+									"        pm.expect(match.applicantRankingEndDate).to.eql(\"2019-02-02T00:00:00.000+0000\");",
+									"        pm.expect(match.recruiterRankingEndDate).to.eql(\"2019-02-16T00:00:00.000+0000\");",
+									"        pm.expect(match.summaryRankingEndDate).to.eql(\"2019-02-28T00:00:00.000+0000\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{MATCH_API}}/applicant/matches?status=gacha",
+							"host": [
+								"{{MATCH_API}}"
+							],
+							"path": [
+								"applicant",
+								"matches"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "gacha"
+								}
 							]
 						}
 					},
