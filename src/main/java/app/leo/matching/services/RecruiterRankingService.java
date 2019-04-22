@@ -1,7 +1,6 @@
 package app.leo.matching.services;
 
 import app.leo.matching.models.ApplicantMatch;
-import app.leo.matching.DTO.Match;
 import app.leo.matching.models.Position;
 import app.leo.matching.models.RecruiterRanking;
 import app.leo.matching.repositories.PositionRepository;

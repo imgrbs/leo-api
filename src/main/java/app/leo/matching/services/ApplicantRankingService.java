@@ -3,7 +3,6 @@ package app.leo.matching.services;
 
 import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.models.ApplicantRanking;
-import app.leo.matching.DTO.Match;
 import app.leo.matching.models.Position;
 import app.leo.matching.repositories.ApplicantMatchRepository;
 import app.leo.matching.repositories.ApplicantRankingRepository;
