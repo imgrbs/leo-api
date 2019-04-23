@@ -33,4 +33,7 @@ public class ApplicantMatchService {
         return this.applicantMatchRepository.getApplicantMatchByMatchId(matchId);
     }
 
+    public List<ApplicantMatch> getApplicantMatchByApplicantId(long applicantId){
+        return this.applicantMatchRepository.getApplicantMatchByApplicantId(applicantId);
+    }
 }
