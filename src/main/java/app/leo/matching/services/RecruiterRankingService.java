@@ -36,7 +36,7 @@ public class RecruiterRankingService {
 
 
     public RecruiterRanking createRecruiterRanking(long matchId, long applicantMatchId, long positionId, int sequence)  {
-        ApplicantMatch applicantMatch =applicantMatchService.getApplicantMatchByApplicantId(applicantMatchId);
+        ApplicantMatch applicantMatch =applicantMatchService.getApplicantMatchByApplicantMatchId(applicantMatchId);
         Position position = positionRepository.findPositionById(positionId);
         RecruiterRanking saveRecruiterRanking = new RecruiterRanking(sequence,matchId,position,applicantMatch);
         return recruiterRankingRepository.save(saveRecruiterRanking);
