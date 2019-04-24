@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5bbd9790-9d10-41d5-bd47-ccb25de0a8df",
+		"_postman_id": "7b3df8d9-9b1a-4129-925f-9614ed99e7db",
 		"name": "Leo-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -49,63 +49,6 @@
 							"path": [
 								"matches",
 								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get Match By applicant match ID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "cd2db60b-c444-4232-8dd4-c0f8e2584055",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"var query = {};",
-									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});",
-									"",
-									"if(query[\"status\"]== \"current\"){",
-									"    pm.test(\"return current match for applicant match Id 1\", function () {",
-									"        var jsonData = pm.response.json();",
-									"        pm.expect(match.name).to.eql(\"SIT Career Day\");",
-									"        pm.expect(match.description).to.eql(\"we're hiring IT guys.\");",
-									"        pm.expect(match.startDate).to.eql(\"2019-01-01T00:00:00.000+0000\");",
-									"        pm.expect(match.applicantRankingEndDate).to.eql(\"2019-02-02T00:00:00.000+0000\");",
-									"        pm.expect(match.recruiterRankingEndDate).to.eql(\"2019-02-16T00:00:00.000+0000\");",
-									"        pm.expect(match.summaryRankingEndDate).to.eql(\"2019-02-28T00:00:00.000+0000\");",
-									"    });",
-									"}"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{MATCH_API}}/applicant/matches?status=gacha",
-							"host": [
-								"{{MATCH_API}}"
-							],
-							"path": [
-								"applicant",
-								"matches"
-							],
-							"query": [
-								{
-									"key": "status",
-									"value": "gacha"
-								}
 							]
 						}
 					},
@@ -762,6 +705,98 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a7654b4-08db-417e-baf9-1ae6dc7b46ae",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"facebook\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{USER_API}}/login",
+							"host": [
+								"{{USER_API}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d0282670-05fc-4843-a824-6451dc9025a7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmYWNlYm9vayIsInVzZXJJZCI6IjIiLCJyb2xlIjoicmVjcnVpdGVyIn0.mu--pw9UUH1DPzXZ3pyTPX960TvRKZQL9LV-WJp7Y3TEDldXpkrP958eM2NT9kpeCN1qOQy0zzK9pRGi8wXrKg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{USER_API}}/me",
+							"host": [
+								"{{USER_API}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
