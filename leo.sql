@@ -103,7 +103,9 @@ CREATE TABLE `matches` (
 --
 
 INSERT INTO `matches` (`id`, `name`, `applicant_ranking_end_date`, `recruiter_ranking_end_date`, `start_date`, `summary_ranking_end_date`, `description`) VALUES
-(1, 'SIT Career Day', '2019-02-02 00:00:00', '2019-02-16 00:00:00', '2019-01-01 00:00:00', '2019-02-28 00:00:00', 'we\'re hiring IT guys.');
+(1, 'SIT Career Day', '2019-02-02 00:00:00', '2019-02-16 00:00:00', '2019-01-01 00:00:00', '2019-02-28 00:00:00', 'we\'re hiring IT guys.'),
+(2, 'Engineer Career Day','2019-02-02 00:00:00','2019-02-16 00:00:00','2019-01-01 00:00:00','2019-02-28 00:00:00','we\'re hiring Engineers.'),
+(3,'SIT Career Day 2018','2018-01-01 00:00:00','2018-02-02 00:00:00','2018-02-16 00:00:00','2018-02-30 00:00:00',' we\'re hiring IT guys.');
 
 -- --------------------------------------------------------
 
