@@ -35,6 +35,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmYWNlYm9vayIsInVzZXJJZCI6IjIiLCJyb2xlIjoicmVjcnVpdGVyIn0.mu--pw9UUH1DPzXZ3pyTPX960TvRKZQL9LV-WJp7Y3TEDldXpkrP958eM2NT9kpeCN1qOQy0zzK9pRGi8wXrKg",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -131,6 +141,16 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmYWNlYm9vayIsInVzZXJJZCI6IjIiLCJyb2xlIjoicmVjcnVpdGVyIn0.miVYwtElThinbqvZGa3lSw0ZYwtcYDr2gS63S87x62y9Uto4eJG80D6fhe9RhRY6VLPKWBrtQ1A-U96R1c-OIQ",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"body": {
@@ -202,6 +222,16 @@
 								}
 							],
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmYWNlYm9vayIsInVzZXJJZCI6IjIiLCJyb2xlIjoicmVjcnVpdGVyIn0.miVYwtElThinbqvZGa3lSw0ZYwtcYDr2gS63S87x62y9Uto4eJG80D6fhe9RhRY6VLPKWBrtQ1A-U96R1c-OIQ",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"body": {
@@ -356,14 +386,22 @@
 											"",
 											"pm.test(\"First rank is seqeunce 1 and position name is Software Engineer\", function () {",
 											"    var jsonData = pm.response.json();",
-											"    pm.expect(jsonData[0].position.name).to.eql(\"Software Engineer\");",
-											"    pm.expect(jsonData[0].position.capacity).to.eql(2);",
+											"    var ranking = jsonData[0];",
+											"    pm.expect(ranking.position.name).to.eql(\"Software Engineer\");",
+											"    pm.expect(ranking.applicantMatch.applicant.name).to.eql(\"Tae Keerati\");",
+											"    pm.expect(ranking.position.capacity).to.eql(2);",
+											"    pm.expect(ranking.sequence).to.eql(1);",
+											"    ",
 											"});",
 											"",
 											"pm.test(\"Second rank is seqeunce 1 and position name is Software Engineer\", function () {",
 											"    var jsonData = pm.response.json();",
-											"    pm.expect(jsonData[1].position.name).to.eql(\"Developer\");",
-											"    pm.expect(jsonData[1].position.capacity).to.eql(1);",
+											"    var ranking = jsonData[1];",
+											"    pm.expect(ranking.position.name).to.eql(\"Developer\");",
+											"    pm.expect(ranking.applicantMatch.applicant.name).to.eql(\"Tae Keerati\");",
+											"    pm.expect(ranking.position.capacity).to.eql(1);",
+											"    pm.expect(ranking.sequence).to.eql(2);",
+											"    ",
 											"});"
 										],
 										"type": "text/javascript"
@@ -371,6 +409,16 @@
 								}
 							],
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmYWNlYm9vayIsInVzZXJJZCI6IjIiLCJyb2xlIjoicmVjcnVpdGVyIn0.miVYwtElThinbqvZGa3lSw0ZYwtcYDr2gS63S87x62y9Uto4eJG80D6fhe9RhRY6VLPKWBrtQ1A-U96R1c-OIQ",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"body": {
@@ -642,22 +690,29 @@
 											"    ",
 											"pm.test(\"Test Recruiter Ranking sequence 1 should return applicant match id 1\", function () {",
 											"    var jsonData = pm.response.json();",
-											"    pm.expect(jsonData[0].sequence).to.eql(1);",
-											"    pm.expect(jsonData[0].applicantMatchId).to.eql(1);",
+											"    var recruiterRanking = jsonData[0];",
+											"    pm.expect(recruiterRanking.sequence).to.eql(1);",
+											"    pm.expect(recruiterRanking.applicantMatch.id).to.eql(1);",
+											"    pm.expect(recruiterRanking.applicantMatch.applicant.name).to.eql(\"Tae Keerati\");",
 											"});",
 											"",
-											"    ",
-											"pm.test(\"Test Recruiter Ranking sequence 2 should return applicant match id 2\", function () {",
-											"    var jsonData = pm.response.json();",
-											"    pm.expect(jsonData[1].sequence).to.eql(2);",
-											"    pm.expect(jsonData[1].applicantMatchId).to.eql(2);",
-											"});"
+											""
 										],
 										"type": "text/javascript"
 									}
 								}
 							],
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"body": {
