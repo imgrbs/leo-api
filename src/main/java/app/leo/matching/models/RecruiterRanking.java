@@ -23,7 +23,7 @@ public class RecruiterRanking extends Ranking {
     public RecruiterRanking() {
     }
 
-    public RecruiterRanking(Position position, ApplicantMatch applicantMatch) {
+    public RecruiterRanking(ApplicantMatch applicantMatch,Position position) {
         this.position = position;
         this.applicantMatch = applicantMatch;
     }
@@ -54,19 +54,15 @@ public class RecruiterRanking extends Ranking {
         this.applicantMatch = applicantMatch;
     }
 
-    public long getApplicantMatchId() {
-        return this.applicantMatch.getId();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if(o instanceof RecruiterRanking) {
-            RecruiterRanking recruiterRanking = (RecruiterRanking) o;
-            ApplicantMatch applicant = recruiterRanking.getApplicantMatch();
-            return applicant.equals(this.getApplicantMatch());
-        }
-        return false;
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if(o instanceof RecruiterRanking) {
+//            RecruiterRanking recruiterRanking = (RecruiterRanking) o;
+//            ApplicantMatch applicant = recruiterRanking.getApplicantMatch();
+//            return applicant.equals(this.getApplicantMatch());
+//        }
+//        return false;
+//    }
 
     @Override
     public String toString() {
