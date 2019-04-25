@@ -47,8 +47,8 @@ public class RecruiterRankingController {
     private List<GetRankingResponse> mapApplicantRankingtoResponse(List<RecruiterRanking> recruiterRankingList){
         ModelMapper modelMapper =new ModelMapper();
         List<GetRankingResponse> responses = new ArrayList<>();
+        int applicantId =1;
         for(RecruiterRanking recruiterRanking :recruiterRankingList){
-            int applicantId =1;
             GetRankingResponse getRankingResponse = modelMapper.map(recruiterRanking,GetRankingResponse.class);
             GetPositionsByMatchIdResponse position  = getRankingResponse.getPosition();
             mockRecruiterInstall(position);
