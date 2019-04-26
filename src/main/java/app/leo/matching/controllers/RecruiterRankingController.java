@@ -47,12 +47,13 @@ public class RecruiterRankingController {
     private List<GetRankingResponse> mapApplicantRankingtoResponse(List<RecruiterRanking> recruiterRankingList){
         ModelMapper modelMapper =new ModelMapper();
         List<GetRankingResponse> responses = new ArrayList<>();
+        int applicantId =1;
         for(RecruiterRanking recruiterRanking :recruiterRankingList){
             GetRankingResponse getRankingResponse = modelMapper.map(recruiterRanking,GetRankingResponse.class);
             GetPositionsByMatchIdResponse position  = getRankingResponse.getPosition();
             mockRecruiterInstall(position);
             GetApplicantsByMatchIdResponse applicant = getRankingResponse.getApplicantMatch();
-            mockApplicantInstall(applicant);
+            mockApplicantInstall(applicant,applicantId++);
             getRankingResponse.setApplicantMatch(applicant);
             getRankingResponse.setPosition(position);
             responses.add(getRankingResponse);
@@ -65,11 +66,19 @@ public class RecruiterRankingController {
         position.setRecruiter(recruiter);
     }
 
-    private void mockApplicantInstall(GetApplicantsByMatchIdResponse applicant){
+    private void mockApplicantInstall(GetApplicantsByMatchIdResponse applicant,int applicantId){
         List<Education> educations = new ArrayList<>();
         educations.add(new Education(1, "School of Information Technology", "4.00"));
-        Applicant mockApplicant = new Applicant(1, "Tae Keerati", educations);
-        applicant.setApplicant(mockApplicant);
+        Applicant[] mockApplicant ={
+                new Applicant(1, "Tae Keerati", educations),
+                new Applicant(2, "Volk Natchanon", educations),
+        };
+        if(applicantId%2==0){
+            applicant.setApplicant(mockApplicant[1]);
+        }else{
+            applicant.setApplicant(mockApplicant[0]);
+        }
+
     }
 
 }
