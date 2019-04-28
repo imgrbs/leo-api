@@ -21,39 +21,33 @@ public class MatchResultController {
     @Autowired
     private MatchResultService matchResultService;
 
+    Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
+    List<Education> educations = new ArrayList<>();
+    Education education = new Education(1, "School of Information Technology", "4.00");
+    Applicant applicant = new Applicant(1, "Tae Keerati", educations);
+
     @GetMapping(path = "user/matches/{matchId:[\\d]}/result")
     public ResponseEntity<GetMatchResultByUserIdAndMatchIdResponse> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId , @RequestAttribute("user") User user){
         long userId = 1;
         String role = user.getRole();
+        ModelMapper modelMapper = new ModelMapper();
+        GetMatchResultByUserIdAndMatchIdResponse matchResultResponse;
+
         if(role.equals("applicant")) {
-            ModelMapper modelMapper = new ModelMapper();
-            GetMatchResultByUserIdAndMatchIdResponse matchResultResponse = modelMapper.map(matchResultService.getMatchResultByApplicantMatchIdAndMatchId(userId,matchId),GetMatchResultByUserIdAndMatchIdResponse.class);
-            Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
-            GetPositionsByMatchIdResponse position = matchResultResponse.getPosition();
-            position.setRecruiter(recruiter);
-            List<Education> educations = new ArrayList<>();
-            educations.add(new Education(1, "School of Information Technology", "4.00"));
-            Applicant applicant = new Applicant(1, "Tae Keerati", educations);
-            GetApplicantsByMatchIdResponse applicantFromModelMap = matchResultResponse.getApplicant();
-            applicantFromModelMap.setApplicant(applicant);
-            matchResultResponse.setApplicant(applicantFromModelMap);
-            matchResultResponse.setPosition(position);
-            return new ResponseEntity<>( matchResultResponse, HttpStatus.OK);
+             matchResultResponse= modelMapper.map(matchResultService.getMatchResultByApplicantMatchIdAndMatchId(userId,matchId),GetMatchResultByUserIdAndMatchIdResponse.class);
         }else if(role.equals("recruiter")){
-            ModelMapper modelMapper = new ModelMapper();
-            GetMatchResultByUserIdAndMatchIdResponse matchResultResponse = modelMapper.map(matchResultService.getMatchResultByApplicantMatchIdAndMatchId(userId,matchId),GetMatchResultByUserIdAndMatchIdResponse.class);
-            Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
-            GetPositionsByMatchIdResponse position = matchResultResponse.getPosition();
-            position.setRecruiter(recruiter);
-            List<Education> educations = new ArrayList<>();
-            educations.add(new Education(1, "School of Information Technology", "4.00"));
-            Applicant applicant = new Applicant(1, "Tae Keerati", educations);
-            GetApplicantsByMatchIdResponse applicantFromModelMap = matchResultResponse.getApplicant();
-            applicantFromModelMap.setApplicant(applicant);
-            matchResultResponse.setApplicant(applicantFromModelMap);
-            matchResultResponse.setPosition(position);
-            return new ResponseEntity<>( matchResultResponse, HttpStatus.OK);
-        }else
-            return  new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+             matchResultResponse = modelMapper.map(matchResultService.getMatchResultByApplicantMatchIdAndMatchId(userId,matchId),GetMatchResultByUserIdAndMatchIdResponse.class);
+        }else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        GetPositionsByMatchIdResponse position = matchResultResponse.getPosition();
+        position.setRecruiter(recruiter);
+        GetApplicantsByMatchIdResponse applicantFromModelMap = matchResultResponse.getApplicant();
+        applicantFromModelMap.setApplicant(applicant);
+        matchResultResponse.setApplicant(applicantFromModelMap);
+        matchResultResponse.setPosition(position);
+        return new ResponseEntity<>( matchResultResponse, HttpStatus.OK);
     }
+
 }
