@@ -73,7 +73,7 @@ public class MatchResult implements Serializable {
 
         boolean isSameApplicant = matchResult.getApplicantMatch().equals(this.applicantMatch);
 
-        boolean isSamePosition = true;
+        boolean isSamePosition = false;
 
         if(this.getPosition() != null && matchResult.getPosition()!=null) {
             isSamePosition = matchResult.getPosition().equals(this.getPosition());
