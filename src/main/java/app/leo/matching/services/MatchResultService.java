@@ -12,7 +12,7 @@ public class MatchResultService {
     private MatchResultRepository matchResultRepository;
 
     public MatchResult getMatchResultByApplicantMatchIdAndMatchId(long applicantMatchId,long matchId){
-        return matchResultRepository.getMatchResultByApplicantMatch_IdAndMatchId(applicantMatchId,matchId);
+        return matchResultRepository.getMatchResultByApplicantMatchIdAndMatchId(applicantMatchId,matchId);
     }
 
     public MatchResult getMatchResultByPositionIdAndMatchId(long positionId,long matchId){
