@@ -1,8 +1,14 @@
 package app.leo.matching.controllers;
 
 import app.leo.matching.DTO.*;
+import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.models.MatchResult;
+import app.leo.matching.models.Position;
+import app.leo.matching.models.RecruiterMatch;
+import app.leo.matching.services.ApplicantMatchService;
 import app.leo.matching.services.MatchResultService;
+import app.leo.matching.services.PositionService;
+import app.leo.matching.services.RecruiterMatchService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +25,16 @@ import java.util.List;
 public class MatchResultController {
 
     @Autowired
+    private PositionService positionService;
+
+    @Autowired
     private MatchResultService matchResultService;
+
+    @Autowired
+    private RecruiterMatchService recruiterMatchService;
+
+    @Autowired
+    private ApplicantMatchService applicantMatchService;
 
     Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
     List<Education> educations = new ArrayList<>();
@@ -27,27 +42,48 @@ public class MatchResultController {
     Applicant applicant = new Applicant(1, "Tae Keerati", educations);
 
     @GetMapping(path = "user/matches/{matchId:[\\d]}/result")
-    public ResponseEntity<GetMatchResultByUserIdAndMatchIdResponse> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId , @RequestAttribute("user") User user){
-        long userId = 1;
+    public ResponseEntity<List<GetMatchResultByUserIdAndMatchIdResponse>> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId , @RequestAttribute("user") User user){
+        long userId = user.getUserId();
         String role = user.getRole();
         ModelMapper modelMapper = new ModelMapper();
-        GetMatchResultByUserIdAndMatchIdResponse matchResultResponse;
+        List<GetMatchResultByUserIdAndMatchIdResponse> matchResultResponse = new ArrayList<>();
 
         if(role.equals("applicant")) {
-             matchResultResponse= modelMapper.map(matchResultService.getMatchResultByApplicantMatchIdAndMatchId(userId,matchId),GetMatchResultByUserIdAndMatchIdResponse.class);
+            ApplicantMatch applicantMatch = applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
+             matchResultResponse.add(
+                 modelMapper.map(
+                     matchResultService.getMatchResultByApplicantMatchIdAndMatchId(applicantMatch.getId(), matchId),
+                     GetMatchResultByUserIdAndMatchIdResponse.class
+                 )
+             );
         }else if(role.equals("recruiter")){
-             matchResultResponse = modelMapper.map(matchResultService.getMatchResultByApplicantMatchIdAndMatchId(userId,matchId),GetMatchResultByUserIdAndMatchIdResponse.class);
-        }else {
+            RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(userId, matchId);
+            List<Position> positions = positionService.getPositionByMatchIdAndRecruiterId(matchId, recruiterMatch.getId());
+            for (Position position: positions) {
+                List<MatchResult> positionMatchResults =  matchResultService.getMatchResultByPositionIdAndMatchId(position.getId(), matchId);
+                for (MatchResult matchResult: positionMatchResults) {
+                    matchResultResponse.add(
+                        modelMapper.map(
+                            matchResult,
+                            GetMatchResultByUserIdAndMatchIdResponse.class
+                        )
+                    );
+                }
+            }
+        } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        GetPositionsByMatchIdResponse position = matchResultResponse.getPosition();
-        position.setRecruiter(recruiter);
-        GetApplicantsByMatchIdResponse applicantFromModelMap = matchResultResponse.getApplicant();
-        applicantFromModelMap.setApplicant(applicant);
-        matchResultResponse.setApplicant(applicantFromModelMap);
-        matchResultResponse.setPosition(position);
-        return new ResponseEntity<>( matchResultResponse, HttpStatus.OK);
+        // set mock data
+        for (GetMatchResultByUserIdAndMatchIdResponse response: matchResultResponse) {
+            GetPositionsByMatchIdResponse position = response.getPosition();
+            position.setRecruiter(recruiter);
+            GetApplicantsByMatchIdResponse applicantFromModelMap = response.getApplicant();
+            applicantFromModelMap.setApplicant(applicant);
+            response.setApplicant(applicantFromModelMap);
+            response.setPosition(position);
+        }
+        return new ResponseEntity<>(matchResultResponse, HttpStatus.OK);
     }
 
 }
