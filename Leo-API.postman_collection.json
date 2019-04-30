@@ -760,6 +760,79 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Match Result",
+					"item": [
+						{
+							"name": "get Match Result By Match Id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/user/matches/1/result",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"user",
+										"matches",
+										"1",
+										"result"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Match Result by Matching",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{MATCHING_API}}/matches/1/matching",
+									"host": [
+										"{{MATCHING_API}}"
+									],
+									"path": [
+										"matches",
+										"1",
+										"matching"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
@@ -794,7 +867,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\": \"facebook\",\n\t\"password\": \"1234\"\n}"
+							"raw": "{\n\t\"username\": \"keerati\",\n\t\"password\": \"1234\"\n}"
 						},
 						"url": {
 							"raw": "{{USER_API}}/login",
@@ -830,7 +903,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmYWNlYm9vayIsInVzZXJJZCI6IjIiLCJyb2xlIjoicmVjcnVpdGVyIn0.mu--pw9UUH1DPzXZ3pyTPX960TvRKZQL9LV-WJp7Y3TEDldXpkrP958eM2NT9kpeCN1qOQy0zzK9pRGi8wXrKg",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
