@@ -16,6 +16,6 @@ public class MatchResultService {
     }
 
     public MatchResult getMatchResultByPositionIdAndMatchId(long positionId,long matchId){
-        return matchResultRepository.getMatchResultByPosition_IdAndMatchId(positionId,matchId);
+        return matchResultRepository.getMatchResultByPositionIdAndMatchId(positionId,matchId);
     }
 }

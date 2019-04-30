@@ -9,5 +9,5 @@ public interface MatchResultRepository extends JpaRepository<MatchResult,Long> {
 
     MatchResult getMatchResultByApplicantMatchIdAndMatchId(long applicantMatchId,long matchId);
 
-    MatchResult getMatchResultByPosition_IdAndMatchId(long positionId , long matchId);
+    MatchResult getMatchResultByPositionIdAndMatchId(long positionId , long matchId);
 }
