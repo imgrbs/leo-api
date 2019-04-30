@@ -24,15 +24,16 @@ public class MatchResult implements Serializable {
     public MatchResult() {
     }
 
-    public MatchResult(long matchId, ApplicantMatch applicantMatch, Position position) {
-        this.matchId = matchId;
+    public MatchResult(ApplicantMatch applicantMatch, Position position) {
         this.applicantMatch = applicantMatch;
         this.position = position;
     }
 
-    public MatchResult(ApplicantMatch applicantMatch, Position position) {
+
+    public MatchResult(long matchId, ApplicantMatch applicantMatch, Position position) {
         this.applicantMatch = applicantMatch;
         this.position = position;
+        this.matchId = matchId;
     }
 
     public ApplicantMatch getApplicantMatch() {
