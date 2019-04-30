@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MatchResultRepository extends JpaRepository<MatchResult,Long> {
 
-    MatchResult getMatchResultByApplicantMatch_IdAndMatchId(long applicantMatchId,long matchId);
+    MatchResult getMatchResultByApplicantMatchIdAndMatchId(long applicantMatchId,long matchId);
 
     MatchResult getMatchResultByPosition_IdAndMatchId(long positionId , long matchId);
 }
