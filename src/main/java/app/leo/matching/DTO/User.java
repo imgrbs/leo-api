@@ -1,23 +1,23 @@
 package app.leo.matching.DTO;
 
 public class User {
-    private long userId;
+    private long id;
     private String role;
 
     public User() {
     }
 
     public User(long userId, String role) {
-        this.userId = userId;
+        this.id = userId;
         this.role = role;
     }
 
     public long getUserId() {
-        return userId;
+        return id;
     }
 
     public void setUserId(long userId) {
-        this.userId = userId;
+        this.id = userId;
     }
 
     public String getRole() {
