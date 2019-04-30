@@ -5,6 +5,8 @@ import app.leo.matching.repositories.MatchResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MatchResultService {
 
@@ -15,7 +17,7 @@ public class MatchResultService {
         return matchResultRepository.getMatchResultByApplicantMatchIdAndMatchId(applicantMatchId,matchId);
     }
 
-    public MatchResult getMatchResultByPositionIdAndMatchId(long positionId,long matchId){
+    public List<MatchResult> getMatchResultByPositionIdAndMatchId(long positionId, long matchId){
         return matchResultRepository.getMatchResultByPositionIdAndMatchId(positionId,matchId);
     }
 }
