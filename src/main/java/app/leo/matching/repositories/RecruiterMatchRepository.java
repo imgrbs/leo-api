@@ -10,4 +10,5 @@ import java.util.List;
 public interface RecruiterMatchRepository extends JpaRepository<RecruiterMatch,Long> {
 
     List<RecruiterMatch> getRecruiterMatchesByRecruiterId(long recruierId);
+    RecruiterMatch getRecruiterMatchByRecruiterIdAndMatchId(long recruiterId, long matchId);
 }
