@@ -36,7 +36,7 @@ public class MatchResultController {
         if(role.equals("applicant")) {
              matchResultResponse= modelMapper.map(matchResultService.getMatchResultByApplicantMatchIdAndMatchId(userId,matchId),GetMatchResultByUserIdAndMatchIdResponse.class);
         }else if(role.equals("recruiter")){
-             matchResultResponse = modelMapper.map(matchResultService.getMatchResultByApplicantMatchIdAndMatchId(userId,matchId),GetMatchResultByUserIdAndMatchIdResponse.class);
+             matchResultResponse = modelMapper.map(matchResultService.getMatchResultByPositionIdAndMatchId(userId,matchId),GetMatchResultByUserIdAndMatchIdResponse.class);
         }else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
