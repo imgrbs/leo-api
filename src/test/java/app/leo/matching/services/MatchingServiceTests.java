@@ -122,7 +122,7 @@ public class MatchingServiceTests {
         List<ApplicantMatch> applicantMatches = applicantMatchService.getApplicantMatchByMatchId(2L);
 
         // act
-        List<MatchResult> actMatchResults = matchingService.matching(applicantMatches);
+        List<MatchResult> actMatchResults = matchingService.matching(2L, applicantMatches);
 
         // assert
         Assert.assertEquals(2, actMatchResults.size());
@@ -140,7 +140,7 @@ public class MatchingServiceTests {
 
         List<ApplicantMatch> applicantMatches = applicantMatchService.getApplicantMatchByMatchId(3L);
 
-        List<MatchResult> actMatchResults = matchingService.matching(applicantMatches);
+        List<MatchResult> actMatchResults = matchingService.matching(3L, applicantMatches);
 
         Assert.assertEquals(2,actMatchResults.size());
         Assert.assertEquals(true,matchResults.equals(actMatchResults));
@@ -159,7 +159,7 @@ public class MatchingServiceTests {
 
         List<ApplicantMatch> applicantMatches = applicantMatchService.getApplicantMatchByMatchId(4L);
 
-        List<MatchResult> actMatchResults = matchingService.matching(applicantMatches);
+        List<MatchResult> actMatchResults = matchingService.matching(4L, applicantMatches);
 
         Assert.assertEquals(2,actMatchResults.size());
         Assert.assertEquals(matchResults, actMatchResults);
@@ -174,7 +174,7 @@ public class MatchingServiceTests {
 
         List<ApplicantMatch> applicantMatches = applicantMatchService.getApplicantMatchByMatchId(5L);
 
-        List<MatchResult> actMatchResults = matchingService.matching(applicantMatches);
+        List<MatchResult> actMatchResults = matchingService.matching(5L, applicantMatches);
 
         Assert.assertEquals(1,actMatchResults.size());
     }

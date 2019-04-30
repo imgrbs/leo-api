@@ -2,9 +2,11 @@ package app.leo.matching.services;
 
 import app.leo.matching.models.*;
 import app.leo.matching.repositories.ApplicantMatchRepository;
+import app.leo.matching.repositories.MatchResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,16 +18,21 @@ public class MatchingService {
     @Autowired
     private ApplicantMatchRepository applicantMatchRepository;
 
+    @Autowired
+    private MatchResultRepository matchResultRepository;
+
     public MatchingService(ApplicantMatchRepository applicantMatchRepository) {
         this.applicantMatchRepository = applicantMatchRepository;
     }
 
+    @Transactional
     public List<MatchResult> matchingByMatchId(long matchId) {
         List<ApplicantMatch> applicantMatches = applicantMatchRepository.getApplicantMatchByMatchId(matchId);
-        return this.matching(applicantMatches);
+        List<MatchResult> matchResults = this.matching(matchId, applicantMatches);
+        return matchResultRepository.saveAll(matchResults);
     }
 
-    public List<MatchResult> matching(List<ApplicantMatch> applicantMatches) {
+    public List<MatchResult> matching(long matchId, List<ApplicantMatch> applicantMatches) {
         List<MatchResult> matchResults = new ArrayList<>();
         Map<Position, List<ApplicantMatch>> positionAccepted = new HashMap<>();
         while (!this.allApplicantMatched(applicantMatches)) {
@@ -45,20 +52,20 @@ public class MatchingService {
                             matchResults = this.removeAcceptedApplicantInMatchResult(matchResults, removalApplicantIndex);
                             positionAccepted.remove(position);
                             positionAccepted.put(position, acceptedApplicant);
-                            matchResults.add(new MatchResult(applicant, position));
+                            matchResults.add(new MatchResult(matchId, applicant, position));
                             applicantMatches.add(applicantMatch);
                         } else if(applicantRanking.isEmpty()) {
-                            matchResults.add(new MatchResult(applicant, null));
+                            matchResults.add(new MatchResult(matchId, applicant, null));
                             break;
                         }
                     } else {
-                        matchResults.add(new MatchResult(applicant, position));
+                        matchResults.add(new MatchResult(matchId, applicant, position));
                         acceptedApplicant.add(applicant);
                         positionAccepted.put(position, acceptedApplicant);
                         break;
                     }
                 } else if(applicantRanking.isEmpty()) {
-                    matchResults.add(new MatchResult(applicant, null));
+                    matchResults.add(new MatchResult(matchId, applicant, null));
                     break;
                 }
             }
