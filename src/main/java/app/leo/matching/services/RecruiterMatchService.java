@@ -14,6 +14,10 @@ public class RecruiterMatchService {
     private RecruiterMatchRepository recruiterMatchRepository;
 
     public List<RecruiterMatch> getRecruiterMatchByRecruiterId(long recruiterId){
-       return recruiterMatchRepository.getRecruiterMatchesByRecruiterId(recruiterId);
+        return recruiterMatchRepository.getRecruiterMatchesByRecruiterId(recruiterId);
+    }
+
+    public RecruiterMatch getRecruiterMatchByRecruiterIdAndMatchId(long recruiterId, long matchId){
+        return recruiterMatchRepository.getRecruiterMatchByRecruiterIdAndMatchId(recruiterId, matchId);
     }
 }

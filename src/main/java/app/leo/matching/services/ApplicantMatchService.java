@@ -29,6 +29,10 @@ public class ApplicantMatchService {
         return applicantMatchRepository.getApplicantMatchById(id);
     }
 
+    public ApplicantMatch getApplicantMatchByApplicantIdAndMatchId(long applicantId, long matchId){
+        return applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(applicantId, matchId);
+    }
+
     public List<ApplicantMatch> getApplicantMatchByMatchId(long matchId) {
         return this.applicantMatchRepository.getApplicantMatchByMatchId(matchId);
     }
