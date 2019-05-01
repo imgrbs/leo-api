@@ -10,14 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "applicant_matches")
-public class ApplicantMatch implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotNull
-    private Long matchId;
+public class ApplicantMatch extends UserMatch {
 
     @OneToMany(mappedBy = "applicantMatch")
     @JsonManagedReference
@@ -29,28 +22,10 @@ public class ApplicantMatch implements Serializable {
 
     }
 
-
-    public ApplicantMatch(long applicantId,long matchId) {
-        this.id = applicantId;
+    public ApplicantMatch( long applicantId,long matchId) {
+        super(matchId);
+        this.setUserId(applicantId);
         this.applicantId = applicantId;
-        this.matchId= matchId;
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getMatchId() {
-        return matchId;
-    }
-
-    public void setMatchId(Long matchId) {
-        this.matchId = matchId;
     }
 
     public List<ApplicantRanking> getApplicantRanking() {
@@ -70,11 +45,11 @@ public class ApplicantMatch implements Serializable {
     }
 
     public boolean isIdEqual(ApplicantMatch applicantMatch){
-        return applicantMatch.getId() == this.getId();
+        return applicantMatch.getUserId() == this.getUserId();
     }
 
     public boolean isSameMatchId(ApplicantMatch applicantMatch){
-        return applicantMatch.matchId == this.matchId;
+        return applicantMatch.getMatchId() == this.getMatchId();
     }
 
     @Override

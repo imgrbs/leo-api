@@ -8,13 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "recruiter_matches")
-public class RecruiterMatch implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private long matchId;
+public class RecruiterMatch extends UserMatch {
 
     private long recruiterId;
 
@@ -27,24 +21,9 @@ public class RecruiterMatch implements Serializable {
     }
 
     public RecruiterMatch(long recruiterId, long matchId) {
-        this.matchId = matchId;
+        super(matchId);
+        this.setUserId(recruiterId);
         this.recruiterId = recruiterId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public long getMatchId() {
-        return matchId;
-    }
-
-    public void setMatchId(long matchId) {
-        this.matchId = matchId;
     }
 
     public long getRecruiterId() {
