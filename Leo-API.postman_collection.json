@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "779de823-8cda-4521-b978-d4b86772b7af",
+		"_postman_id": "3e23a041-508c-4448-8b9a-1d1b59edb3de",
 		"name": "Leo-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -66,6 +66,20 @@
 				},
 				{
 					"name": "get Current User Matches by Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e01a8921-5e36-499b-84cb-477beca7d83b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -104,6 +118,20 @@
 				},
 				{
 					"name": "get Ended User Matches by Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b90870eb-00d3-444b-8774-66352fabbf47",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -842,6 +870,37 @@
 					"item": [
 						{
 							"name": "get Match Result By Match Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e6591774-0829-4600-b1d9-922347f98355",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Match Result's Position is correct value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.position.name).to.eql(\"Software Engineer\");",
+											"    pm.expect(jsonData.position.money).to.eql(\"฿30,000-฿45,000\");",
+											"    pm.expect(jsonData.position.capacity).to.eql(2);",
+											"    pm.expect(jsonData.position.recruiter.name).to.eql(\"Microsoft word co., Ltd\");",
+											"    pm.expect(jsonData.position.recruiter.location).to.eql(\"Phayathai, BKK\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Match Result's Applicant is correct value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.applicant.matchId).to.eql(1);",
+											"    pm.expect(jsonData.applicant.applicantId).to.eql(1);",
+											"    pm.expect(jsonData.applicant.applicant.name).to.eql(\"Tae Keerati\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -876,6 +935,20 @@
 						},
 						{
 							"name": "create Match Result by Matching",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b9f25ee4-6513-4691-9887-81c883743489",
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1003,6 +1076,28 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1cc4106a-8d73-4fee-98d3-d101ad507de3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0d189c02-688b-4a3c-8e42-a58ff9e527b3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

@@ -48,6 +48,8 @@ public class RecruiterRankingController {
         ModelMapper modelMapper =new ModelMapper();
         List<GetRankingResponse> responses = new ArrayList<>();
         int applicantId =1;
+
+        //mock data
         for(RecruiterRanking recruiterRanking :recruiterRankingList){
             GetRankingResponse getRankingResponse = modelMapper.map(recruiterRanking,GetRankingResponse.class);
             GetPositionsByMatchIdResponse position  = getRankingResponse.getPosition();
@@ -61,12 +63,12 @@ public class RecruiterRankingController {
         return  responses;
     }
 
-    private void mockRecruiterInstall(GetPositionsByMatchIdResponse position){
+    private void mockRecruiterInstall(GetPositionsByMatchIdResponse position){//mock data method
         Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
         position.setRecruiter(recruiter);
     }
 
-    private void mockApplicantInstall(GetApplicantsByMatchIdResponse applicant,int applicantId){
+    private void mockApplicantInstall(GetApplicantsByMatchIdResponse applicant,int applicantId){//mock data method
         List<Education> educations = new ArrayList<>();
         educations.add(new Education(1, "School of Information Technology", "4.00"));
         Applicant[] mockApplicant ={
