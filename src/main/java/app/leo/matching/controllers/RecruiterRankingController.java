@@ -26,7 +26,7 @@ public class RecruiterRankingController {
     @PostMapping("/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/ranking")
     public ResponseEntity<List<CreateRecruiterRankingRequest>>createRecruiterRanking(@PathVariable long matchId,@PathVariable long positionId,@Valid @RequestBody List<CreateRecruiterRankingRequest>createRecruiterRankingRequestList){
         for(CreateRecruiterRankingRequest recruiterRankingRequest:createRecruiterRankingRequestList) {
-            recruiterRankingService.createRecruiterRanking(matchId,recruiterRankingRequest.getApplicantMatchId(),positionId,recruiterRankingRequest.getSequence());
+            recruiterRankingService.createRecruiterRanking(matchId,recruiterRankingRequest.getUserId(),positionId,recruiterRankingRequest.getSequence());
         }
         return  new ResponseEntity<>(createRecruiterRankingRequestList,HttpStatus.CREATED);
     }

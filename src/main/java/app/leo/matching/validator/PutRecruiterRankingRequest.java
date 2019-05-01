@@ -1,23 +1,23 @@
 package app.leo.matching.validator;
 
 public class PutRecruiterRankingRequest {
-    private long applicantMatchId;
+    private long userId;
     private int sequence;
 
     public PutRecruiterRankingRequest() {
     }
 
-    public PutRecruiterRankingRequest(long applicantMatchId, int sequence) {
-        this.applicantMatchId = applicantMatchId;
+    public PutRecruiterRankingRequest(long userId, int sequence) {
+        this.userId = userId;
         this.sequence = sequence;
     }
 
-    public long getApplicantMatchId() {
-        return applicantMatchId;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setApplicantMatchId(long applicantMatchId) {
-        this.applicantMatchId = applicantMatchId;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public int getSequence() {

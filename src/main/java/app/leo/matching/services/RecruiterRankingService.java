@@ -35,8 +35,8 @@ public class RecruiterRankingService {
     }
 
 
-    public RecruiterRanking createRecruiterRanking(long matchId, long applicantMatchId, long positionId, int sequence)  {
-        ApplicantMatch applicantMatch =applicantMatchService.getApplicantMatchByApplicantMatchId(applicantMatchId);
+    public RecruiterRanking createRecruiterRanking(long matchId, long userId, long positionId, int sequence)  {
+        ApplicantMatch applicantMatch =applicantMatchService.getApplicantMatchByUserId(userId);
         Position position = positionRepository.findPositionById(positionId);
         RecruiterRanking saveRecruiterRanking = new RecruiterRanking(sequence,matchId,position,applicantMatch);
         return recruiterRankingRepository.save(saveRecruiterRanking);
@@ -45,7 +45,7 @@ public class RecruiterRankingService {
     public void updateRecuiterRankingByMatchIdAndPositionId(long matchId, long positionId, List<PutRecruiterRankingRequest> putRecruiterRankingRequestList){
         recruiterRankingRepository.deleteRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
         for(PutRecruiterRankingRequest putRecruiterRankingRequest:putRecruiterRankingRequestList){
-            this.createRecruiterRanking(matchId,putRecruiterRankingRequest.getApplicantMatchId(),positionId,putRecruiterRankingRequest.getSequence());
+            this.createRecruiterRanking(matchId,putRecruiterRankingRequest.getUserId(),positionId,putRecruiterRankingRequest.getSequence());
         }
     }
 

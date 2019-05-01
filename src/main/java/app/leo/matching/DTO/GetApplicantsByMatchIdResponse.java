@@ -1,7 +1,7 @@
 package app.leo.matching.DTO;
 
 public class GetApplicantsByMatchIdResponse {
-    private long id;
+    private long userId;
     private long matchId;
     private long applicantId;
     private Applicant applicant;
@@ -9,19 +9,19 @@ public class GetApplicantsByMatchIdResponse {
     public GetApplicantsByMatchIdResponse() {
     }
 
-    public GetApplicantsByMatchIdResponse(long id, long matchId, long applicantId, Applicant applicant) {
-        this.id = id;
+    public GetApplicantsByMatchIdResponse(long userId, long matchId, long applicantId, Applicant applicant) {
+        this.userId = userId;
         this.matchId = matchId;
         this.applicantId = applicantId;
         this.applicant = applicant;
     }
 
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public long getMatchId() {
