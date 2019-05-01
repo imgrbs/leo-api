@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7b3df8d9-9b1a-4129-925f-9614ed99e7db",
+		"_postman_id": "779de823-8cda-4521-b978-d4b86772b7af",
 		"name": "Leo-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -59,6 +59,82 @@
 							"path": [
 								"matches",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Current User Matches by Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{MATCH_API}}/user/matches?status=current",
+							"host": [
+								"{{MATCH_API}}"
+							],
+							"path": [
+								"user",
+								"matches"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "current"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Ended User Matches by Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{MATCH_API}}/user/matches?status=ended",
+							"host": [
+								"{{MATCH_API}}"
+							],
+							"path": [
+								"user",
+								"matches"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ended"
+								}
 							]
 						}
 					},
