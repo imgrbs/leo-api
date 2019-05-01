@@ -50,10 +50,4 @@ public class ApplicantMatchController {
         }
         return responses;
     }
-
-    @GetMapping(path = "applicant/matches")
-    public List<ApplicantMatch> getListOfUserByApplicantId(){
-        long applicantId = 1;
-        return applicantMatchService.getApplicantMatchByApplicantId(1);
-    }
 }
