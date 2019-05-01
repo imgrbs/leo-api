@@ -24,6 +24,6 @@ public class PositionService {
     }
 
     public List<Position> getPositionByMatchIdAndRecruiterId(long recruiterId,long matchId){
-        return positionRepository.getPositionsByRecruiterMatchIdAndMatchId(recruiterId,matchId);
+        return positionRepository.getPositionsByRecruiterMatchUserIdAndMatchId(recruiterId,matchId);
     }
 }

@@ -15,8 +15,8 @@ public interface ApplicantRankingRepository extends JpaRepository<ApplicantRanki
     @Query(value= "select ar.* from applicant_rankings ar where ar.applicant_match_id = ?1 and ar.position_id = ?2" , nativeQuery = true)
     ApplicantRanking getApplicantRankingByApplicantIdandPositionId(long applicantId,long positionId);
 
-    List<ApplicantRanking> getApplicantRankingByMatchIdAndApplicantMatchIdOrderBySequenceAsc(long matchId, long applicantMatchId);
+    List<ApplicantRanking> getApplicantRankingByMatchIdAndApplicantMatchUserIdOrderBySequenceAsc(long matchId, long applicantMatchId);
 
     @Transactional
-    void deleteApplicantRankingByMatchIdAndApplicantMatchId(long matchId, long applicantMatchId);
+    void deleteApplicantRankingByMatchIdAndApplicantMatchUserId(long matchId, long UserId);
 }

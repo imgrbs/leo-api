@@ -14,7 +14,7 @@ public class MatchResultService {
     private MatchResultRepository matchResultRepository;
 
     public MatchResult getMatchResultByApplicantMatchIdAndMatchId(long applicantMatchId,long matchId){
-        return matchResultRepository.getMatchResultByApplicantMatchIdAndMatchId(applicantMatchId,matchId);
+        return matchResultRepository.getMatchResultByApplicantMatchUserIdAndMatchId(applicantMatchId,matchId);
     }
 
     public List<MatchResult> getMatchResultByPositionIdAndMatchId(long positionId, long matchId){

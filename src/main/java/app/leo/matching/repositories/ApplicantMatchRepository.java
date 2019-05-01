@@ -12,7 +12,7 @@ public interface ApplicantMatchRepository extends JpaRepository<ApplicantMatch, 
 
     List<ApplicantMatch> getApplicantMatchByMatchId(long matchId);
 
-    ApplicantMatch getApplicantMatchById(long id);
+    ApplicantMatch getApplicantMatchByUserId(long userId);
 
     ApplicantMatch getApplicantMatchByApplicantIdAndMatchId(long applicantId, long matchId);
 

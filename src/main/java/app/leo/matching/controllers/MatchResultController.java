@@ -52,13 +52,13 @@ public class MatchResultController {
             ApplicantMatch applicantMatch = applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
              matchResultResponse.add(
                  modelMapper.map(
-                     matchResultService.getMatchResultByApplicantMatchIdAndMatchId(applicantMatch.getId(), matchId),
+                     matchResultService.getMatchResultByApplicantMatchIdAndMatchId(applicantMatch.getUserId(), matchId),
                      GetMatchResultByUserIdAndMatchIdResponse.class
                  )
              );
         }else if(role.equals("recruiter")){
             RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(userId, matchId);
-            List<Position> positions = positionService.getPositionByMatchIdAndRecruiterId(matchId, recruiterMatch.getId());
+            List<Position> positions = positionService.getPositionByMatchIdAndRecruiterId(matchId, recruiterMatch.getUserId());
             for (Position position: positions) {
                 List<MatchResult> positionMatchResults =  matchResultService.getMatchResultByPositionIdAndMatchId(position.getId(), matchId);
                 for (MatchResult matchResult: positionMatchResults) {

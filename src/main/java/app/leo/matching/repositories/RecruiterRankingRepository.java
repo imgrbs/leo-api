@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface RecruiterRankingRepository extends JpaRepository<RecruiterRanking,Long> {
 
-    @Query(value = "select rr.* from recruiter_rankings rr where rr.position_id = ?1 and rr.applicant_match_id = ?2",nativeQuery = true)
-    RecruiterRanking getRecruiterRankingbyPositionIdandApplicantMatchId(long positionId,long applicantMatchId);
+    @Query(value = "select rr.* from recruiter_rankings rr where rr.position_id = ?1 and rr.user_id = ?2",nativeQuery = true)
+    RecruiterRanking getRecruiterRankingbyPositionIdandUserId(long positionId,long userId);
 
     @Transactional
     void deleteRecruiterRankingByMatchIdAndPositionId(long matchId, long positionId);

@@ -38,16 +38,16 @@ public class ApplicantRankingService {
         this.applicantRankingRepository = applicantRankingRepository;
     }
     public ApplicantRanking createApplicantRanking(long matchId, long userId, long positionId, int sequence) {
-        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchById(userId);
+        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByUserId(userId);
         Position position = positionRepository.findPositionById(positionId);
         ApplicantRanking applicantRanking = new ApplicantRanking(sequence,matchId,applicantMatch,position);
         return applicantRankingRepository.save(applicantRanking);
     }
 
-    public void updateApplicantRankingByMatchIdAndApplicantId(long matchId, long applicantId, List<PutApplicantRankingRequest> applicantRankings) {
-        applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchId(matchId, applicantId);
+    public void updateApplicantRankingByMatchIdAndApplicantId(long matchId, long userId, List<PutApplicantRankingRequest> applicantRankings) {
+        applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchUserId(matchId, userId);
         for(PutApplicantRankingRequest putApplicantRankingRequest : applicantRankings) {
-            this.createApplicantRanking(matchId, applicantId, putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequence());
+            this.createApplicantRanking(matchId, userId, putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequence());
         }
     }
 
@@ -61,6 +61,6 @@ public class ApplicantRankingService {
     }
 
     public List<ApplicantRanking> getApplicantRankingByMatchIdAndApplicantId(long matchId, long applicantId){
-        return applicantRankingRepository.getApplicantRankingByMatchIdAndApplicantMatchIdOrderBySequenceAsc(matchId, applicantId);
+        return applicantRankingRepository.getApplicantRankingByMatchIdAndApplicantMatchUserIdOrderBySequenceAsc(matchId, applicantId);
     }
 }
