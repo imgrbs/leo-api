@@ -46,6 +46,7 @@ public class MatchResultController {
         long userId = user.getUserId();
         String role = user.getRole();
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         List<GetMatchResultByUserIdAndMatchIdResponse> matchResultResponse = new ArrayList<>();
 
         if(role.equals("applicant")) {

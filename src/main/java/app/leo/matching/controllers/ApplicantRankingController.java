@@ -41,6 +41,7 @@ public class ApplicantRankingController {
 
     private List<GetRankingResponse> mapApplicantRankingtoResponse(List<ApplicantRanking> applicantRankingList){
         ModelMapper modelMapper =new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         List<GetRankingResponse> responses = new ArrayList<>();
         for(ApplicantRanking applicantRanking:applicantRankingList){
             GetRankingResponse getRankingResponse = modelMapper.map(applicantRanking,GetRankingResponse.class);

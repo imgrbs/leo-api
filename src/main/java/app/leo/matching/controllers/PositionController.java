@@ -41,6 +41,7 @@ public class PositionController {
 
     private List<GetPositionsByMatchIdResponse> responseBuilder(List<Position> positions) {
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         List<GetPositionsByMatchIdResponse> responses = new ArrayList<>();
         for(Position position:positions){
             GetPositionsByMatchIdResponse response =modelMapper.map(position,GetPositionsByMatchIdResponse.class);
