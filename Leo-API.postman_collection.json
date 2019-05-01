@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fb9c528c-a6d7-4f4b-b5b5-a8640ee1198b",
+		"_postman_id": "3e23a041-508c-4448-8b9a-1d1b59edb3de",
 		"name": "Leo-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -59,6 +59,110 @@
 							"path": [
 								"matches",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Current User Matches by Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e01a8921-5e36-499b-84cb-477beca7d83b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{MATCH_API}}/user/matches?status=current",
+							"host": [
+								"{{MATCH_API}}"
+							],
+							"path": [
+								"user",
+								"matches"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "current"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Ended User Matches by Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b90870eb-00d3-444b-8774-66352fabbf47",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{MATCH_API}}/user/matches?status=ended",
+							"host": [
+								"{{MATCH_API}}"
+							],
+							"path": [
+								"user",
+								"matches"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ended"
+								}
 							]
 						}
 					},
@@ -972,6 +1076,28 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1cc4106a-8d73-4fee-98d3-d101ad507de3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0d189c02-688b-4a3c-8e42-a58ff9e527b3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
