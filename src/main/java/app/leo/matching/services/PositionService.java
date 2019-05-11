@@ -23,7 +23,7 @@ public class PositionService {
        return positionRepository.getPositionByMatchId(matchId);
     }
 
-    public List<Position> getPositionByMatchIdAndRecruiterId(long recruiterId,long matchId){
-        return positionRepository.getPositionsByRecruiterMatchUserIdAndMatchId(recruiterId,matchId);
+    public List<Position> getPositionByMatchIdAndRecruiterId(long recruiterParticipantId,long matchId){
+        return positionRepository.getPositionsByRecruiterMatchParticipantIdAndMatchId(recruiterParticipantId,matchId);
     }
 }

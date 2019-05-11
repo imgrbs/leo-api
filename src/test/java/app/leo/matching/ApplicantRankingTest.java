@@ -43,7 +43,7 @@ public class ApplicantRankingTest {
     public void setUp() throws Exception{
 
         this.applicantMatch = ApplicantMatchGenerator.generateApplicantMatch(6L, "Programmer", 1);
-        this.applicantMatchListCase = new ArrayList<ApplicantMatch>();
+        this.applicantMatchListCase = new ArrayList<>();
         this.applicantMatchListCase.add(applicantMatch);
         this.position = this.applicantMatchListCase.get(0).getApplicantRanking().get(0).getPosition();
 
@@ -57,12 +57,12 @@ public class ApplicantRankingTest {
     @Test
     public void createApplicantRankingShouldReturnApplicantRanking() {
         ApplicantRanking applicantRanking = new ApplicantRanking(3, 6L, this.applicantMatchListCase.get(0), this.position);
-        Mockito.when(this.applicantMatchRepository.getApplicantMatchByUserId(this.applicantMatchListCase.get(0).getUserId())).thenReturn(this.applicantMatchListCase.get(0));
+        Mockito.when(this.applicantMatchRepository.getApplicantMatchByParticipantId(this.applicantMatchListCase.get(0).getParticipantId())).thenReturn(this.applicantMatchListCase.get(0));
         Mockito.when(this.positionRepository.findPositionById(6L)).thenReturn(this.position);
         Mockito.when(this.applicantRankingRepository.save(any(ApplicantRanking.class))).thenReturn(applicantRanking);
 
         try {
-            ApplicantRanking applicantRanking1 = this.applicantRankingService.createApplicantRanking(6L, this.applicantMatchListCase.get(0).getUserId(), 6L, 3);
+            ApplicantRanking applicantRanking1 = this.applicantRankingService.createApplicantRanking(6L, this.applicantMatchListCase.get(0).getParticipantId(), 6L, 3);
             Assert.assertEquals(applicantRanking, applicantRanking1);
         }catch (Exception e){
             e.printStackTrace();

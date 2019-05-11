@@ -3,7 +3,6 @@ package app.leo.matching.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -21,8 +20,7 @@ public class RecruiterMatch extends UserMatch {
     }
 
     public RecruiterMatch(long recruiterId, long matchId) {
-        super(matchId);
-        this.setUserId(recruiterId);
+        super(recruiterId,matchId);
         this.recruiterId = recruiterId;
     }
 

@@ -37,15 +37,15 @@ public class ApplicantRankingService {
         this.positionRepository = positionRepository;
         this.applicantRankingRepository = applicantRankingRepository;
     }
-    public ApplicantRanking createApplicantRanking(long matchId, long userId, long positionId, int sequence) {
-        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByUserId(userId);
+    public ApplicantRanking createApplicantRanking(long matchId, long participantId, long positionId, int sequence) {
+        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByParticipantId(participantId);
         Position position = positionRepository.findPositionById(positionId);
         ApplicantRanking applicantRanking = new ApplicantRanking(sequence,matchId,applicantMatch,position);
         return applicantRankingRepository.save(applicantRanking);
     }
 
     public void updateApplicantRankingByMatchIdAndApplicantId(long matchId, long userId, List<PutApplicantRankingRequest> applicantRankings) {
-        applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchUserId(matchId, userId);
+        applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchParticipantId(matchId, userId);
         for(PutApplicantRankingRequest putApplicantRankingRequest : applicantRankings) {
             this.createApplicantRanking(matchId, userId, putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequence());
         }
@@ -61,6 +61,6 @@ public class ApplicantRankingService {
     }
 
     public List<ApplicantRanking> getApplicantRankingByMatchIdAndApplicantId(long matchId, long applicantId){
-        return applicantRankingRepository.getApplicantRankingByMatchIdAndApplicantMatchUserIdOrderBySequenceAsc(matchId, applicantId);
+        return applicantRankingRepository.getApplicantRankingByMatchIdAndApplicantMatchParticipantIdOrderBySequenceAsc(matchId, applicantId);
     }
 }

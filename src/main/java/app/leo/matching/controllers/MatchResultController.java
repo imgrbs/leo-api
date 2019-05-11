@@ -36,10 +36,9 @@ public class MatchResultController {
     @Autowired
     private ApplicantMatchService applicantMatchService;
 
-    Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
-    List<Education> educations = new ArrayList<>();
-    Education education = new Education(1, "School of Information Technology", "4.00");
-    Applicant applicant = new Applicant(1, "Tae Keerati", educations);
+    private Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
+    private List<Education> educations = new ArrayList<>();
+    private Education education = new Education(1, "School of Information Technology", "4.00");
 
     @GetMapping(path = "user/matches/{matchId:[\\d]}/result")
     public ResponseEntity<List<GetMatchResultByUserIdAndMatchIdResponse>> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId , @RequestAttribute("user") User user){
@@ -53,13 +52,13 @@ public class MatchResultController {
             ApplicantMatch applicantMatch = applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
              matchResultResponse.add(
                  modelMapper.map(
-                     matchResultService.getMatchResultByApplicantMatchIdAndMatchId(applicantMatch.getUserId(), matchId),
+                     matchResultService.getMatchResultByApplicantMatchIdAndMatchId(applicantMatch.getParticipantId(), matchId),
                      GetMatchResultByUserIdAndMatchIdResponse.class
                  )
              );
         }else if(role.equals("recruiter")){
             RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(userId, matchId);
-            List<Position> positions = positionService.getPositionByMatchIdAndRecruiterId(matchId, recruiterMatch.getUserId());
+            List<Position> positions = positionService.getPositionByMatchIdAndRecruiterId(matchId, recruiterMatch.getParticipantId());
             for (Position position: positions) {
                 List<MatchResult> positionMatchResults =  matchResultService.getMatchResultByPositionIdAndMatchId(position.getId(), matchId);
                 for (MatchResult matchResult: positionMatchResults) {
@@ -76,6 +75,8 @@ public class MatchResultController {
         }
 
         // set mock data
+        educations.add(education);
+        Applicant applicant = new Applicant(1, "Tae Keerati", educations);
         for (GetMatchResultByUserIdAndMatchIdResponse response: matchResultResponse) {
             GetPositionsByMatchIdResponse position = response.getPosition();
             position.setRecruiter(recruiter);

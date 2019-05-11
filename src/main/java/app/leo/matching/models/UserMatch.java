@@ -12,7 +12,7 @@ public class UserMatch implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private long participantId;
 
     @NotNull
     private long matchId;
@@ -24,12 +24,18 @@ public class UserMatch implements Serializable {
         this.matchId = matchId;
     }
 
-    public long getUserId() {
-        return userId;
+    public UserMatch(long participantId,@NotNull long matchId) {
+        this.participantId = participantId;
+        this.matchId = matchId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+
+    public Long getParticipantId() {
+        return participantId;
+    }
+
+    public void setParticipantId(Long participantId) {
+        this.participantId = participantId;
     }
 
     public long getMatchId() {

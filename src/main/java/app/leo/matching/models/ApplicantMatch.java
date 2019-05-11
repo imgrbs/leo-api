@@ -3,8 +3,6 @@ package app.leo.matching.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.List;
 
 
@@ -23,8 +21,7 @@ public class ApplicantMatch extends UserMatch {
     }
 
     public ApplicantMatch( long applicantId,long matchId) {
-        super(matchId);
-        this.setUserId(applicantId);
+        super(applicantId,matchId);
         this.applicantId = applicantId;
     }
 
@@ -45,7 +42,7 @@ public class ApplicantMatch extends UserMatch {
     }
 
     public boolean isIdEqual(ApplicantMatch applicantMatch){
-        return applicantMatch.getUserId() == this.getUserId();
+        return applicantMatch.getParticipantId().equals(this.getParticipantId());
     }
 
     public boolean isSameMatchId(ApplicantMatch applicantMatch){

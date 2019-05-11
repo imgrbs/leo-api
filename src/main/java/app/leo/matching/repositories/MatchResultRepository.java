@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface MatchResultRepository extends JpaRepository<MatchResult,Long> {
 
-    MatchResult getMatchResultByApplicantMatchUserIdAndMatchId(long applicantMatchId,long matchId);
+    MatchResult getMatchResultByApplicantMatchParticipantIdAndMatchId(long participantId,long matchId);
 
     List<MatchResult> getMatchResultByPositionIdAndMatchId(long positionId , long matchId);
 }

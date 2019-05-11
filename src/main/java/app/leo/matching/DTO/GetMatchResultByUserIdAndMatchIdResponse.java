@@ -6,8 +6,6 @@ public class GetMatchResultByUserIdAndMatchIdResponse {
     private GetPositionsByMatchIdResponse position;
     private GetApplicantsByMatchIdResponse applicant;
 
-    public GetMatchResultByUserIdAndMatchIdResponse() {
-    }
 
     public long getMatchResultId() {
         return matchResultId;

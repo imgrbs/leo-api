@@ -25,8 +25,8 @@ public class ApplicantMatchService {
         return applicantMatchRepository.getApplicantMatchByMatchIdAndPositionId(matchId,positionId);
     }
 
-    public ApplicantMatch getApplicantMatchByUserId(long userId){
-        return applicantMatchRepository.getApplicantMatchByUserId(userId);
+    public ApplicantMatch getApplicantMatchByUserId(long participantId){
+        return applicantMatchRepository.getApplicantMatchByParticipantId(participantId);
     }
 
     public ApplicantMatch getApplicantMatchByApplicantIdAndMatchId(long applicantId, long matchId){

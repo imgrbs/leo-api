@@ -46,7 +46,7 @@ public class RecruiterRankingTest {
     @Before
     public void setup()throws Exception{
         this.applicantMatch = ApplicantMatchGenerator.generateApplicantMatch(6L, "Programmer", 1);
-        this.applicantMatchListCase = new ArrayList<ApplicantMatch>();
+        this.applicantMatchListCase = new ArrayList<>();
         this.applicantMatchListCase.add(applicantMatch);
         this.position = this.applicantMatchListCase.get(0).getApplicantRanking().get(0).getPosition();
 
@@ -62,11 +62,11 @@ public class RecruiterRankingTest {
     @Test
     public void createRecruiterRankingShouldReturnRecruiterRanking(){
         RecruiterRanking recruiterRanking = new RecruiterRanking(3,6L,this.position,this.applicantMatch);
-        Mockito.when(applicantMatchService.getApplicantMatchByUserId(this.applicantMatch.getUserId())).thenReturn(this.applicantMatchListCase.get(0));
+        Mockito.when(applicantMatchService.getApplicantMatchByUserId(this.applicantMatch.getParticipantId())).thenReturn(this.applicantMatchListCase.get(0));
         Mockito.when(this.positionRepository.findPositionById(1)).thenReturn(this.position);
         Mockito.when(this.recruiterRankingRepository.save(any(RecruiterRanking.class))).thenReturn(recruiterRanking);
         try {
-            RecruiterRanking savedRecruiterRanking = recruiterRankingService.createRecruiterRanking(6L, this.applicantMatch.getUserId(), 1, 3);
+            RecruiterRanking savedRecruiterRanking = recruiterRankingService.createRecruiterRanking(6L, this.applicantMatch.getParticipantId(), 1, 3);
             Assert.assertNotNull(savedRecruiterRanking);
             Assert.assertEquals(3, recruiterRanking.getSequence());
         }catch (Exception e){
