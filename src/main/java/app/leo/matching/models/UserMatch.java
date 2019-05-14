@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @MappedSuperclass
 public class UserMatch implements Serializable {
@@ -16,6 +17,8 @@ public class UserMatch implements Serializable {
 
     @NotNull
     private long matchId;
+
+    private Timestamp joinDate;
 
     public UserMatch() {
     }
@@ -44,5 +47,13 @@ public class UserMatch implements Serializable {
 
     public void setMatchId(long matchId) {
         this.matchId = matchId;
+    }
+
+    public Timestamp getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Timestamp joinDate) {
+        this.joinDate = joinDate;
     }
 }
