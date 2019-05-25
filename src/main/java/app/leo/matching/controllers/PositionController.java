@@ -47,7 +47,6 @@ public class PositionController {
 
     public ResponseEntity<List<GetPositionsByMatchIdResponse>> getPositionsByRecruiterIdAndMatchId(@PathVariable long matchId,@RequestAttribute("user") User user){
         long recruiterId = user.getUserId();
-        System.out.println(recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(recruiterId, matchId));
         RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(recruiterId, matchId);
         List<Position> positions = positionService.getPositionByMatchIdAndRecruiterMatchParticipantId(matchId, recruiterMatch.getParticipantId());
         return new ResponseEntity<>(this.responseBuilder(positions), HttpStatus.OK);
