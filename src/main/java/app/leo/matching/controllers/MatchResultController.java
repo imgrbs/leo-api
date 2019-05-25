@@ -58,7 +58,7 @@ public class MatchResultController {
              );
         }else if(role.equals("recruiter")){
             RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(userId, matchId);
-            List<Position> positions = positionService.getPositionByMatchIdAndRecruiterId(matchId, recruiterMatch.getParticipantId());
+            List<Position> positions = positionService.getPositionByMatchIdAndRecruiterMatchParticipantId(matchId, recruiterMatch.getParticipantId());
             for (Position position: positions) {
                 List<MatchResult> positionMatchResults =  matchResultService.getMatchResultByPositionIdAndMatchId(position.getId(), matchId);
                 for (MatchResult matchResult: positionMatchResults) {
