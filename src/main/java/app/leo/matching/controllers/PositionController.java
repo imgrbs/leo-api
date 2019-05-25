@@ -4,7 +4,9 @@ import app.leo.matching.DTO.GetPositionsByMatchIdResponse;
 import app.leo.matching.DTO.Recruiter;
 import app.leo.matching.DTO.User;
 import app.leo.matching.models.Position;
+import app.leo.matching.models.RecruiterMatch;
 import app.leo.matching.services.PositionService;
+import app.leo.matching.services.RecruiterMatchService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,9 @@ public class PositionController {
 
     @Autowired
     private PositionService positionService;
+
+    @Autowired
+    private RecruiterMatchService recruiterMatchService;
 
     @GetMapping(path = "/healthcheck")
     public Date getDate(){
@@ -41,9 +46,10 @@ public class PositionController {
     @GetMapping(path="/matches/{matchId:[\\d]}/recruiters/positions")
 
     public ResponseEntity<List<GetPositionsByMatchIdResponse>> getPositionsByRecruiterIdAndMatchId(@PathVariable long matchId,@RequestAttribute("user") User user){
-        installMap();
-        long recruiterId = recruiterMatchIdMap.get(user.getUserId());
-        List<Position> positions = positionService.getPositionByMatchIdAndRecruiterMatchParticipantId(recruiterId, matchId);
+        long recruiterId = user.getUserId();
+        System.out.println(recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(recruiterId, matchId));
+        RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(recruiterId, matchId);
+        List<Position> positions = positionService.getPositionByMatchIdAndRecruiterMatchParticipantId(matchId, recruiterMatch.getParticipantId());
         return new ResponseEntity<>(this.responseBuilder(positions), HttpStatus.OK);
     }
 
