@@ -13,8 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @CrossOrigin("*")
@@ -24,9 +23,16 @@ public class ApplicantRankingController {
     @Autowired
     private ApplicantRankingService applicantRankingService;
 
+    private static Map<Long, Long> userIdandApplcantMatchIdMap = new HashMap<Long, Long>() {{
+            put(1L, 1L);
+            put(3L, 2L);
+            put(4L, 3L);
+            put(5L, 4L);
+        }};
+
     @PostMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
-    public ResponseEntity<List<CreateApplicantRankingRequest>> createApplicantRanking(@Valid @PathVariable("matchId") Long matchId, @Valid @RequestBody List<CreateApplicantRankingRequest> applicantRankingRequest){
-        long userId = 1;
+    public ResponseEntity<List<CreateApplicantRankingRequest>> createApplicantRanking(@Valid @PathVariable("matchId") Long matchId, @Valid @RequestBody List<CreateApplicantRankingRequest> applicantRankingRequest,@RequestAttribute("user") User user){
+        long userId = userIdandApplcantMatchIdMap.get(user.getUserId());
         for(CreateApplicantRankingRequest applicantRanking : applicantRankingRequest){
             applicantRankingService.createApplicantRanking(matchId, userId, applicantRanking.getPositionId(), applicantRanking.getSequence());
         }
@@ -34,8 +40,8 @@ public class ApplicantRankingController {
     }
 
     @GetMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
-    public ResponseEntity<List<GetRankingResponse>> getApplicantRanking(@Valid @PathVariable("matchId") Long matchId){
-        long userId = 1;
+    public ResponseEntity<List<GetRankingResponse>> getApplicantRanking(@Valid @PathVariable("matchId") Long matchId,@RequestAttribute("user") User user){
+        long userId =  userIdandApplcantMatchIdMap.get(user.getUserId());
         return new ResponseEntity<>(mapApplicantRankingtoResponse(applicantRankingService.getApplicantRankingByMatchIdAndApplicantId(matchId, userId)), HttpStatus.OK);
     }
 
