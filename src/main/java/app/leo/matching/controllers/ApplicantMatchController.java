@@ -45,8 +45,9 @@ public class ApplicantMatchController {
                 new Applicant(3,"Jill Jirapa",educations)
         };
         for (int i = 0; i < applicantMatches.size(); i++) {
+            long applicantId = applicantMatches.get(i).getApplicantId();
             GetApplicantsByMatchIdResponse response = modelMapper.map(applicantMatches.get(i), GetApplicantsByMatchIdResponse.class);
-            response.setApplicant(applicants[i]);
+            response.setApplicant(applicants[Integer.parseInt(""+ (applicantId - 1))]);
             responses.add(response);
         }
         return responses;
