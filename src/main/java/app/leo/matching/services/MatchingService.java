@@ -38,6 +38,7 @@ public class MatchingService {
         while (!this.allApplicantMatched(applicantMatches)) {
             ApplicantMatch applicant = applicantMatches.remove(0);
             List<ApplicantRanking> applicantRanking = applicant.getApplicantRanking();
+
             while (!applicantRanking.isEmpty()) {
                 Position position = applicantRanking.remove(0).getPosition();
                 List<ApplicantMatch> acceptedApplicant = positionAccepted.get(position);
@@ -46,14 +47,17 @@ public class MatchingService {
                 }
                 if (this.isRecruiterAccepted(applicant, position.getRecruiterRankings())) {
                     if ((this.isRecruiterHasFullCapacity(position, acceptedApplicant))) {
-                        int removalApplicantIndex = this.findRemovalApplicantInPositionRanking(position, applicant, positionAccepted);
+                        int removalApplicantIndex = this.findRemovalApplicantInPositionRanking(position, applicant, acceptedApplicant);
                         if (this.isRankBetterThanPositionAccepted(removalApplicantIndex)) {
-                            ApplicantMatch applicantMatch = acceptedApplicant.remove(removalApplicantIndex);
-                            matchResults = this.removeAcceptedApplicantInMatchResult(matchResults, removalApplicantIndex);
+                            ApplicantMatch removalApplicant = position.getRecruiterRankings().get(removalApplicantIndex).getApplicantMatch();
+                            ApplicantMatch applicantMatch = acceptedApplicant.remove(acceptedApplicant.indexOf(removalApplicant));
+
+                            matchResults = this.removeAcceptedApplicantInMatchResult(matchResults, removalApplicant);
                             positionAccepted.remove(position);
                             positionAccepted.put(position, acceptedApplicant);
                             matchResults.add(new MatchResult(matchId, applicant, position));
-                            applicantMatches.add(applicantMatch);
+                            applicantMatches.add(removalApplicant);
+                            break;
                         } else if(applicantRanking.isEmpty()) {
                             matchResults.add(new MatchResult(matchId, applicant, null));
                             break;
@@ -85,7 +89,7 @@ public class MatchingService {
 
     private boolean isRecruiterHasFullCapacity(Position position, List<ApplicantMatch> applicantAccepted){
         int capacity = position.getCapacity();
-        return applicantAccepted.size() == capacity || capacity == 0;
+        return applicantAccepted.size() == capacity;
     }
 
     private boolean isRankBetterThanPositionAccepted (int indexOfApplicant) {
@@ -96,30 +100,51 @@ public class MatchingService {
         return  indexOfApplicant > -1;
     }
 
-    private int findRemovalApplicantInPositionRanking(Position position, ApplicantMatch applicant, Map<Position, List<ApplicantMatch>> positionAccepted){
+    private int findRemovalApplicantInPositionRanking(Position position, ApplicantMatch applicant, List<ApplicantMatch> applicantAccepted){
         int indexOfRemovalApplicant = -1;
         List<RecruiterRanking> recruiterRankings = new ArrayList<>(position.getRecruiterRankings());
-        if (positionAccepted.get(position) != null) {
-            List<ApplicantMatch> applicantAccepted = new ArrayList<>(positionAccepted.get(position));
-            int indexOfNewApplicant = recruiterRankings.indexOf(applicant);
-            if (this.isIndexCorrected(indexOfNewApplicant)) {
-                int newApplicantSequence = recruiterRankings.get(indexOfNewApplicant).getSequence();
-                for (ApplicantMatch applicantMatch: applicantAccepted) {
-                    int indexOfOldApplicant = recruiterRankings.indexOf(applicantMatch);
-                    int oldApplicantSequence = recruiterRankings.get(indexOfOldApplicant).getSequence();
-                    if (oldApplicantSequence < newApplicantSequence) {
-                        indexOfRemovalApplicant = indexOfOldApplicant;
-                        break;
-                    }
+        int indexOfNewApplicant = new RecruiterRankingList(recruiterRankings).indexOf(applicant);
+        if (this.isIndexCorrected(indexOfNewApplicant)) {
+            int newApplicantSequence = recruiterRankings.get(indexOfNewApplicant).getSequence();
+            for (ApplicantMatch applicantMatch: applicantAccepted) {
+                int indexOfOldApplicant = new RecruiterRankingList(recruiterRankings).indexOf(applicantMatch);
+                int oldApplicantSequence = recruiterRankings.get(indexOfOldApplicant).getSequence();
+                if (oldApplicantSequence > newApplicantSequence) {
+                    indexOfRemovalApplicant = indexOfOldApplicant;
+                    break;
                 }
             }
         }
         return indexOfRemovalApplicant;
     }
 
-    private List<MatchResult> removeAcceptedApplicantInMatchResult(List<MatchResult> matchResults, int removalApplicantIndex) {
-        matchResults.remove(removalApplicantIndex);
+    private List<MatchResult> removeAcceptedApplicantInMatchResult(List<MatchResult> matchResults, ApplicantMatch removalApplicant) {
+        for (int index = 0; index < matchResults.size(); index ++) {
+            if (removalApplicant.equals(matchResults.get(index).getApplicantMatch())) {
+                matchResults.remove(index);
+                break;
+            }
+        }
         return matchResults;
+    }
+    
+    private class RecruiterRankingList {
+        List<RecruiterRanking> recruiterRankings;
+
+        public RecruiterRankingList(List<RecruiterRanking> recruiterRankings) {
+            this.recruiterRankings = recruiterRankings;
+        }
+        
+        public int indexOf(ApplicantMatch applicantMatch) {
+            int index = -1;
+              for (int i = 0; i < this.recruiterRankings.size(); i++) {
+                if (applicantMatch.equals(this.recruiterRankings.get(i).getApplicantMatch())) {
+                    index = i;
+                    break;
+                }
+              }
+            return index;
+        }
     }
 
 }

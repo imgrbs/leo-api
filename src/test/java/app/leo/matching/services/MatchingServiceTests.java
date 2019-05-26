@@ -1,5 +1,6 @@
 package app.leo.matching.services;
 
+import app.leo.matching.DTO.Applicant;
 import app.leo.matching.generators.ApplicantMatchGenerator;
 import app.leo.matching.models.*;
 import app.leo.matching.repositories.ApplicantMatchRepository;
@@ -119,6 +120,72 @@ public class MatchingServiceTests {
 
         Assert.assertEquals(2,actMatchResults.size());
         Assert.assertEquals(matchResults,actMatchResults);
+
+    }
+
+    @Test
+    public void testMatchingWhenSomeoneHaveSameRankingShouldReturnMatchResult(){
+        List<ApplicantMatch> applicantMatches = new ArrayList<>();
+
+        Position position1 = new Position("Software Engineer", 1, null);
+        position1.setId(1L);
+        Position position2 = new Position("Developer", 1, null);
+        position2.setId(3L);
+
+        ApplicantMatch applicantMatch1 = new ApplicantMatch();
+        applicantMatch1.setMatchId(1);
+        applicantMatch1.setApplicantId(1L);
+        applicantMatch1.setParticipantId(1L);
+        List<ApplicantRanking> applicantRankings1 = new ArrayList<>();
+        applicantRankings1.add(new ApplicantRanking(1, 1, applicantMatch1, position1));
+        applicantRankings1.add(new ApplicantRanking(2, 1, applicantMatch1, position2));
+        applicantMatch1.setApplicantRanking(applicantRankings1);
+
+        ApplicantMatch applicantMatch2 = new ApplicantMatch();
+        applicantMatch2.setMatchId(1);
+        applicantMatch2.setApplicantId(2L);
+        applicantMatch2.setParticipantId(2L);
+        List<ApplicantRanking> applicantRankings2 = new ArrayList<>();
+        applicantRankings2.add(new ApplicantRanking(1, 1, applicantMatch2, position2));
+        applicantRankings2.add(new ApplicantRanking(2, 1, applicantMatch2, position1));
+        applicantMatch2.setApplicantRanking(applicantRankings2);
+
+        ApplicantMatch applicantMatch3 = new ApplicantMatch();
+        applicantMatch3.setMatchId(1);
+        applicantMatch3.setApplicantId(3L);
+        applicantMatch3.setParticipantId(3L);
+        List<ApplicantRanking> applicantRankings3 = new ArrayList<>();
+        applicantRankings3.add(new ApplicantRanking(1, 1, applicantMatch3, position2));
+        applicantRankings3.add(new ApplicantRanking(2, 1, applicantMatch3, position1));
+        applicantMatch3.setApplicantRanking(applicantRankings3);
+
+        List<RecruiterRanking> recruiterRankings1 = new ArrayList<>();
+        recruiterRankings1.add(new RecruiterRanking(1,1, position1, applicantMatch3));
+        recruiterRankings1.add(new RecruiterRanking(2,1, position1, applicantMatch1));
+        recruiterRankings1.add(new RecruiterRanking(3,1, position1, applicantMatch2));
+        position1.setRecruiterRankings(recruiterRankings1);
+
+        List<RecruiterRanking> recruiterRankings2 = new ArrayList<>();
+        recruiterRankings2.add(new RecruiterRanking(1,1, position2, applicantMatch3));
+        recruiterRankings2.add(new RecruiterRanking(2,1, position2, applicantMatch1));
+        recruiterRankings2.add(new RecruiterRanking(3,1, position2, applicantMatch2));
+        position2.setRecruiterRankings(recruiterRankings2);
+
+        applicantMatches.add(applicantMatch1);
+        applicantMatches.add(applicantMatch2);
+        applicantMatches.add(applicantMatch3);
+
+        List<MatchResult> actMatchResults = matchingService.matching(1L, applicantMatches);
+
+        Assert.assertEquals(3, actMatchResults.size());
+        Assert.assertEquals(1L, actMatchResults.get(0).getApplicantMatch().getParticipantId().longValue());
+        Assert.assertEquals(1L, actMatchResults.get(0).getPosition().getId().longValue());
+
+        Assert.assertEquals(3L, actMatchResults.get(1).getApplicantMatch().getParticipantId().longValue());
+        Assert.assertEquals(3L, actMatchResults.get(1).getPosition().getId().longValue());
+
+        Assert.assertEquals(2L, actMatchResults.get(2).getApplicantMatch().getParticipantId().longValue());
+        Assert.assertNull(actMatchResults.get(2).getPosition());
 
     }
 
