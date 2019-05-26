@@ -75,9 +75,9 @@ public class ApplicantRankingController {
         List<Education> educations = new ArrayList<>();
         educations.add(new Education(1, "School of Information Technology", "4.00"));
         Applicant mockApplicant = null;
-            if(userIdandApplcantMatchIdMap.get(user.getUserId()) == 3 ){
+            if(user.getUserId() == 3 ){
                 mockApplicant = new Applicant(3, "Jill Jirapa", educations);
-            }else if(userIdandApplcantMatchIdMap.get(user.getUserId()) == 2 ){
+            }else if(user.getUserId() == 2 ){
                 mockApplicant = new Applicant(2,"Volk Natchanon",educations);
             }else{
                 mockApplicant = new Applicant(1,"Tae Keerati",educations);
