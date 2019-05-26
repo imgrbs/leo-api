@@ -61,6 +61,7 @@ public class ApplicantRankingService {
     }
 
     public List<ApplicantRanking> getApplicantRankingByMatchIdAndApplicantId(long matchId, long applicantId){
-        return applicantRankingRepository.getApplicantRankingByMatchIdAndApplicantMatchParticipantIdOrderBySequenceAsc(matchId, applicantId);
+        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(applicantId, matchId);
+        return applicantRankingRepository.getApplicantRankingByMatchIdAndApplicantMatchParticipantIdOrderBySequenceAsc(matchId, applicantMatch.getParticipantId());
     }
 }
