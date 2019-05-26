@@ -37,15 +37,16 @@ public class ApplicantRankingService {
         this.positionRepository = positionRepository;
         this.applicantRankingRepository = applicantRankingRepository;
     }
-    public ApplicantRanking createApplicantRanking(long matchId, long participantId, long positionId, int sequence) {
-        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByParticipantId(participantId);
+    public ApplicantRanking createApplicantRanking(long matchId, long userId, long positionId, int sequence) {
+        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
         Position position = positionRepository.findPositionById(positionId);
         ApplicantRanking applicantRanking = new ApplicantRanking(sequence,matchId,applicantMatch,position);
         return applicantRankingRepository.save(applicantRanking);
     }
 
     public void updateApplicantRankingByMatchIdAndApplicantId(long matchId, long userId, List<PutApplicantRankingRequest> applicantRankings) {
-        applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchParticipantId(matchId, userId);
+        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
+        applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchParticipantId(matchId, applicantMatch.getParticipantId());
         for(PutApplicantRankingRequest putApplicantRankingRequest : applicantRankings) {
             this.createApplicantRanking(matchId, userId, putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequence());
         }
