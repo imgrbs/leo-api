@@ -192,12 +192,11 @@ public class MatchingServiceTests {
     @Test
     public void testMatchWhenRankisBetterShouldReturnMatchResult(){
         Mockito.when(applicantMatchRepository.getApplicantMatchByMatchId(4L)).thenReturn(this.applicantMatchListCase4);
-        MatchResult matchResult1 = new MatchResult(this.applicantMatchListCase4.get(0),this.applicantMatchListCase4.get(0).getApplicantRanking().get(0).getPosition());
-        MatchResult matchResult2 = new MatchResult(this.applicantMatchListCase4.get(1),this.applicantMatchListCase4.get(1).getApplicantRanking().get(1).getPosition());
+        MatchResult matchResult1 = new MatchResult(this.applicantMatchListCase4.get(0),this.applicantMatchListCase4.get(1).getApplicantRanking().get(1).getPosition());
+        MatchResult matchResult2 = new MatchResult(this.applicantMatchListCase4.get(1),this.applicantMatchListCase4.get(0).getApplicantRanking().get(0).getPosition());
         List<MatchResult> matchResults = new ArrayList<>();
-        matchResults.add(matchResult1);
         matchResults.add(matchResult2);
-
+        matchResults.add(matchResult1);
 
         List<ApplicantMatch> applicantMatches = applicantMatchService.getApplicantMatchByMatchId(4L);
 
