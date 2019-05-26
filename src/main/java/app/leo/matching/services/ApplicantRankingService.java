@@ -48,7 +48,7 @@ public class ApplicantRankingService {
         ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
         applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchParticipantId(matchId, applicantMatch.getParticipantId());
         for(PutApplicantRankingRequest putApplicantRankingRequest : applicantRankings) {
-            this.createApplicantRanking(matchId, userId, putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequence());
+            this.createApplicantRanking(matchId, applicantMatch.getParticipantId(), putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequence());
         }
     }
 
