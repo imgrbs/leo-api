@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class MatchingService {
@@ -38,7 +35,7 @@ public class MatchingService {
         while (!this.allApplicantMatched(applicantMatches)) {
             ApplicantMatch applicant = applicantMatches.remove(0);
             List<ApplicantRanking> applicantRanking = applicant.getApplicantRanking();
-
+            Collections.sort(applicantRanking);
             while (!applicantRanking.isEmpty()) {
                 Position position = applicantRanking.remove(0).getPosition();
                 List<ApplicantMatch> acceptedApplicant = positionAccepted.get(position);

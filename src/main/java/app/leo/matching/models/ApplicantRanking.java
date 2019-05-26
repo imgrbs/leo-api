@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "applicant_rankings")
-public class ApplicantRanking extends Ranking {
+public class ApplicantRanking extends Ranking implements Comparable<ApplicantRanking>{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_match_id")
@@ -50,6 +50,21 @@ public class ApplicantRanking extends Ranking {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public int compareTo(ApplicantRanking applicantRanking) {
+        int Before = -1;
+        int Equal = 0;
+        int After = 1;
+        int compareNumber = this.getSequence() - applicantRanking.getSequence();
+        if( compareNumber <0){
+            return Before;
+        }else if(compareNumber >0){
+            return After;
+        }else{
+            return Equal;
+        }
+
     }
 
 }
