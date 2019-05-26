@@ -25,7 +25,7 @@ public class ApplicantMatchService {
         return applicantMatchRepository.getApplicantMatchByMatchIdAndPositionId(matchId,positionId);
     }
 
-    public ApplicantMatch getApplicantMatchByUserId(long participantId){
+    public ApplicantMatch getApplicantMatchByParticipantId(long participantId){
         return applicantMatchRepository.getApplicantMatchByParticipantId(participantId);
     }
 
@@ -40,4 +40,5 @@ public class ApplicantMatchService {
     public List<ApplicantMatch> getApplicantMatchByApplicantId(long applicantId){
         return this.applicantMatchRepository.getApplicantMatchByApplicantId(applicantId);
     }
+
 }

@@ -62,7 +62,7 @@ public class RecruiterRankingTest {
     @Test
     public void createRecruiterRankingShouldReturnRecruiterRanking(){
         RecruiterRanking recruiterRanking = new RecruiterRanking(3,6L,this.position,this.applicantMatch);
-        Mockito.when(applicantMatchService.getApplicantMatchByUserId(this.applicantMatch.getParticipantId())).thenReturn(this.applicantMatchListCase.get(0));
+        Mockito.when(applicantMatchService.getApplicantMatchByParticipantId(this.applicantMatch.getParticipantId())).thenReturn(this.applicantMatchListCase.get(0));
         Mockito.when(this.positionRepository.findPositionById(1)).thenReturn(this.position);
         Mockito.when(this.recruiterRankingRepository.save(any(RecruiterRanking.class))).thenReturn(recruiterRanking);
         try {
