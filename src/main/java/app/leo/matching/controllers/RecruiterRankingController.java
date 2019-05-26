@@ -47,7 +47,6 @@ public class RecruiterRankingController {
     private List<GetRankingResponse> mapApplicantRankingtoResponse(List<RecruiterRanking> recruiterRankingList){
         ModelMapper modelMapper =new ModelMapper();
         List<GetRankingResponse> responses = new ArrayList<>();
-        int applicantId =1;
 
         //mock data
         for(RecruiterRanking recruiterRanking :recruiterRankingList){
@@ -55,7 +54,7 @@ public class RecruiterRankingController {
             GetPositionsByMatchIdResponse position  = getRankingResponse.getPosition();
             mockRecruiterInstall(position);
             GetApplicantsByMatchIdResponse applicant = getRankingResponse.getApplicantMatch();
-            mockApplicantInstall(applicant,applicantId++);
+            mockApplicantInstall(applicant, applicant.getApplicantId());
             getRankingResponse.setApplicantMatch(applicant);
             getRankingResponse.setPosition(position);
             responses.add(getRankingResponse);
@@ -72,7 +71,7 @@ public class RecruiterRankingController {
         position.setRecruiter(recruiter);
     }
 
-    private void mockApplicantInstall(GetApplicantsByMatchIdResponse applicant,int applicantId){//mock data method
+    private void mockApplicantInstall(GetApplicantsByMatchIdResponse applicant,long applicantId){//mock data method
         List<Education> educations = new ArrayList<>();
         educations.add(new Education(1, "School of Information Technology", "4.00"));
         Applicant[] mockApplicant ={
