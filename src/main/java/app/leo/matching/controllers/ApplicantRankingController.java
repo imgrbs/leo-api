@@ -42,10 +42,10 @@ public class ApplicantRankingController {
     @GetMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
     public ResponseEntity<List<GetRankingResponse>> getApplicantRanking(@Valid @PathVariable("matchId") Long matchId,@RequestAttribute("user") User user){
         long userId =  userIdandApplcantMatchIdMap.get(user.getUserId());
-        return new ResponseEntity<>(mapApplicantRankingtoResponse(applicantRankingService.getApplicantRankingByMatchIdAndApplicantId(matchId, userId)), HttpStatus.OK);
+        return new ResponseEntity<>(mapApplicantRankingtoResponse(applicantRankingService.getApplicantRankingByMatchIdAndApplicantId(matchId, userId),user), HttpStatus.OK);
     }
 
-    private List<GetRankingResponse> mapApplicantRankingtoResponse(List<ApplicantRanking> applicantRankingList){
+    private List<GetRankingResponse> mapApplicantRankingtoResponse(List<ApplicantRanking> applicantRankingList, User user){
         ModelMapper modelMapper =new ModelMapper();
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         List<GetRankingResponse> responses = new ArrayList<>();
@@ -54,7 +54,7 @@ public class ApplicantRankingController {
             GetPositionsByMatchIdResponse position  = getRankingResponse.getPosition();
             mockRecruiterInstall(position);
             GetApplicantsByMatchIdResponse applicant = getRankingResponse.getApplicantMatch();
-            mockApplicantInstall(applicant);
+            mockApplicantInstall(applicant,user);
             getRankingResponse.setApplicantMatch(applicant);
             getRankingResponse.setPosition(position);
             responses.add(getRankingResponse);
@@ -63,14 +63,25 @@ public class ApplicantRankingController {
     }
 
     private void mockRecruiterInstall(GetPositionsByMatchIdResponse position){
-        Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
+        Recruiter recruiter = null;
+        if(position.getId() < 3) {
+            recruiter = new Recruiter(1L, "Microsoft word co., Ltd", "Phayathai, BKK");
+        }else
+            recruiter = new Recruiter(2L,"Facebook co., Ltd","San francisco,USA");
         position.setRecruiter(recruiter);
     }
 
-    private void mockApplicantInstall(GetApplicantsByMatchIdResponse applicant){
+    private void mockApplicantInstall(GetApplicantsByMatchIdResponse applicant,User user){
         List<Education> educations = new ArrayList<>();
         educations.add(new Education(1, "School of Information Technology", "4.00"));
-        Applicant mockApplicant = new Applicant(1, "Tae Keerati", educations);
+        Applicant mockApplicant = null;
+            if(userIdandApplcantMatchIdMap.get(user.getUserId()) == 3 ){
+                mockApplicant = new Applicant(3, "Jill Jirapa", educations);
+            }else if(userIdandApplcantMatchIdMap.get(user.getUserId()) == 2 ){
+                mockApplicant = new Applicant(2,"Volk Natchanon",educations);
+            }else{
+                mockApplicant = new Applicant(1,"Tae Keerati",educations);
+            }
         applicant.setApplicant(mockApplicant);
     }
 

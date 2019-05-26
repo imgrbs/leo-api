@@ -36,7 +36,7 @@ public class MatchResultController {
     @Autowired
     private ApplicantMatchService applicantMatchService;
 
-    private Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
+    private Recruiter recruiter;
     private List<Education> educations = new ArrayList<>();
     private Education education = new Education(1, "School of Information Technology", "4.00");
 
@@ -76,12 +76,26 @@ public class MatchResultController {
 
         // set mock data
         educations.add(education);
-        Applicant applicant = new Applicant(1, "Tae Keerati", educations);
+        Applicant[] applicants ={
+                new Applicant(1, "Tae Keerati", educations),
+                new Applicant(2, "Volk Natchanon", educations),
+                new Applicant(3,"Jill Jirapa",educations)
+        };
         for (GetMatchResultByUserIdAndMatchIdResponse response: matchResultResponse) {
             GetPositionsByMatchIdResponse position = response.getPosition();
+            if(position.getId() < 3)
+                recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
+            else
+                recruiter = new Recruiter(2L,"Facebook co., Ltd","San francisco, USA");
             position.setRecruiter(recruiter);
             GetApplicantsByMatchIdResponse applicantFromModelMap = response.getApplicant();
-            applicantFromModelMap.setApplicant(applicant);
+            if(response.getApplicant().getApplicantId() %3==0 ){
+                applicantFromModelMap.setApplicant(applicants[2]);
+            }else if(response.getApplicant().getApplicantId() %3==0  ){
+                applicantFromModelMap.setApplicant(applicants[1]);
+            }else{
+                applicantFromModelMap.setApplicant(applicants[0]);;
+            }
             response.setApplicant(applicantFromModelMap);
             response.setPosition(position);
         }

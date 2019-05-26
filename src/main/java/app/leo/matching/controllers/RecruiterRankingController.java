@@ -64,7 +64,11 @@ public class RecruiterRankingController {
     }
 
     private void mockRecruiterInstall(GetPositionsByMatchIdResponse position){//mock data method
-        Recruiter recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
+        Recruiter recruiter = null;
+        if(position.getId() < 3) {
+            recruiter = new Recruiter(1L, "Microsoft word co., Ltd", "Phayathai, BKK");
+        }else
+            recruiter = new Recruiter(2L,"Facebook co,. Ltd","San francisco,USA");
         position.setRecruiter(recruiter);
     }
 
@@ -74,12 +78,14 @@ public class RecruiterRankingController {
         Applicant[] mockApplicant ={
                 new Applicant(1, "Tae Keerati", educations),
                 new Applicant(2, "Volk Natchanon", educations),
+                new Applicant(3,"Jill Jirapa",educations)
         };
         if(applicantId%2==0){
             applicant.setApplicant(mockApplicant[1]);
-        }else{
+        }else if(applicantId%3 == 0){
+            applicant.setApplicant(mockApplicant[2]);
+        }else
             applicant.setApplicant(mockApplicant[0]);
-        }
 
     }
 
