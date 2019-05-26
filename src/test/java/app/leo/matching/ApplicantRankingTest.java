@@ -60,7 +60,7 @@ public class ApplicantRankingTest {
         Mockito.when(this.applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(this.applicantMatchListCase.get(0).getApplicantId(), 6L)).thenReturn(this.applicantMatchListCase.get(0));
         Mockito.when(this.positionRepository.findPositionById(6L)).thenReturn(this.position);
         Mockito.when(this.applicantRankingRepository.save(any(ApplicantRanking.class))).thenReturn(applicantRanking);
-
+
         try {
             ApplicantRanking applicantRanking1 = this.applicantRankingService.createApplicantRanking(6L, this.applicantMatchListCase.get(0).getParticipantId(), 6L, 3);
             Assert.assertEquals(applicantRanking, applicantRanking1);

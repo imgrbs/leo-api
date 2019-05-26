@@ -32,7 +32,7 @@ public class ApplicantRankingController {
 
     @PostMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
     public ResponseEntity<List<CreateApplicantRankingRequest>> createApplicantRanking(@Valid @PathVariable("matchId") Long matchId, @Valid @RequestBody List<CreateApplicantRankingRequest> applicantRankingRequest,@RequestAttribute("user") User user){
-        long userId = userIdandApplcantMatchIdMap.get(user.getUserId());
+        long userId = user.getUserId();
         for(CreateApplicantRankingRequest applicantRanking : applicantRankingRequest){
             applicantRankingService.createApplicantRanking(matchId, userId, applicantRanking.getPositionId(), applicantRanking.getSequence());
         }
@@ -41,7 +41,7 @@ public class ApplicantRankingController {
 
     @GetMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
     public ResponseEntity<List<GetRankingResponse>> getApplicantRanking(@Valid @PathVariable("matchId") Long matchId,@RequestAttribute("user") User user){
-        long userId =  userIdandApplcantMatchIdMap.get(user.getUserId());
+        long userId = user.getUserId();
         return new ResponseEntity<>(mapApplicantRankingtoResponse(applicantRankingService.getApplicantRankingByMatchIdAndApplicantId(matchId, userId),user), HttpStatus.OK);
     }
 
@@ -86,8 +86,11 @@ public class ApplicantRankingController {
     }
 
     @PutMapping(path  = "/matches/{matchId:[\\d]}/applicants/ranking")
-    public ResponseEntity<List<PutApplicantRankingRequest>> updateApplicantRanking(@PathVariable long matchId, @Valid @RequestBody List<PutApplicantRankingRequest> putApplicantRankingRequestList) {
-        long applicantId = 1;
+    public ResponseEntity<List<PutApplicantRankingRequest>> updateApplicantRanking(
+            @PathVariable long matchId,
+            @Valid @RequestBody List<PutApplicantRankingRequest> putApplicantRankingRequestList,
+            @RequestAttribute("user") User user) {
+        long applicantId = user.getUserId();
         applicantRankingService.updateApplicantRankingByMatchIdAndApplicantId(matchId, applicantId, putApplicantRankingRequestList);
         return new ResponseEntity<>(putApplicantRankingRequestList, HttpStatus.ACCEPTED);
     }
