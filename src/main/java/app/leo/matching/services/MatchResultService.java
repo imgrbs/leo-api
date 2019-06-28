@@ -12,8 +12,11 @@ public class MatchResultService {
 
     @Autowired
     private MatchResultRepository matchResultRepository;
+    @Autowired
+    private PeriodCheckService periodCheckService;
 
-    public MatchResult getMatchResultByApplicantMatchIdAndMatchId(long applicantMatchId,long matchId){
+    public MatchResult getMatchResultByApplicantMatchIdAndMatchId(String token,long applicantMatchId,long matchId){
+        periodCheckService.todayIsInAnnouncePeriod(token,matchId);
         return matchResultRepository.getMatchResultByApplicantMatchParticipantIdAndMatchId(applicantMatchId,matchId);
     }
 

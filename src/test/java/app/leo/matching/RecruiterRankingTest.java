@@ -9,6 +9,7 @@ import app.leo.matching.repositories.PositionRepository;
 import app.leo.matching.repositories.RecruiterRankingRepository;
 import app.leo.matching.services.ApplicantMatchService;
 import app.leo.matching.services.MatchingService;
+import app.leo.matching.services.PeriodCheckService;
 import app.leo.matching.services.RecruiterRankingService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,6 +34,8 @@ public class RecruiterRankingTest {
     private PositionRepository positionRepository;
     @Mock
     private ApplicantMatchRepository applicantMatchRepository;
+    @Mock
+    private PeriodCheckService periodCheckService;
 
     private ApplicantMatchService applicantMatchService;
     private MatchingService matchingService;
@@ -54,9 +57,10 @@ public class RecruiterRankingTest {
         this.positionRepository = mock(PositionRepository.class);
         this.recruiterRankingRepository = mock(RecruiterRankingRepository.class);
         this.applicantMatchRepository = mock(ApplicantMatchRepository.class);
+        this.periodCheckService = mock(PeriodCheckService.class);
         this.applicantMatchService = new ApplicantMatchService(applicantMatchRepository);
         this.matchingService = new MatchingService(applicantMatchRepository);
-        this.recruiterRankingService = new RecruiterRankingService(recruiterRankingRepository, matchingService,positionRepository,applicantMatchService);
+        this.recruiterRankingService = new RecruiterRankingService(recruiterRankingRepository, matchingService,positionRepository,applicantMatchService,periodCheckService);
     }
 
     @Test
@@ -66,7 +70,7 @@ public class RecruiterRankingTest {
         Mockito.when(this.positionRepository.findPositionById(1)).thenReturn(this.position);
         Mockito.when(this.recruiterRankingRepository.save(any(RecruiterRanking.class))).thenReturn(recruiterRanking);
         try {
-            RecruiterRanking savedRecruiterRanking = recruiterRankingService.createRecruiterRanking(6L, this.applicantMatch.getParticipantId(), 1, 3);
+            RecruiterRanking savedRecruiterRanking = recruiterRankingService.createRecruiterRanking("mock",6L, this.applicantMatch.getParticipantId(), 1, 3);
             Assert.assertNotNull(savedRecruiterRanking);
             Assert.assertEquals(3, recruiterRanking.getSequence());
         }catch (Exception e){

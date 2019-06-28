@@ -22,30 +22,38 @@ public class RecruiterRankingService {
     private PositionRepository positionRepository;
     @Autowired
     private ApplicantMatchService applicantMatchService;
-
+    @Autowired
+    private PeriodCheckService periodCheckService;
 
     public RecruiterRankingService() {
     }
 
-    public RecruiterRankingService(RecruiterRankingRepository recruiterRankingRepository, MatchingService matchingService, PositionRepository positionRepository, ApplicantMatchService applicantMatchService) {
+    public RecruiterRankingService(RecruiterRankingRepository recruiterRankingRepository,
+                                   MatchingService matchingService,
+                                   PositionRepository positionRepository,
+                                   ApplicantMatchService applicantMatchService,
+                                   PeriodCheckService periodCheckService) {
         this.recruiterRankingRepository = recruiterRankingRepository;
         this.matchingService = matchingService;
         this.positionRepository =positionRepository;
         this.applicantMatchService = applicantMatchService;
+        this.periodCheckService = periodCheckService;
     }
 
 
-    public RecruiterRanking createRecruiterRanking(long matchId, long participantId, long positionId, int sequence)  {
+    public RecruiterRanking createRecruiterRanking(String token,long matchId, long participantId, long positionId, int sequence)  {
+        periodCheckService.todayIsInRecruiterRankingPeriod(token,matchId);
         ApplicantMatch applicantMatch =applicantMatchService.getApplicantMatchByParticipantId(participantId);
         Position position = positionRepository.findPositionById(positionId);
         RecruiterRanking saveRecruiterRanking = new RecruiterRanking(sequence,matchId,position,applicantMatch);
         return recruiterRankingRepository.save(saveRecruiterRanking);
     }
 
-    public void updateRecuiterRankingByMatchIdAndPositionId(long matchId, long positionId, List<PutRecruiterRankingRequest> putRecruiterRankingRequestList){
+    public void updateRecuiterRankingByMatchIdAndPositionId(String token,long matchId, long positionId, List<PutRecruiterRankingRequest> putRecruiterRankingRequestList){
+        periodCheckService.todayIsInRecruiterRankingPeriod(token, matchId);
         recruiterRankingRepository.deleteRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
         for(PutRecruiterRankingRequest putRecruiterRankingRequest:putRecruiterRankingRequestList){
-            this.createRecruiterRanking(matchId,putRecruiterRankingRequest.getParticipantId(),positionId,putRecruiterRankingRequest.getSequence());
+            this.createRecruiterRanking(token,matchId,putRecruiterRankingRequest.getParticipantId(),positionId,putRecruiterRankingRequest.getSequence());
         }
     }
 

@@ -8,6 +8,7 @@ import app.leo.matching.repositories.ApplicantMatchRepository;
 import app.leo.matching.repositories.ApplicantRankingRepository;
 import app.leo.matching.repositories.PositionRepository;
 import app.leo.matching.services.ApplicantRankingService;
+import app.leo.matching.services.PeriodCheckService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +31,8 @@ public class ApplicantRankingTest {
     private ApplicantMatchRepository applicantMatchRepository;
     @Mock
     private PositionRepository positionRepository;
-
+    @Mock
+    private PeriodCheckService periodCheckService;
     private ApplicantRankingService applicantRankingService;
 
     private ApplicantMatch applicantMatch;
@@ -50,7 +52,8 @@ public class ApplicantRankingTest {
         this.applicantRankingRepository = mock(ApplicantRankingRepository.class);
         this.applicantMatchRepository = mock(ApplicantMatchRepository.class);
         this.positionRepository = mock(PositionRepository.class);
-        this.applicantRankingService = new ApplicantRankingService(this.applicantMatchRepository,this.positionRepository,this.applicantRankingRepository);
+        this.periodCheckService = mock(PeriodCheckService.class);
+        this.applicantRankingService = new ApplicantRankingService(this.applicantMatchRepository,this.positionRepository,this.applicantRankingRepository,this.periodCheckService);
 
     }
 
@@ -62,7 +65,7 @@ public class ApplicantRankingTest {
         Mockito.when(this.applicantRankingRepository.save(any(ApplicantRanking.class))).thenReturn(applicantRanking);
 
         try {
-            ApplicantRanking applicantRanking1 = this.applicantRankingService.createApplicantRanking(6L, this.applicantMatchListCase.get(0).getParticipantId(), 6L, 3);
+            ApplicantRanking applicantRanking1 = this.applicantRankingService.createApplicantRanking("mock",6L, this.applicantMatchListCase.get(0).getParticipantId(), 6L, 3);
             Assert.assertEquals(applicantRanking, applicantRanking1);
         }catch (Exception e){
             e.printStackTrace();

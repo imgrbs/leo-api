@@ -41,7 +41,7 @@ public class MatchResultController {
     private Education education = new Education(1, "School of Information Technology", "4.00");
 
     @GetMapping(path = "user/matches/{matchId:[\\d]}/result")
-    public ResponseEntity<List<GetMatchResultByUserIdAndMatchIdResponse>> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId , @RequestAttribute("user") User user){
+    public ResponseEntity<List<GetMatchResultByUserIdAndMatchIdResponse>> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId , @RequestAttribute("user") User user,@RequestAttribute("token") String token){
         long userId = user.getUserId();
         String role = user.getRole();
         ModelMapper modelMapper = new ModelMapper();
@@ -52,7 +52,7 @@ public class MatchResultController {
             ApplicantMatch applicantMatch = applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
              matchResultResponse.add(
                  modelMapper.map(
-                     matchResultService.getMatchResultByApplicantMatchIdAndMatchId(applicantMatch.getParticipantId(), matchId),
+                     matchResultService.getMatchResultByApplicantMatchIdAndMatchId(token,applicantMatch.getParticipantId(), matchId),
                      GetMatchResultByUserIdAndMatchIdResponse.class
                  )
              );

@@ -24,21 +24,28 @@ public class RecruiterRankingController {
     private RecruiterRankingService recruiterRankingService;
 
     @PostMapping("/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/ranking")
-    public ResponseEntity<List<CreateRecruiterRankingRequest>>createRecruiterRanking(@PathVariable long matchId,@PathVariable long positionId,@Valid @RequestBody List<CreateRecruiterRankingRequest>createRecruiterRankingRequestList){
+    public ResponseEntity<List<CreateRecruiterRankingRequest>>createRecruiterRanking(@PathVariable long matchId,
+                                                                                     @PathVariable long positionId,
+                                                                                     @Valid @RequestBody List<CreateRecruiterRankingRequest>createRecruiterRankingRequestList,
+                                                                                     @RequestAttribute("token") String token){
         for(CreateRecruiterRankingRequest recruiterRankingRequest:createRecruiterRankingRequestList) {
-            recruiterRankingService.createRecruiterRanking(matchId,recruiterRankingRequest.getParticipantId(),positionId,recruiterRankingRequest.getSequence());
+            recruiterRankingService.createRecruiterRanking(token,matchId,recruiterRankingRequest.getParticipantId(),positionId,recruiterRankingRequest.getSequence());
         }
         return  new ResponseEntity<>(createRecruiterRankingRequestList,HttpStatus.CREATED);
     }
 
     @PutMapping(path ="/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/ranking")
-    public ResponseEntity<List<PutRecruiterRankingRequest>> updateRecruiterRanking(@PathVariable long matchId,@PathVariable long positionId ,@Valid @RequestBody List<PutRecruiterRankingRequest> recruiterRankingRequestList){
-        recruiterRankingService.updateRecuiterRankingByMatchIdAndPositionId(matchId,positionId,recruiterRankingRequestList);
+    public ResponseEntity<List<PutRecruiterRankingRequest>> updateRecruiterRanking(@PathVariable long matchId,
+                                                                                   @PathVariable long positionId,
+                                                                                   @Valid @RequestBody List<PutRecruiterRankingRequest> recruiterRankingRequestList,
+                                                                                   @RequestAttribute("token") String token){
+        recruiterRankingService.updateRecuiterRankingByMatchIdAndPositionId(token,matchId,positionId,recruiterRankingRequestList);
       return new ResponseEntity<>(recruiterRankingRequestList,HttpStatus.ACCEPTED);
     }
 
     @GetMapping(path = "/matches/{matchId:[\\d]}/recruiters/positions/{positionId:[\\d]}/ranking")
-    public ResponseEntity<List<GetRankingResponse>> getPositionRankingByPositionId (@PathVariable long matchId,@PathVariable long positionId){
+    public ResponseEntity<List<GetRankingResponse>> getPositionRankingByPositionId (@PathVariable long matchId,
+                                                                                    @PathVariable long positionId){
         List<RecruiterRanking> recruiterRankingList = recruiterRankingService.getRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
        return new ResponseEntity<>(mapApplicantRankingtoResponse(recruiterRankingList),HttpStatus.OK);
     }

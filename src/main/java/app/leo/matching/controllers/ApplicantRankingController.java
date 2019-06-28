@@ -23,18 +23,15 @@ public class ApplicantRankingController {
     @Autowired
     private ApplicantRankingService applicantRankingService;
 
-    private static Map<Long, Long> userIdandApplcantMatchIdMap = new HashMap<Long, Long>() {{
-            put(1L, 1L);
-            put(3L, 2L);
-            put(4L, 3L);
-            put(5L, 4L);
-        }};
 
     @PostMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
-    public ResponseEntity<List<CreateApplicantRankingRequest>> createApplicantRanking(@Valid @PathVariable("matchId") Long matchId, @Valid @RequestBody List<CreateApplicantRankingRequest> applicantRankingRequest,@RequestAttribute("user") User user){
+    public ResponseEntity<List<CreateApplicantRankingRequest>> createApplicantRanking(@Valid @PathVariable("matchId") Long matchId,
+                                                                                      @Valid @RequestBody List<CreateApplicantRankingRequest> applicantRankingRequest,
+                                                                                      @RequestAttribute("user") User user,
+                                                                                      @RequestAttribute("token") String token){
         long userId = user.getUserId();
         for(CreateApplicantRankingRequest applicantRanking : applicantRankingRequest){
-            applicantRankingService.createApplicantRanking(matchId, userId, applicantRanking.getPositionId(), applicantRanking.getSequence());
+            applicantRankingService.createApplicantRanking(token,matchId, userId, applicantRanking.getPositionId(), applicantRanking.getSequence());
         }
         return new ResponseEntity<>(applicantRankingRequest, HttpStatus.CREATED);
     }
@@ -89,9 +86,10 @@ public class ApplicantRankingController {
     public ResponseEntity<List<PutApplicantRankingRequest>> updateApplicantRanking(
             @PathVariable long matchId,
             @Valid @RequestBody List<PutApplicantRankingRequest> putApplicantRankingRequestList,
-            @RequestAttribute("user") User user) {
+            @RequestAttribute("user") User user,
+            @RequestAttribute("token") String token) {
         long applicantId = user.getUserId();
-        applicantRankingService.updateApplicantRankingByMatchIdAndApplicantId(matchId, applicantId, putApplicantRankingRequestList);
+        applicantRankingService.updateApplicantRankingByMatchIdAndApplicantId(token,matchId, applicantId, putApplicantRankingRequestList);
         return new ResponseEntity<>(putApplicantRankingRequestList, HttpStatus.ACCEPTED);
     }
 
