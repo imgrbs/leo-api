@@ -18,20 +18,21 @@ public class TokenInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws BadRequestException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws BadRequestException    {
         if (this.isOptionMethod(request)) {
             return true;
         }
         String token = getToken(request);
         User user = this.getUserFromToken(token);
         request.setAttribute("user", user);
+        request.setAttribute("token", token);
         return true;
     }
 
     private boolean isValidToken (String token){
         if (token == null) {
             return false;
-        } else if (token.startsWith("Bearer") == false || token.equals("")||token.length()< 7) {
+        } else if (token.startsWith("Bearer") == false ||token.length() < 7) {
             return false;
         }
         return true;
