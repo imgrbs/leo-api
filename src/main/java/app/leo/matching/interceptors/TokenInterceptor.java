@@ -1,6 +1,9 @@
 package app.leo.matching.interceptors;
 
+import app.leo.matching.DTO.GetTokenRequest;
+import app.leo.matching.DTO.TokenDTO;
 import app.leo.matching.DTO.User;
+import app.leo.matching.adapters.UserAdapter;
 import app.leo.matching.exceptions.BadRequestException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -9,9 +12,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 public class TokenInterceptor implements HandlerInterceptor {
     private String SECRET;
+
+    private UserAdapter userAdapter = new UserAdapter();
 
     public TokenInterceptor(String secret) {
         this.SECRET = secret;
@@ -32,15 +38,30 @@ public class TokenInterceptor implements HandlerInterceptor {
     private boolean isValidToken (String token){
         if (token == null) {
             return false;
-        } else if (token.startsWith("Bearer") == false ||token.length() < 7) {
+        } else if (!token.startsWith("Bearer") ||token.length() < 7) {
+            return false;
+        }else if(isExpires(token)){
             return false;
         }
         return true;
     }
 
+    private boolean isExpires(String token){
+        String username = getUsernameFromToken(token);
+        GetTokenRequest getTokenRequest = new GetTokenRequest();
+        getTokenRequest.setToken(token);
+        getTokenRequest.setUsername(username);
+
+        TokenDTO tokenDTO = userAdapter.getTokenByUsernameAndToken(getTokenRequest.getToken());
+        System.out.println(new Date(System.currentTimeMillis()));
+        System.out.println(new Date(System.currentTimeMillis()).after(tokenDTO.getExpiresTime()));
+        return new Date(System.currentTimeMillis()).after(tokenDTO.getExpiresTime());
+    }
+
     private String getToken (HttpServletRequest httpServletRequest) throws BadRequestException {
         String token = httpServletRequest.getHeader("Authorization");
-        if (this.isValidToken(token) == false) {
+        if (!this.isValidToken(token)) {
+            userAdapter.deleteAllTokenByUsername(getUsernameFromToken(token));
             throw new BadRequestException("Invalid authorization provided.");
         }
         return token;
@@ -61,5 +82,11 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     private boolean isOptionMethod(HttpServletRequest request) {
         return "OPTIONS".equalsIgnoreCase(request.getMethod());
+    }
+
+    private String getUsernameFromToken(String token){
+        String tokenFormat = token.substring(7);
+        Jws<Claims> claims = Jwts.parser().setSigningKey(this.SECRET).parseClaimsJws(tokenFormat);
+        return (String) claims.getBody().get("sub");
     }
 }

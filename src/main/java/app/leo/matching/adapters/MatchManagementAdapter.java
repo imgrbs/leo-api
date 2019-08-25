@@ -18,7 +18,7 @@ import app.leo.matching.DTO.MatchDTO;
 
 @Service
 public class MatchManagementAdapter {
-	@Value("${MATCHING_API_URL}")
+	@Value("${matchmanagement.api.url}")
 	private String matchManagementApiUrl;
 
 	private Logger logger = LoggerFactory.getLogger(MatchManagementAdapter.class);
