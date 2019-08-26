@@ -41,4 +41,7 @@ public class ApplicantMatchService {
         return this.applicantMatchRepository.getApplicantMatchByApplicantId(applicantId);
     }
 
+    public ApplicantMatch saveApplicantMatch(ApplicantMatch applicantMatch){
+        return this.applicantMatchRepository.save(applicantMatch);
+    }
 }
