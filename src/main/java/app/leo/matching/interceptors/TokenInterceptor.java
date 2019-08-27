@@ -1,5 +1,15 @@
 package app.leo.matching.interceptors;
 
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.servlet.HandlerInterceptor;
+
 import app.leo.matching.DTO.GetTokenRequest;
 import app.leo.matching.DTO.TokenDTO;
 import app.leo.matching.DTO.User;
@@ -8,20 +18,14 @@ import app.leo.matching.exceptions.BadRequestException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-
+@ComponentScan
 public class TokenInterceptor implements HandlerInterceptor {
+    @Value("${jwt.secret}")
     private String SECRET;
 
-    private UserAdapter userAdapter = new UserAdapter();
-
-    public TokenInterceptor(String secret) {
-        this.SECRET = secret;
-    }
+    @Autowired
+    private UserAdapter userAdapter;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws BadRequestException    {
