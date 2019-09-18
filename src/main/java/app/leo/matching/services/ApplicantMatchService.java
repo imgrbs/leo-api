@@ -44,4 +44,8 @@ public class ApplicantMatchService {
     public ApplicantMatch saveApplicantMatch(ApplicantMatch applicantMatch){
         return this.applicantMatchRepository.save(applicantMatch);
     }
+
+    public int countApplicantMatchByMatchId(long matchId){
+        return this.applicantMatchRepository.countApplciantMatchByMatchId(matchId);
+    }
 }

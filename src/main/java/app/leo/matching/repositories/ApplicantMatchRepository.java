@@ -23,4 +23,7 @@ public interface ApplicantMatchRepository extends JpaRepository<ApplicantMatch, 
     List<ApplicantMatch> getApplicantMatchByMatchIdAndPositionId(Long matchId,Long positionId);
 
     List<ApplicantMatch> getApplicantMatchByApplicantId(long applicantId);
+
+    @Query(value = "select COUNT(a.participant_id) from applicant_matches a where a.match_id = ?1",nativeQuery = true)
+    int countApplciantMatchByMatchId(long matchId);
 }

@@ -52,4 +52,9 @@ public class ApplicantMatchController {
         }
         return responses;
     }
+
+    @GetMapping("/numberOfApplicant/{matchId}")
+    public ResponseEntity<Integer> getNumberOfApplicant(@PathVariable long matchId){
+        return new ResponseEntity<>(applicantMatchService.countApplicantMatchByMatchId(matchId),HttpStatus.OK);
+    }
 }

@@ -30,7 +30,7 @@ public class PositionController {
         return new Date();
     }
 
-    private Map<Long, Long> recruiterMatchIdMap = new HashMap<Long, Long>();
+    private Map<Long, Long> recruiterMatchIdMap = new HashMap<>();
 
     private void installMap(){
         recruiterMatchIdMap.put(2L,1L);
@@ -67,5 +67,10 @@ public class PositionController {
             responses.add(response);
         }
         return responses;
+    }
+
+    @GetMapping("/matches/{matchId}/position/count")
+    public ResponseEntity<Integer> getPositionCount(@PathVariable long matchId){
+        return new ResponseEntity<>( positionService.countPositionByMatchId(matchId),HttpStatus.OK);
     }
 }
