@@ -1,19 +1,20 @@
 package app.leo.matching.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "recruiter_matches")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "participantId")
 public class RecruiterMatch extends UserMatch {
 
     private long recruiterId;
 
 
     @OneToMany(mappedBy = "recruiterMatch")
-    @JsonManagedReference
+    @JsonManagedReference(value = "recruiterMatch-position")
     private List<Position> positions;
 
     public RecruiterMatch() {

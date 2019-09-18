@@ -1,17 +1,16 @@
 package app.leo.matching.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
-
-@Entity
+ @Entity
 @Table(name = "positions")
-public class Position implements Serializable {
+ @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+ public class Position implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +24,23 @@ public class Position implements Serializable {
 
     private long matchId;
 
+    private String description;
+
+    private String money;
+
     @OneToMany(mappedBy = "position")
+    @JsonProperty("collection")
     @JsonManagedReference
     private List<RecruiterRanking> recruiterRankings;
 
     @ManyToOne
     @JoinColumn(name = "recruiter_match_id")
-    @JsonBackReference
+    @JsonIgnore
     private RecruiterMatch recruiterMatch;
 
-    private String money;
+    @OneToMany(mappedBy = "position")
+    @JsonIgnore
+    private List<ApplicantRanking> applicantRankings;
 
     public Position() {
     }
@@ -46,7 +52,22 @@ public class Position implements Serializable {
         this.recruiterMatch = recruiterMatch;
     }
 
-    public Long getId() {
+     public Position(@NotBlank String name, @NotNull int capacity, long matchId, String money) {
+         this.name = name;
+         this.capacity = capacity;
+         this.matchId = matchId;
+         this.money = money;
+     }
+
+     public Position(@NotBlank String name, @NotNull int capacity, long matchId, String description, String money) {
+         this.name = name;
+         this.capacity = capacity;
+         this.matchId = matchId;
+         this.description = description;
+         this.money = money;
+     }
+
+     public Long getId() {
         return id;
     }
 
@@ -101,4 +122,12 @@ public class Position implements Serializable {
     public void setMoney(String money) {
         this.money = money;
     }
-}
+
+     public String getDescription() {
+         return description;
+     }
+
+     public void setDescription(String description) {
+         this.description = description;
+     }
+ }

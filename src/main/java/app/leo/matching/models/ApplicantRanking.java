@@ -13,13 +13,12 @@ public class ApplicantRanking extends Ranking implements Comparable<ApplicantRan
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_match_id")
-    @JsonBackReference
+    @JsonBackReference(value = "applicantMatch-ranking")
     private ApplicantMatch applicantMatch;
 
 
     @ManyToOne
     @JoinColumn(name = "position_id")
-    @JsonManagedReference
     private Position position;
 
     public ApplicantRanking() {

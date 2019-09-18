@@ -1,6 +1,8 @@
 package app.leo.matching.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,10 +10,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "applicant_matches")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "participantId")
 public class ApplicantMatch extends UserMatch {
 
     @OneToMany(mappedBy = "applicantMatch")
-    @JsonManagedReference
+    @JsonManagedReference(value = "applicantMatch-ranking")
     private List<ApplicantRanking> applicantRanking;
 
     private long applicantId;

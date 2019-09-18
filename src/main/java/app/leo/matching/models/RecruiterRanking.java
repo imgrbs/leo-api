@@ -1,13 +1,14 @@
 package app.leo.matching.models;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "recruiter_rankings")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class RecruiterRanking extends Ranking {
 
     @ManyToOne
@@ -17,7 +18,7 @@ public class RecruiterRanking extends Ranking {
 
     @ManyToOne
     @JoinColumn(name = "applicant_match_id")
-    @JsonBackReference
+    @JsonBackReference(value = "applicantMatch-RecruiterRanking")
     private ApplicantMatch applicantMatch;
 
     public RecruiterRanking() {
