@@ -1,5 +1,6 @@
 package app.leo.matching.services;
 
+import app.leo.matching.DTO.TokenDTO;
 import app.leo.matching.models.RecruiterMatch;
 import app.leo.matching.repositories.RecruiterMatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,9 @@ public class RecruiterMatchService {
 
     public RecruiterMatch getRecruiterMatchByRecruiterIdAndMatchId(long recruiterId, long matchId){
         return recruiterMatchRepository.getRecruiterMatchByRecruiterIdAndMatchId(recruiterId, matchId);
+    }
+
+    public RecruiterMatch saveRecruiterMatch(RecruiterMatch recruiterMatch){
+        return recruiterMatchRepository.save(recruiterMatch);
     }
 }

@@ -26,4 +26,12 @@ public class PositionService {
     public List<Position> getPositionByMatchIdAndRecruiterMatchParticipantId(long matchId, long recruiterMatchId){
         return positionRepository.getPositionByMatchIdAndRecruiterMatchParticipantId(matchId, recruiterMatchId);
     }
+
+    public Position savePosition(Position position){
+        return positionRepository.save(position);
+    }
+
+    public int countPositionByMatchId(long matchId) {
+        return positionRepository.countByMatchId(matchId);
+    }
 }
