@@ -20,9 +20,24 @@ public class PeriodCheckService {
     private final Date currentDate = java.sql.Date.valueOf(LocalDate.now(ZoneId.of("Asia/Bangkok")));
     private Logger logger = LoggerFactory.getLogger(PeriodCheckService.class);
 
+    public PeriodCheckService() {
+    }
+
+    public PeriodCheckService(MatchManagementAdapter matchManagementAdapter,Logger logger) {
+        this.matchManagementAdapter = matchManagementAdapter;
+        this.logger = logger;
+    }
+    public void todayIsJoiningPeriod(String token, long matchId){
+        MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
+        if(currentDate.before(match.getStartJoiningDate())||currentDate.after(match.getEndJoiningDate())){
+            logger.warn("Sorry, it's not period for joining match.");
+            throw new WrongPeriodException("Sorry, it's not period for joining.");
+        }
+    }
+
     public void todayIsApplicantRankingPeriod(String token,long matchId){
         MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
-        if(currentDate.before(match.getStartJoiningDate())||currentDate.after(match.getApplicantRankingEndDate())){
+        if(currentDate.before(match.getEndJoiningDate())||currentDate.after(match.getApplicantRankingEndDate())){
             logger.warn("Sorry, it's not period for Applicant Ranking.");
             throw new WrongPeriodException("Sorry, it's not period for Applicant Ranking.");
         }
