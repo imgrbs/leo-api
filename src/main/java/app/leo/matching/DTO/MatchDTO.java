@@ -12,6 +12,8 @@ public class MatchDTO {
 
     private Date startJoiningDate;
 
+    private Date endJoiningDate;
+
     private Date applicantRankingEndDate;
 
     private Date recruiterRankingEndDate;
@@ -86,5 +88,13 @@ public class MatchDTO {
 
     public void setAnnounceDate(Date announceDate) {
         this.announceDate = announceDate;
+    }
+
+    public Date getEndJoiningDate() {
+        return endJoiningDate;
+    }
+
+    public void setEndJoiningDate(Date endJoiningDate) {
+        this.endJoiningDate = endJoiningDate;
     }
 }
