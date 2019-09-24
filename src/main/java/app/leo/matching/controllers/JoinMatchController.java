@@ -57,12 +57,14 @@ public class JoinMatchController {
     }
 
     @PostMapping("/matches/{matchId}/recruiters/join")
-    public ResponseEntity<RecruiterMatch> joinMatch(@PathVariable long matchId, @RequestBody @Valid RecruiterJoinMatchRequest recruiterJoinMatchRequest){
-        periodCheckService.todayIsJoiningPeriod(recruiterJoinMatchRequest.getToken(),matchId);
-        if(recruiterJoinMatchRequest.getUser().getRole().equalsIgnoreCase("Recruiter")) {
+    public ResponseEntity<RecruiterMatch> joinMatch(@PathVariable long matchId, @RequestBody @Valid RecruiterJoinMatchRequest recruiterJoinMatchRequest,
+                                                    @RequestAttribute("user")User user,
+                                                    @RequestAttribute("token") String token){
+        periodCheckService.todayIsJoiningPeriod(token,matchId);
+        if(user.getRole().equalsIgnoreCase("Recruiter")) {
             RecruiterMatch recruiterMatch = new RecruiterMatch();
             recruiterMatch.setMatchId(matchId);
-            recruiterMatch.setRecruiterId(recruiterJoinMatchRequest.getUser().getUserId());
+            recruiterMatch.setRecruiterId(user.getUserId());
             recruiterMatch.setJoinDate(new Timestamp(System.currentTimeMillis()));
             recruiterMatch = recruiterMatchService.saveRecruiterMatch(recruiterMatch);
             List<Position> positionList = convertToPosition(recruiterJoinMatchRequest.getPositions(), matchId,recruiterMatch);
