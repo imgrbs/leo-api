@@ -43,7 +43,7 @@ public class JoinMatchController {
                                                     @RequestAttribute(name ="user") User user,
                                                     @RequestAttribute(name ="token") String token){
         periodCheckService.todayIsJoiningPeriod(token,matchId);
-        if(user.getRole().equalsIgnoreCase("Applicant")) {
+        if(user.getRole().equals("applicant")) {
             ApplicantMatch existedApplicantMatch = applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(user.getUserId(), matchId);
             if (existedApplicantMatch != null) {
                 throw new AlreadyJoinedException("You already joined this match");
@@ -61,7 +61,7 @@ public class JoinMatchController {
                                                     @RequestAttribute("user")User user,
                                                     @RequestAttribute("token") String token){
         periodCheckService.todayIsJoiningPeriod(token,matchId);
-        if(user.getRole().equalsIgnoreCase("Recruiter")) {
+        if(user.getRole().equals("recruiter")) {
             RecruiterMatch recruiterMatch = new RecruiterMatch();
             recruiterMatch.setMatchId(matchId);
             recruiterMatch.setRecruiterId(user.getUserId());
