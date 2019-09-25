@@ -3,6 +3,7 @@ package app.leo.matching.services;
 import app.leo.matching.DTO.MatchDTO;
 import app.leo.matching.adapters.MatchManagementAdapter;
 import app.leo.matching.exceptions.WrongPeriodException;
+import app.leo.matching.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,26 @@ public class PeriodCheckService {
     @Autowired
     private MatchManagementAdapter matchManagementAdapter;
 
-    private final Date currentDate = java.sql.Date.valueOf(LocalDate.now(ZoneId.of("Asia/Bangkok")));
+    private Date currentDate = new DateUtil().getCurrentDate();
+
     private Logger logger = LoggerFactory.getLogger(PeriodCheckService.class);
 
     public PeriodCheckService() {
     }
 
-    public PeriodCheckService(MatchManagementAdapter matchManagementAdapter,Logger logger) {
+    public PeriodCheckService(MatchManagementAdapter matchManagementAdapter, Logger logger) {
         this.matchManagementAdapter = matchManagementAdapter;
         this.logger = logger;
     }
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
+    }
+
     public void todayIsJoiningPeriod(String token, long matchId){
         MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
         if(currentDate.before(match.getStartJoiningDate())||currentDate.after(match.getEndJoiningDate())){
