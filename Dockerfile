@@ -6,4 +6,8 @@ COPY ${JAR_FILE} app.jar
 
 EXPOSE 8080
 
+RUN echo "Asia/Bangkok" > /etc/timezone
+
+RUN dpkg-reconfigure -f noninteractive tzdata
+
 ENTRYPOINT ["java","-jar","/app.jar"]
