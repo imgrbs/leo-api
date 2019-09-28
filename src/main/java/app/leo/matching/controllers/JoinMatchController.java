@@ -1,5 +1,6 @@
 package app.leo.matching.controllers;
 
+import app.leo.matching.DTO.CheckJoinedResponse;
 import app.leo.matching.DTO.PositionDTO;
 import app.leo.matching.DTO.RecruiterJoinMatchRequest;
 import app.leo.matching.DTO.User;
@@ -8,6 +9,7 @@ import app.leo.matching.exceptions.WrongRoleException;
 import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.models.Position;
 import app.leo.matching.models.RecruiterMatch;
+import app.leo.matching.models.UserMatch;
 import app.leo.matching.services.ApplicantMatchService;
 import app.leo.matching.services.PeriodCheckService;
 import app.leo.matching.services.PositionService;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -88,5 +89,21 @@ public class JoinMatchController {
     }
 
     private static class PositionDTOList extends ArrayList<PositionDTO> {
+    }
+
+    @GetMapping("/matches/{matchId}/isJoin")
+    public ResponseEntity<CheckJoinedResponse> userIsJoinedTheMatch(@RequestAttribute("user") User user,
+                                                                    @PathVariable long matchId){
+        UserMatch userMatch = null;
+        if(user.getRole().equals("applicant")){
+            userMatch= applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(user.getUserId(),matchId);
+        }if(user.getRole().equals("recruiter")){
+            userMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(user.getUserId(),matchId);
+        }
+        if(userMatch != null){
+            return new ResponseEntity<>(new CheckJoinedResponse(true),HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(new CheckJoinedResponse(false),HttpStatus.OK);
     }
 }
