@@ -6,4 +6,6 @@ COPY ${JAR_FILE} app.jar
 
 EXPOSE 8080
 
+RUN echo "Asia/Bangkok" > /etc/timezone
+
 ENTRYPOINT ["java","-jar","/app.jar"]
