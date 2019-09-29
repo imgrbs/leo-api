@@ -2,7 +2,9 @@ package app.leo.matching.controllers;
 
 import app.leo.matching.DTO.GetPositionsByMatchIdResponse;
 import app.leo.matching.DTO.Recruiter;
+import app.leo.matching.DTO.RecruiterProfile;
 import app.leo.matching.DTO.User;
+import app.leo.matching.adapters.ProfileAdapter;
 import app.leo.matching.models.Position;
 import app.leo.matching.models.RecruiterMatch;
 import app.leo.matching.services.PositionService;
@@ -25,6 +27,9 @@ public class PositionController {
     @Autowired
     private RecruiterMatchService recruiterMatchService;
 
+    @Autowired
+    private ProfileAdapter profileAdapter;
+
     @GetMapping(path = "/healthcheck")
     public Date getDate(){
         return new Date();
@@ -38,31 +43,33 @@ public class PositionController {
     }
 
     @GetMapping(path= "matches/{matchId:[\\d]}/positions")
-    public ResponseEntity<List<GetPositionsByMatchIdResponse>> getPositionsByMatchId(@PathVariable long matchId){
+    public ResponseEntity<List<GetPositionsByMatchIdResponse>> getPositionsByMatchId(@PathVariable long matchId,
+                                                                                     @RequestAttribute("token" ) String token){
         List<Position> positions = positionService.getPositionByMatchId(matchId);
-        return new ResponseEntity<>(this.responseBuilder(positions), HttpStatus.OK);
+        return new ResponseEntity<>(this.responseBuilder(positions,token), HttpStatus.OK);
     }
 
     @GetMapping(path="/matches/{matchId:[\\d]}/recruiters/positions")
 
-    public ResponseEntity<List<GetPositionsByMatchIdResponse>> getPositionsByRecruiterIdAndMatchId(@PathVariable long matchId,@RequestAttribute("user") User user){
+    public ResponseEntity<List<GetPositionsByMatchIdResponse>> getPositionsByRecruiterIdAndMatchId(@PathVariable long matchId,
+                                                                                                   @RequestAttribute("user") User user,
+                                                                                                   @RequestAttribute("token") String token){
         long recruiterId = user.getUserId();
         RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(recruiterId, matchId);
         List<Position> positions = positionService.getPositionByMatchIdAndRecruiterMatchParticipantId(matchId, recruiterMatch.getParticipantId());
-        return new ResponseEntity<>(this.responseBuilder(positions), HttpStatus.OK);
+        return new ResponseEntity<>(this.responseBuilder(positions,token), HttpStatus.OK);
     }
 
-    private List<GetPositionsByMatchIdResponse> responseBuilder(List<Position> positions) {
+    private List<GetPositionsByMatchIdResponse> responseBuilder(List<Position> positions,String token) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         List<GetPositionsByMatchIdResponse> responses = new ArrayList<>();
         for(Position position:positions){
             GetPositionsByMatchIdResponse response =modelMapper.map(position,GetPositionsByMatchIdResponse.class);
-            Recruiter recruiter= null;
-            if(position.getId() < 3)
-                recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
-            else
-                recruiter = new Recruiter(2L,"Facebook co., Ltd","San francisco, USA");
+            Recruiter recruiter= new Recruiter();
+            RecruiterProfile recruiterProfile = profileAdapter.getRecruiterProfileByUserId(token,position.getRecruiterMatch().getRecruiterId());
+            recruiter.setName(recruiterProfile.getName());
+            recruiter.setLocation(recruiterProfile.getLocation());
             response.setRecruiter(recruiter);
             responses.add(response);
         }

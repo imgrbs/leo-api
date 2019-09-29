@@ -1,6 +1,7 @@
 package app.leo.matching.controllers;
 
 import app.leo.matching.DTO.*;
+import app.leo.matching.adapters.ProfileAdapter;
 import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.models.MatchResult;
 import app.leo.matching.models.Position;
@@ -36,12 +37,13 @@ public class MatchResultController {
     @Autowired
     private ApplicantMatchService applicantMatchService;
 
-    private Recruiter recruiter;
-    private List<Education> educations = new ArrayList<>();
-    private Education education = new Education(1, "School of Information Technology", "4.00");
+    @Autowired
+    private ProfileAdapter profileAdapter;
 
     @GetMapping(path = "user/matches/{matchId:[\\d]}/result")
-    public ResponseEntity<List<GetMatchResultByUserIdAndMatchIdResponse>> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId , @RequestAttribute("user") User user,@RequestAttribute("token") String token){
+    public ResponseEntity<List<GetMatchResultByUserIdAndMatchIdResponse>> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId ,
+                                                                                                                @RequestAttribute("user") User user,
+                                                                                                                @RequestAttribute("token") String token){
         long userId = user.getUserId();
         String role = user.getRole();
         ModelMapper modelMapper = new ModelMapper();
@@ -50,56 +52,63 @@ public class MatchResultController {
 
         if(role.equals("applicant")) {
             ApplicantMatch applicantMatch = applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
-             matchResultResponse.add(
-                 modelMapper.map(
-                     matchResultService.getMatchResultByApplicantMatchIdAndMatchId(token,applicantMatch.getParticipantId(), matchId),
-                     GetMatchResultByUserIdAndMatchIdResponse.class
-                 )
-             );
+            MatchResult matchResult = matchResultService.getMatchResultByApplicantMatchIdAndMatchId(token,applicantMatch.getParticipantId(), matchId);
+
+            GetMatchResultByUserIdAndMatchIdResponse response =modelMapper.map(matchResult,GetMatchResultByUserIdAndMatchIdResponse.class) ;
+            responseEdit(token,applicantMatch,matchResult.getPosition(),response);
+            matchResultResponse.add(response);
         }else if(role.equals("recruiter")){
             RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(userId, matchId);
             List<Position> positions = positionService.getPositionByMatchIdAndRecruiterMatchParticipantId(matchId, recruiterMatch.getParticipantId());
             for (Position position: positions) {
                 List<MatchResult> positionMatchResults =  matchResultService.getMatchResultByPositionIdAndMatchId(position.getId(), matchId);
                 for (MatchResult matchResult: positionMatchResults) {
-                    matchResultResponse.add(
-                        modelMapper.map(
+                    GetMatchResultByUserIdAndMatchIdResponse response = modelMapper.map(
                             matchResult,
                             GetMatchResultByUserIdAndMatchIdResponse.class
-                        )
                     );
+                    responseEdit(token,matchResult.getApplicantMatch(),matchResult.getPosition(),response);
+                    matchResultResponse.add(response);
                 }
             }
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        // set mock data
-        educations.add(education);
-        Applicant[] applicants ={
-                new Applicant(1, "Tae Keerati", educations),
-                new Applicant(2, "Volk Natchanon", educations),
-                new Applicant(3,"Jill Jirapa",educations)
-        };
-        for (GetMatchResultByUserIdAndMatchIdResponse response: matchResultResponse) {
-            GetPositionsByMatchIdResponse position = response.getPosition();
-            if(position.getId() < 3)
-                recruiter = new Recruiter(1L,"Microsoft word co., Ltd","Phayathai, BKK");
-            else
-                recruiter = new Recruiter(2L,"Facebook co., Ltd","San francisco, USA");
-            position.setRecruiter(recruiter);
-            GetApplicantsByMatchIdResponse applicantFromModelMap = response.getApplicant();
-            if(response.getApplicant().getApplicantId() %3==0 ){
-                applicantFromModelMap.setApplicant(applicants[2]);
-            }else if(response.getApplicant().getApplicantId() %3==0  ){
-                applicantFromModelMap.setApplicant(applicants[1]);
-            }else{
-                applicantFromModelMap.setApplicant(applicants[0]);;
-            }
-            response.setApplicant(applicantFromModelMap);
-            response.setPosition(position);
-        }
+
         return new ResponseEntity<>(matchResultResponse, HttpStatus.OK);
     }
 
+    private void responseEdit(String token,ApplicantMatch applicantMatch,Position position,GetMatchResultByUserIdAndMatchIdResponse response){
+       Applicant applicant =getApplicantFromApplicantProfile(token,applicantMatch);
+       GetApplicantsByMatchIdResponse applicantsByMatchIdResponse = new GetApplicantsByMatchIdResponse();
+       applicantsByMatchIdResponse.setApplicant(applicant);
+       applicantsByMatchIdResponse.setApplicantId(applicantMatch.getApplicantId());
+       applicantsByMatchIdResponse.setMatchId(applicantMatch.getMatchId());
+       applicantsByMatchIdResponse.setParticipantId(applicantMatch.getParticipantId());
+       response.setApplicant(applicantsByMatchIdResponse);
+       Recruiter recruiter =getRecruiterFromRecruiterProfile(token,position);
+       GetPositionsByMatchIdResponse positionResponse = new GetPositionsByMatchIdResponse();
+       positionResponse.setRecruiter(recruiter);
+       positionResponse.setCapacity(position.getCapacity());
+       positionResponse.setId(position.getId());
+       positionResponse.setName(position.getName());
+       positionResponse.setMoney(position.getMoney());
+        response.setPosition(positionResponse);
+    }
+
+    private Recruiter getRecruiterFromRecruiterProfile(String token,Position position){
+        RecruiterProfile recruiterProfile = profileAdapter.getRecruiterProfileByUserId(token,position.getRecruiterMatch().getRecruiterId());
+        Recruiter recruiter = new Recruiter();
+        recruiter.setName(recruiterProfile.getName());
+        recruiter.setLocation(recruiterProfile.getLocation());
+        return recruiter;
+    }
+    private Applicant getApplicantFromApplicantProfile(String token, ApplicantMatch applicantMatch){
+        ApplicantProfile applicantProfile = profileAdapter.getApplicantProfileByUserId(token,applicantMatch.getApplicantId());
+        Applicant applicant =new Applicant();
+        applicant.setEducations(applicantProfile.getEducations());
+        applicant.setName(applicantProfile.getFirstName() + " " + applicantProfile.getLastName());
+        return applicant;
+    }
 }

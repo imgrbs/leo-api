@@ -1,8 +1,10 @@
 package app.leo.matching.controllers;
 
 import app.leo.matching.DTO.Applicant;
+import app.leo.matching.DTO.ApplicantProfile;
 import app.leo.matching.DTO.Education;
 import app.leo.matching.DTO.GetApplicantsByMatchIdResponse;
+import app.leo.matching.adapters.ProfileAdapter;
 import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.services.ApplicantMatchService;
 import org.modelmapper.ModelMapper;
@@ -22,32 +24,35 @@ public class ApplicantMatchController {
     @Autowired
     private ApplicantMatchService applicantMatchService;
 
+    @Autowired
+    private ProfileAdapter profileAdapter;
+
     @GetMapping(path = "/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/applicants")
-    public ResponseEntity<List<GetApplicantsByMatchIdResponse>> getApplicantMatchesByPositionId(@PathVariable long matchId, @PathVariable long positionId){
+    public ResponseEntity<List<GetApplicantsByMatchIdResponse>> getApplicantMatchesByPositionId(@PathVariable long matchId,
+                                                                                                @PathVariable long positionId,
+                                                                                                @RequestAttribute("token") String token){
         List<ApplicantMatch> applicantMatches = applicantMatchService.getApplicantMatchesByMatchIdandPositionId(matchId,positionId);
-        return new ResponseEntity<>(this.responseBuilder(applicantMatches), HttpStatus.OK);
+        return new ResponseEntity<>(this.responseBuilder(applicantMatches,token), HttpStatus.OK);
     }
 
     @GetMapping(path = "matches/{matchId:[\\d]}/applicants")
-    public ResponseEntity<List<GetApplicantsByMatchIdResponse>> getApplicantMatchByMatchId(@PathVariable Long matchId) {
+    public ResponseEntity<List<GetApplicantsByMatchIdResponse>> getApplicantMatchByMatchId(@PathVariable Long matchId,
+                                                                                           @RequestAttribute("token") String token) {
         List<ApplicantMatch> applicantMatches = this.applicantMatchService.getApplicantMatchByMatchId(matchId);
-        return new ResponseEntity<>(this.responseBuilder(applicantMatches), HttpStatus.OK);
+        return new ResponseEntity<>(this.responseBuilder(applicantMatches,token), HttpStatus.OK);
     }
 
-    private List<GetApplicantsByMatchIdResponse> responseBuilder(List<ApplicantMatch> applicantMatches) {
+    private List<GetApplicantsByMatchIdResponse> responseBuilder(List<ApplicantMatch> applicantMatches,String token) {
         ModelMapper modelMapper = new ModelMapper();
         List<GetApplicantsByMatchIdResponse> responses = new ArrayList<>();
-        List<Education> educations = new ArrayList<>();
-        educations.add(new Education(1, "School of Information Technology", "4.00"));
-        Applicant[] applicants = {
-                new Applicant(1, "Tae Keerati", educations),
-                new Applicant(2, "Volk Natchanon", educations),
-                new Applicant(3,"Jill Jirapa",educations)
-        };
         for (int i = 0; i < applicantMatches.size(); i++) {
             long applicantId = applicantMatches.get(i).getApplicantId();
             GetApplicantsByMatchIdResponse response = modelMapper.map(applicantMatches.get(i), GetApplicantsByMatchIdResponse.class);
-            response.setApplicant(applicants[Integer.parseInt(""+ (applicantId - 1))]);
+            ApplicantProfile applicantProfile = profileAdapter.getApplicantProfileByUserId(token,applicantId);
+            Applicant applicant = new Applicant();
+            applicant.setName(applicantProfile.getFirstName() + " " + applicantProfile.getLastName());
+            applicant.setEducations(applicantProfile.getEducations());
+            response.setApplicant(applicant);
             responses.add(response);
         }
         return responses;

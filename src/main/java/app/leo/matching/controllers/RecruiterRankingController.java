@@ -2,6 +2,9 @@ package app.leo.matching.controllers;
 
 
 import app.leo.matching.DTO.*;
+import app.leo.matching.adapters.ProfileAdapter;
+import app.leo.matching.models.ApplicantMatch;
+import app.leo.matching.models.RecruiterMatch;
 import app.leo.matching.models.RecruiterRanking;
 import app.leo.matching.services.RecruiterRankingService;
 import app.leo.matching.validator.CreateRecruiterRankingRequest;
@@ -22,6 +25,9 @@ public class RecruiterRankingController {
 
     @Autowired
     private RecruiterRankingService recruiterRankingService;
+
+    @Autowired
+    private ProfileAdapter profileAdapter;
 
     @PostMapping("/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/ranking")
     public ResponseEntity<List<CreateRecruiterRankingRequest>>createRecruiterRanking(@PathVariable long matchId,
@@ -45,23 +51,23 @@ public class RecruiterRankingController {
 
     @GetMapping(path = "/matches/{matchId:[\\d]}/recruiters/positions/{positionId:[\\d]}/ranking")
     public ResponseEntity<List<GetRankingResponse>> getPositionRankingByPositionId (@PathVariable long matchId,
-                                                                                    @PathVariable long positionId){
+                                                                                    @PathVariable long positionId,
+                                                                                    @RequestAttribute("token") String token){
         List<RecruiterRanking> recruiterRankingList = recruiterRankingService.getRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
-       return new ResponseEntity<>(mapApplicantRankingtoResponse(recruiterRankingList),HttpStatus.OK);
+       return new ResponseEntity<>(mapApplicantRankingtoResponse(recruiterRankingList,token),HttpStatus.OK);
     }
 
 
-    private List<GetRankingResponse> mapApplicantRankingtoResponse(List<RecruiterRanking> recruiterRankingList){
+    private List<GetRankingResponse> mapApplicantRankingtoResponse(List<RecruiterRanking> recruiterRankingList,String token){
         ModelMapper modelMapper =new ModelMapper();
         List<GetRankingResponse> responses = new ArrayList<>();
 
-        //mock data
         for(RecruiterRanking recruiterRanking :recruiterRankingList){
             GetRankingResponse getRankingResponse = modelMapper.map(recruiterRanking,GetRankingResponse.class);
             GetPositionsByMatchIdResponse position  = getRankingResponse.getPosition();
-            mockRecruiterInstall(position);
+            recruiterProfileInstall(position,token, recruiterRanking.getPosition().getRecruiterMatch());
             GetApplicantsByMatchIdResponse applicant = getRankingResponse.getApplicantMatch();
-            mockApplicantInstall(applicant, applicant.getApplicantId());
+            applicantProfileInstall(applicant, token ,recruiterRanking.getApplicantMatch());
             getRankingResponse.setApplicantMatch(applicant);
             getRankingResponse.setPosition(position);
             responses.add(getRankingResponse);
@@ -69,30 +75,20 @@ public class RecruiterRankingController {
         return  responses;
     }
 
-    private void mockRecruiterInstall(GetPositionsByMatchIdResponse position){//mock data method
-        Recruiter recruiter = null;
-        if(position.getId() < 3) {
-            recruiter = new Recruiter(1L, "Microsoft word co., Ltd", "Phayathai, BKK");
-        }else
-            recruiter = new Recruiter(2L,"Facebook co,. Ltd","San francisco,USA");
+    private void recruiterProfileInstall(GetPositionsByMatchIdResponse position, String token, RecruiterMatch recruiterMatch){
+        RecruiterProfile recruiterPro = (RecruiterProfile) profileAdapter.getRecruiterProfileByUserId(token,recruiterMatch.getRecruiterId());
+        Recruiter recruiter = new Recruiter();
+        recruiter.setName(recruiterPro.getName());
+        recruiter.setLocation(recruiterPro.getLocation());
         position.setRecruiter(recruiter);
     }
 
-    private void mockApplicantInstall(GetApplicantsByMatchIdResponse applicant,long applicantId){//mock data method
-        List<Education> educations = new ArrayList<>();
-        educations.add(new Education(1, "School of Information Technology", "4.00"));
-        Applicant[] mockApplicant ={
-                new Applicant(1, "Tae Keerati", educations),
-                new Applicant(2, "Volk Natchanon", educations),
-                new Applicant(3,"Jill Jirapa",educations)
-        };
-        if(applicantId%2==0){
-            applicant.setApplicant(mockApplicant[1]);
-        }else if(applicantId%3 == 0){
-            applicant.setApplicant(mockApplicant[2]);
-        }else
-            applicant.setApplicant(mockApplicant[0]);
-
+    private void applicantProfileInstall(GetApplicantsByMatchIdResponse applicant, String token, ApplicantMatch applicantMatch){
+        ApplicantProfile applicantProfile = (ApplicantProfile) profileAdapter.getApplicantProfileByUserId(token,applicantMatch.getApplicantId());
+        Applicant applicant1 = new Applicant();
+        applicant1.setEducations(applicantProfile.getEducations());
+        applicant1.setName(applicantProfile.getFirstName() + " " + applicantProfile.getLastName());
+        applicant.setApplicant(applicant1);
     }
 
 }
