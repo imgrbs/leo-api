@@ -4,6 +4,7 @@ import app.leo.matching.DTO.CheckJoinedResponse;
 import app.leo.matching.DTO.PositionDTO;
 import app.leo.matching.DTO.RecruiterJoinMatchRequest;
 import app.leo.matching.DTO.User;
+import app.leo.matching.adapters.MatchManagementAdapter;
 import app.leo.matching.exceptions.AlreadyJoinedException;
 import app.leo.matching.exceptions.WrongRoleException;
 import app.leo.matching.models.ApplicantMatch;
@@ -38,6 +39,10 @@ public class JoinMatchController {
 
     @Autowired
     private PositionService positionService;
+
+    @Autowired
+    private MatchManagementAdapter matchManagementAdapter;
+
     @PostMapping("/matches/{matchId}/applicants/join")
     public ResponseEntity<ApplicantMatch> joinMatch(@PathVariable long matchId,
                                                     @RequestAttribute(name ="user") User user,
@@ -50,7 +55,9 @@ public class JoinMatchController {
             }
             ApplicantMatch applicantMatch = new ApplicantMatch(user.getUserId(), matchId);
             applicantMatch.setJoinDate(new Timestamp(System.currentTimeMillis()));
-            return new ResponseEntity<>(applicantMatchService.saveApplicantMatch(applicantMatch), HttpStatus.ACCEPTED);
+            applicantMatch = applicantMatchService.saveApplicantMatch(applicantMatch);
+            matchManagementAdapter.updateNumberOfUserInMatch(token,matchId);
+            return new ResponseEntity<>(applicantMatch, HttpStatus.ACCEPTED);
         }else{
             throw new WrongRoleException("You are not applicant");
         }
@@ -70,6 +77,7 @@ public class JoinMatchController {
             List<Position> positionList = convertToPosition(recruiterJoinMatchRequest.getPositions(), matchId,recruiterMatch);
             recruiterMatch.setPositions(positionList);
             recruiterMatch = recruiterMatchService.saveRecruiterMatch(recruiterMatch);
+            matchManagementAdapter.updateNumberOfUserInMatch(token,matchId);
             return new ResponseEntity<>(recruiterMatch, HttpStatus.ACCEPTED);
         }else{
             throw new WrongRoleException("You are not recruiter");

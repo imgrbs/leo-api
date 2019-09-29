@@ -37,4 +37,19 @@ public class MatchManagementAdapter {
 				});
 		return responseEntity.getBody();
 	}
+
+	public MatchDTO updateNumberOfUserInMatch(String token, long matchId) {
+		RestTemplate restTemplate = new RestTemplate();
+		String url = String.format(matchManagementApiUrl + "matches/" + matchId +"/join");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization",  token);
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.add("user-agent",
+				"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+		HttpEntity<String> entity = new HttpEntity<>(headers);
+		ResponseEntity<MatchDTO> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, entity,
+				new ParameterizedTypeReference<MatchDTO>() {
+				});
+		return responseEntity.getBody();
+	}
 }
