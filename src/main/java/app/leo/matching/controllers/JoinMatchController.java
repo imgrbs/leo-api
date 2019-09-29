@@ -79,7 +79,7 @@ public class JoinMatchController {
     private List<Position> convertToPosition(List<PositionDTO> positionList,long matchId,RecruiterMatch recruiterMatch) {
         List<Position> result = new ArrayList<>();
         for(PositionDTO positionDTO:positionList){
-            Position position = new Position(positionDTO.getName(),positionDTO.getCapacity(),matchId,positionDTO.getMoney(),positionDTO.getDescription());
+            Position position = new Position(positionDTO.getName(),positionDTO.getCapacity(),matchId,positionDTO.getDescription(),positionDTO.getMoney());
             position.setRecruiterMatch(recruiterMatch);
             position = positionService.savePosition(position);
             result.add(position);
