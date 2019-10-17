@@ -28,6 +28,9 @@ import java.util.List;
 
     private String money;
 
+    @ElementCollection
+    private List<String> requiredDocuments;
+
     @OneToMany(mappedBy = "position")
     @JsonProperty("collection")
     @JsonManagedReference
@@ -129,5 +132,13 @@ import java.util.List;
 
      public void setDescription(String description) {
          this.description = description;
+     }
+
+     public List<String> getRequiredDocuments() {
+         return requiredDocuments;
+     }
+
+     public void setRequiredDocuments(List<String> requiredDocuments) {
+         this.requiredDocuments = requiredDocuments;
      }
  }
