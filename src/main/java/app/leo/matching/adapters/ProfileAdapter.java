@@ -1,6 +1,7 @@
 package app.leo.matching.adapters;
 
 import app.leo.matching.DTO.ApplicantProfile;
+import app.leo.matching.DTO.DocumentDTO;
 import app.leo.matching.DTO.RecruiterProfile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class ProfileAdapter {
