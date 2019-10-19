@@ -29,7 +29,7 @@ import java.util.List;
     private String money;
 
     @ElementCollection
-    private List<String> requiredDocuments;
+    private List<String> documents;
 
     @OneToMany(mappedBy = "position")
     @JsonProperty("collection")
@@ -134,11 +134,11 @@ import java.util.List;
          this.description = description;
      }
 
-     public List<String> getRequiredDocuments() {
-         return requiredDocuments;
+     public List<String> getDocuments() {
+         return documents;
      }
 
-     public void setRequiredDocuments(List<String> requiredDocuments) {
-         this.requiredDocuments = requiredDocuments;
+     public void setDocuments(List<String> documents) {
+         this.documents = documents;
      }
  }
