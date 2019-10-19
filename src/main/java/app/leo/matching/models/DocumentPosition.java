@@ -1,9 +1,6 @@
 package app.leo.matching.models;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -13,6 +10,8 @@ public class DocumentPosition {
     @GeneratedValue
     private long id;
 
+    @ManyToOne(fetch = FetchType.EAGER , optional = false)
+    @JoinColumn(name = "position_id")
     private Position position;
 
     private long userId;
