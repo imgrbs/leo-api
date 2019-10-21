@@ -1,9 +1,6 @@
 package app.leo.matching.controllers;
 
-import app.leo.matching.DTO.CreateDocumentPositionRequest;
-import app.leo.matching.DTO.FilesDTO;
-import app.leo.matching.DTO.PositionDTO;
-import app.leo.matching.DTO.User;
+import app.leo.matching.DTO.*;
 import app.leo.matching.models.DocumentPosition;
 import app.leo.matching.models.Position;
 import app.leo.matching.services.DocumentPositionService;
@@ -23,10 +20,10 @@ public class DocumentController {
     private DocumentPositionService documentPositionService;
 
     @PostMapping("/positions/documents")
-    public ResponseEntity<List<DocumentPosition>> createDocumentPositions(List<CreateDocumentPositionRequest> createDocumentPositionRequestList,
+    public ResponseEntity<List<DocumentPosition>> createDocumentPositions(@RequestBody CreateDocumentPositionRequest[] createDocumentPositionRequests,
                                                                           @RequestAttribute("user") User user){
         List<DocumentPosition> documentPositions = new ArrayList<>();
-        for(CreateDocumentPositionRequest request:createDocumentPositionRequestList){
+        for(CreateDocumentPositionRequest request:createDocumentPositionRequests){
             DocumentPosition documentPosition = new DocumentPosition();
             List<Long> filesId = extractFileIdFromFiles(request.getFiles());
             documentPosition.setFilesId(filesId);
