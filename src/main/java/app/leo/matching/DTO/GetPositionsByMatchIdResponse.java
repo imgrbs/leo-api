@@ -9,6 +9,7 @@ public class GetPositionsByMatchIdResponse {
     private String money;
     private int capacity;
     private List<String> documents;
+    private String description;
     private Recruiter recruiter;
 
     public GetPositionsByMatchIdResponse() {
@@ -75,5 +76,13 @@ public class GetPositionsByMatchIdResponse {
 
     public void setDocuments(List<String> documents) {
         this.documents = documents;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -9,6 +9,7 @@ public class RecruiterProfile implements Profile{
     private String location;
     private String email;
     private String telno;
+    private String website;
 
 
     public long getRecruiterId() {
@@ -57,5 +58,13 @@ public class RecruiterProfile implements Profile{
 
     public void setTelno(String telno) {
         this.telno = telno;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }
