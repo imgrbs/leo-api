@@ -1,12 +1,14 @@
 package app.leo.matching.DTO;
 
 
+import java.util.List;
 
 public class GetPositionsByMatchIdResponse {
     private long id;
     private String name;
     private String money;
     private int capacity;
+    private List<String> documents;
     private Recruiter recruiter;
 
     public GetPositionsByMatchIdResponse() {
@@ -65,5 +67,13 @@ public class GetPositionsByMatchIdResponse {
 
     public void setRecruiter(Recruiter recruiter) {
         this.recruiter = recruiter;
+    }
+
+    public List<String> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<String> documents) {
+        this.documents = documents;
     }
 }
