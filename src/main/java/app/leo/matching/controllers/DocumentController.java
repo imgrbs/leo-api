@@ -11,12 +11,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
 public class DocumentController {
 
     @Autowired
@@ -37,12 +37,12 @@ public class DocumentController {
         return new ResponseEntity<>( documentPositionService.createDocumentPositions(documentPositions), HttpStatus.ACCEPTED);
     }
 
-
     private Position convertDTOToPosition(PositionDTO positionDTO){
         ModelMapper modelMapper = new ModelMapper();
         Position position =modelMapper.map(positionDTO,Position.class);
         return position;
     }
+
     private List<Long> extractFileIdFromFiles(List<FilesDTO> files){
         List<Long> filesId = new ArrayList<>();
         for(FilesDTO file:files){
