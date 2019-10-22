@@ -68,14 +68,20 @@ public class PositionController {
             GetPositionsByMatchIdResponse response =modelMapper.map(position,GetPositionsByMatchIdResponse.class);
             Recruiter recruiter= new Recruiter();
             RecruiterProfile recruiterProfile = profileAdapter.getRecruiterProfileByUserId(token,position.getRecruiterMatch().getRecruiterId());
-            recruiter.setName(recruiterProfile.getName());
-            recruiter.setLocation(recruiterProfile.getLocation());
+            setRecruiterAttributes(recruiter,recruiterProfile);
             response.setRecruiter(recruiter);
             responses.add(response);
         }
         return responses;
     }
 
+    private void setRecruiterAttributes(Recruiter recruiter,RecruiterProfile recruiterProfile){
+        recruiter.setName(recruiterProfile.getName());
+        recruiter.setLocation(recruiterProfile.getLocation());
+        recruiter.setWebsite(recruiterProfile.getWebsite());
+        recruiter.setTelno(recruiterProfile.getTelno());
+        recruiter.setEmail(recruiterProfile.getEmail());
+    }
     @GetMapping("/matches/{matchId}/position/count")
     public ResponseEntity<Integer> getPositionCount(@PathVariable long matchId){
         return new ResponseEntity<>( positionService.countPositionByMatchId(matchId),HttpStatus.OK);
