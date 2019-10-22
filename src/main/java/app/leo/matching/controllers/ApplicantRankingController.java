@@ -71,7 +71,7 @@ public class ApplicantRankingController {
         recruiter.setName(recruiterPro.getName());
         recruiter.setLocation(recruiterPro.getLocation());
         recruiter.setEmail(recruiterPro.getEmail());
-        recruiter.setTelno(recruiterPro.getTelno());
+        recruiter.setTelno(recruiterPro.getTelNo());
         recruiter.setWebsite(recruiterPro.getWebsite());
         position.setRecruiter(recruiter);
     }

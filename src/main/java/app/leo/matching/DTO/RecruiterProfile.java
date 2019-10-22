@@ -8,7 +8,7 @@ public class RecruiterProfile implements Profile{
     private String description;
     private String location;
     private String email;
-    private String telno;
+    private String telNo;
     private String website;
 
 
@@ -52,12 +52,12 @@ public class RecruiterProfile implements Profile{
         this.email = email;
     }
 
-    public String getTelno() {
-        return telno;
+    public String getTelNo() {
+        return telNo;
     }
 
-    public void setTelno(String telno) {
-        this.telno = telno;
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
     }
 
     public String getWebsite() {

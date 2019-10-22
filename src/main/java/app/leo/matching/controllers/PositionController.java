@@ -79,7 +79,7 @@ public class PositionController {
         recruiter.setName(recruiterProfile.getName());
         recruiter.setLocation(recruiterProfile.getLocation());
         recruiter.setWebsite(recruiterProfile.getWebsite());
-        recruiter.setTelno(recruiterProfile.getTelno());
+        recruiter.setTelno(recruiterProfile.getTelNo());
         recruiter.setEmail(recruiterProfile.getEmail());
     }
     @GetMapping("/matches/{matchId}/position/count")
