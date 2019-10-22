@@ -1,10 +1,13 @@
 package app.leo.matching.DTO;
 
+import java.util.List;
+
 public class GetApplicantsByMatchIdResponse {
     private long participantId;
     private long matchId;
     private long applicantId;
     private Applicant applicant;
+    private List<DocumentDTO> documents;
 
     public GetApplicantsByMatchIdResponse() {
     }
@@ -46,5 +49,13 @@ public class GetApplicantsByMatchIdResponse {
 
     public void setApplicant(Applicant applicant) {
         this.applicant = applicant;
+    }
+
+    public List<DocumentDTO> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<DocumentDTO> documents) {
+        this.documents = documents;
     }
 }

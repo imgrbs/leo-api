@@ -76,7 +76,7 @@ public class RecruiterRankingController {
     }
 
     private void recruiterProfileInstall(GetPositionsByMatchIdResponse position, String token, RecruiterMatch recruiterMatch){
-        RecruiterProfile recruiterPro = (RecruiterProfile) profileAdapter.getRecruiterProfileByUserId(token,recruiterMatch.getRecruiterId());
+        RecruiterProfile recruiterPro = profileAdapter.getRecruiterProfileByUserId(token,recruiterMatch.getRecruiterId());
         Recruiter recruiter = new Recruiter();
         recruiter.setName(recruiterPro.getName());
         recruiter.setLocation(recruiterPro.getLocation());
@@ -84,10 +84,14 @@ public class RecruiterRankingController {
     }
 
     private void applicantProfileInstall(GetApplicantsByMatchIdResponse applicant, String token, ApplicantMatch applicantMatch){
-        ApplicantProfile applicantProfile = (ApplicantProfile) profileAdapter.getApplicantProfileByUserId(token,applicantMatch.getApplicantId());
+        ApplicantProfile applicantProfile = profileAdapter.getApplicantProfileByUserId(token,applicantMatch.getApplicantId());
         Applicant applicant1 = new Applicant();
-        applicant1.setEducations(applicantProfile.getEducations());
         applicant1.setName(applicantProfile.getFirstName() + " " + applicantProfile.getLastName());
+        applicant1.setEducations(applicantProfile.getEducations());
+        applicant1.setEmail(applicantProfile.getEmail());
+        applicant1.setSkills(applicantProfile.getSkills());
+        applicant1.setTelno(applicantProfile.getTelno());
+        applicant1.setWebsite(applicantProfile.getWebsite());
         applicant.setApplicant(applicant1);
     }
 

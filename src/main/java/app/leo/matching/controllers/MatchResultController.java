@@ -109,6 +109,10 @@ public class MatchResultController {
         Applicant applicant =new Applicant();
         applicant.setEducations(applicantProfile.getEducations());
         applicant.setName(applicantProfile.getFirstName() + " " + applicantProfile.getLastName());
+        applicant.setWebsite(applicantProfile.getWebsite());
+        applicant.setTelno(applicantProfile.getTelno());
+        applicant.setSkills(applicantProfile.getSkills());
+        applicant.setEmail(applicantProfile.getEmail());
         return applicant;
     }
 }
