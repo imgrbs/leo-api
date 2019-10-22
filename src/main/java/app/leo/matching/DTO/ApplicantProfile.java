@@ -7,7 +7,7 @@ public class ApplicantProfile implements Profile{
     private String firstName;
     private String lastName;
     private String email;
-    private String telno;
+    private String telNo;
     private String experiences;
     private String website;
 
@@ -49,12 +49,12 @@ public class ApplicantProfile implements Profile{
         this.email = email;
     }
 
-    public String getTelno() {
-        return telno;
+    public String getTelNo() {
+        return telNo;
     }
 
-    public void setTelno(String telno) {
-        this.telno = telno;
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
     }
 
     public String getExperiences() {

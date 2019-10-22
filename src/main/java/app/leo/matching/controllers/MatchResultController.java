@@ -110,7 +110,7 @@ public class MatchResultController {
         applicant.setEducations(applicantProfile.getEducations());
         applicant.setName(applicantProfile.getFirstName() + " " + applicantProfile.getLastName());
         applicant.setWebsite(applicantProfile.getWebsite());
-        applicant.setTelno(applicantProfile.getTelno());
+        applicant.setTelno(applicantProfile.getTelNo());
         applicant.setSkills(applicantProfile.getSkills());
         applicant.setEmail(applicantProfile.getEmail());
         return applicant;
