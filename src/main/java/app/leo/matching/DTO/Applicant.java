@@ -5,12 +5,13 @@ import java.util.List;
 public class Applicant {
     private long id;
     private String name;
-    private List<Education> educations;
     private String email;
-    private String telno;
-    private List<String> skills;
+    private String telNo;
     private String website;
+    private String experiences;
 
+    private List<Education> educations;
+    private List<String> skills;
 
     public Applicant() {
     }
@@ -53,12 +54,12 @@ public class Applicant {
         this.email = email;
     }
 
-    public String getTelno() {
-        return telno;
+    public String getTelNo() {
+        return telNo;
     }
 
-    public void setTelno(String telno) {
-        this.telno = telno;
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
     }
 
     public List<String> getSkills() {
@@ -75,5 +76,13 @@ public class Applicant {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public String getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(String experiences) {
+        this.experiences = experiences;
     }
 }

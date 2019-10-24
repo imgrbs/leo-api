@@ -90,8 +90,9 @@ public class RecruiterRankingController {
         applicant1.setEducations(applicantProfile.getEducations());
         applicant1.setEmail(applicantProfile.getEmail());
         applicant1.setSkills(applicantProfile.getSkills());
-        applicant1.setTelno(applicantProfile.getTelNo());
+        applicant1.setTelNo(applicantProfile.getTelNo());
         applicant1.setWebsite(applicantProfile.getWebsite());
+        applicant1.setExperiences(applicantProfile.getExperiences());
         applicant.setApplicant(applicant1);
     }
 

@@ -2,7 +2,6 @@ package app.leo.matching.controllers;
 
 import app.leo.matching.DTO.Applicant;
 import app.leo.matching.DTO.ApplicantProfile;
-import app.leo.matching.DTO.Education;
 import app.leo.matching.DTO.GetApplicantsByMatchIdResponse;
 import app.leo.matching.adapters.ProfileAdapter;
 import app.leo.matching.models.ApplicantMatch;
@@ -52,6 +51,12 @@ public class ApplicantMatchController {
             Applicant applicant = new Applicant();
             applicant.setName(applicantProfile.getFirstName() + " " + applicantProfile.getLastName());
             applicant.setEducations(applicantProfile.getEducations());
+            applicant.setEmail(applicantProfile.getEmail());
+            applicant.setSkills(applicantProfile.getSkills());
+            applicant.setTelNo(applicantProfile.getTelNo());
+            applicant.setWebsite(applicantProfile.getWebsite());
+            applicant.setExperiences(applicantProfile.getExperiences());
+            applicant.setId(applicantProfile.getApplicantId());
             response.setApplicant(applicant);
             responses.add(response);
         }
