@@ -6,7 +6,7 @@ public class Applicant {
     private long id;
     private String name;
     private String email;
-    private String telNo;
+    private String telno;
     private String website;
     private String experiences;
 
@@ -54,12 +54,12 @@ public class Applicant {
         this.email = email;
     }
 
-    public String getTelNo() {
-        return telNo;
+    public String getTelno() {
+        return telno;
     }
 
-    public void setTelNo(String telNo) {
-        this.telNo = telNo;
+    public void setTelno(String telno) {
+        this.telno = telno;
     }
 
     public List<String> getSkills() {

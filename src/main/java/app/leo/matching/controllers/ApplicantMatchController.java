@@ -44,16 +44,16 @@ public class ApplicantMatchController {
     private List<GetApplicantsByMatchIdResponse> responseBuilder(List<ApplicantMatch> applicantMatches,String token) {
         ModelMapper modelMapper = new ModelMapper();
         List<GetApplicantsByMatchIdResponse> responses = new ArrayList<>();
-        for (int i = 0; i < applicantMatches.size(); i++) {
-            long applicantId = applicantMatches.get(i).getApplicantId();
-            GetApplicantsByMatchIdResponse response = modelMapper.map(applicantMatches.get(i), GetApplicantsByMatchIdResponse.class);
-            ApplicantProfile applicantProfile = profileAdapter.getApplicantProfileByUserId(token,applicantId);
+        for (ApplicantMatch applicantMatch : applicantMatches) {
+            long applicantId = applicantMatch.getApplicantId();
+            GetApplicantsByMatchIdResponse response = modelMapper.map(applicantMatch, GetApplicantsByMatchIdResponse.class);
+            ApplicantProfile applicantProfile = profileAdapter.getApplicantProfileByUserId(token, applicantId);
             Applicant applicant = new Applicant();
             applicant.setName(applicantProfile.getFirstName() + " " + applicantProfile.getLastName());
             applicant.setEducations(applicantProfile.getEducations());
             applicant.setEmail(applicantProfile.getEmail());
             applicant.setSkills(applicantProfile.getSkills());
-            applicant.setTelNo(applicantProfile.getTelNo());
+            applicant.setTelno(applicantProfile.getTelNo());
             applicant.setWebsite(applicantProfile.getWebsite());
             applicant.setExperiences(applicantProfile.getExperiences());
             applicant.setId(applicantProfile.getApplicantId());
