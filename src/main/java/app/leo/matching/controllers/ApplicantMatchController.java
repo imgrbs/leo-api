@@ -26,7 +26,7 @@ public class ApplicantMatchController {
     @Autowired
     private ProfileAdapter profileAdapter;
 
-    @GetMapping(path = "/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/applicants")
+    @GetMapping(path = "/matches/{matchId}/positions/{positionId}/applicants")
     public ResponseEntity<List<GetApplicantsByMatchIdResponse>> getApplicantMatchesByPositionId(@PathVariable long matchId,
                                                                                                 @PathVariable long positionId,
                                                                                                 @RequestAttribute("token") String token){
@@ -34,7 +34,7 @@ public class ApplicantMatchController {
         return new ResponseEntity<>(this.responseBuilder(applicantMatches,token), HttpStatus.OK);
     }
 
-    @GetMapping(path = "matches/{matchId:[\\d]}/applicants")
+    @GetMapping(path = "matches/{matchId}/applicants")
     public ResponseEntity<List<GetApplicantsByMatchIdResponse>> getApplicantMatchByMatchId(@PathVariable Long matchId,
                                                                                            @RequestAttribute("token") String token) {
         List<ApplicantMatch> applicantMatches = this.applicantMatchService.getApplicantMatchByMatchId(matchId);

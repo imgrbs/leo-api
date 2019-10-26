@@ -28,7 +28,7 @@ public class ApplicantRankingController {
     @Autowired
     private ProfileAdapter profileAdapter;
 
-    @PostMapping(path= "/matches/{matchId:[\\d+]}/applicants/ranking")
+    @PostMapping(path= "/matches/{matchId}/applicants/ranking")
     public ResponseEntity<List<CreateApplicantRankingRequest>> createApplicantRanking(@Valid @PathVariable("matchId") Long matchId,
                                                                                       @Valid @RequestBody List<CreateApplicantRankingRequest> applicantRankingRequest,
                                                                                       @RequestAttribute("user") User user,

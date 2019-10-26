@@ -17,7 +17,7 @@ public class MatchingController {
     @Autowired
     MatchingService matchingService;
 
-    @PostMapping("/matches/{matchId:[\\d]}/matching")
+    @PostMapping("/matches/{matchId}/matching")
     public ResponseEntity<List<MatchResult>>createRecruiterRanking(@PathVariable long matchId){
         return  new ResponseEntity<>(matchingService.matchingByMatchId(matchId), HttpStatus.CREATED);
     }
