@@ -6,6 +6,7 @@ import app.leo.matching.adapters.ProfileAdapter;
 import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.models.RecruiterMatch;
 import app.leo.matching.models.RecruiterRanking;
+import app.leo.matching.services.DocumentPositionService;
 import app.leo.matching.services.RecruiterRankingService;
 import app.leo.matching.validator.CreateRecruiterRankingRequest;
 import app.leo.matching.validator.PutRecruiterRankingRequest;
@@ -28,6 +29,9 @@ public class RecruiterRankingController {
 
     @Autowired
     private ProfileAdapter profileAdapter;
+
+    @Autowired
+    private DocumentPositionService documentPositionService;
 
     @PostMapping("/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/ranking")
     public ResponseEntity<List<CreateRecruiterRankingRequest>>createRecruiterRanking(@PathVariable long matchId,
@@ -54,11 +58,11 @@ public class RecruiterRankingController {
                                                                                     @PathVariable long positionId,
                                                                                     @RequestAttribute("token") String token){
         List<RecruiterRanking> recruiterRankingList = recruiterRankingService.getRecruiterRankingByMatchIdAndPositionId(matchId,positionId);
-       return new ResponseEntity<>(mapApplicantRankingtoResponse(recruiterRankingList,token),HttpStatus.OK);
+       return new ResponseEntity<>(mapApplicantRankingtoResponse(recruiterRankingList,token,positionId),HttpStatus.OK);
     }
 
 
-    private List<GetRankingResponse> mapApplicantRankingtoResponse(List<RecruiterRanking> recruiterRankingList,String token){
+    private List<GetRankingResponse> mapApplicantRankingtoResponse(List<RecruiterRanking> recruiterRankingList,String token,long positionId){
         ModelMapper modelMapper =new ModelMapper();
         List<GetRankingResponse> responses = new ArrayList<>();
 
@@ -68,6 +72,7 @@ public class RecruiterRankingController {
             recruiterProfileInstall(position,token, recruiterRanking.getPosition().getRecruiterMatch());
             GetApplicantsByMatchIdResponse applicant = getRankingResponse.getApplicantMatch();
             applicantProfileInstall(applicant, token ,recruiterRanking.getApplicantMatch());
+            setDocumentForApplicant(applicant,positionId,applicant.getApplicantId(),token);
             getRankingResponse.setApplicantMatch(applicant);
             getRankingResponse.setPosition(position);
             responses.add(getRankingResponse);
@@ -83,6 +88,11 @@ public class RecruiterRankingController {
         position.setRecruiter(recruiter);
     }
 
+    private void setDocumentForApplicant(GetApplicantsByMatchIdResponse applicant,long positionId,long applicantId,String token){
+        List<Long> documentIdList = documentPositionService.getDocumentByPositionIdAndApplicantId(positionId, applicantId).get(0).getFilesId();
+        List<DocumentDTO> documentList = profileAdapter.getDocumentByDocumentIdList(token, documentIdList);
+        applicant.setDocuments(documentList);
+    }
     private void applicantProfileInstall(GetApplicantsByMatchIdResponse applicant, String token, ApplicantMatch applicantMatch){
         ApplicantProfile applicantProfile = profileAdapter.getApplicantProfileByUserId(token,applicantMatch.getApplicantId());
         Applicant applicant1 = new Applicant();

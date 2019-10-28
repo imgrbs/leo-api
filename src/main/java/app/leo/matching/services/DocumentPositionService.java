@@ -29,4 +29,8 @@ public class DocumentPositionService {
     public List<DocumentPosition> createDocumentPositions(List<DocumentPosition> documentPositions){
         return documentPositionRepository.saveAll(documentPositions);
     }
+
+    public List<DocumentPosition> getDocumentByPositionIdAndApplicantId(long positionId, long applicantId){
+        return documentPositionRepository.findByPositionIdAndUserId(positionId,applicantId);
+    }
 }

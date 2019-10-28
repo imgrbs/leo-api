@@ -13,6 +13,7 @@ public interface DocumentPositionRepository extends JpaRepository<DocumentPositi
 
     List<DocumentPosition> findByPosition(Position position);
 
+    List<DocumentPosition> findByPositionIdAndUserId(long positionId,long userId);
 
     List<DocumentPosition> findByPositionMatchIdAndUserId(long positionMatchId,long userId);
 }

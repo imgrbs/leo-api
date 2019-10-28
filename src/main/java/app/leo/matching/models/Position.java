@@ -62,12 +62,13 @@ import java.util.List;
          this.money = money;
      }
 
-     public Position(@NotBlank String name, @NotNull int capacity, long matchId, String description, String money) {
+     public Position(@NotBlank String name, @NotNull int capacity, long matchId, String description, String money,List<String> documents) {
          this.name = name;
          this.capacity = capacity;
          this.matchId = matchId;
          this.description = description;
          this.money = money;
+         this.documents = documents;
      }
 
      public Long getId() {
