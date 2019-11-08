@@ -2,7 +2,9 @@ package app.leo.matching.controllers;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.validation.Valid;
 
@@ -61,7 +63,7 @@ public class JoinMatchController {
                 throw new AlreadyJoinedException("You already joined this match");
             }
             ApplicantMatch applicantMatch = new ApplicantMatch(user.getProfileId(), matchId);
-            applicantMatch.setJoinDate(new Timestamp(System.currentTimeMillis()));
+            applicantMatch.setJoinDate(new Timestamp(getTimeNowInMilliSecond()));
             applicantMatch = applicantMatchService.saveApplicantMatch(applicantMatch);
             matchManagementAdapter.updateNumberOfUserInMatch(token,matchId);
             return new ResponseEntity<>(applicantMatch, HttpStatus.ACCEPTED);
@@ -79,7 +81,7 @@ public class JoinMatchController {
             RecruiterMatch recruiterMatch = new RecruiterMatch();
             recruiterMatch.setMatchId(matchId);
             recruiterMatch.setRecruiterId(user.getProfileId());
-            recruiterMatch.setJoinDate(new Timestamp(System.currentTimeMillis()));
+            recruiterMatch.setJoinDate(new Timestamp(getTimeNowInMilliSecond()));
             recruiterMatch = recruiterMatchService.saveRecruiterMatch(recruiterMatch);
             List<Position> positionList = convertToPosition(recruiterJoinMatchRequest.getPositions(), matchId,recruiterMatch);
             recruiterMatch.setPositions(positionList);
@@ -91,6 +93,9 @@ public class JoinMatchController {
         }
     }
 
+    private long getTimeNowInMilliSecond(){
+        return Calendar.getInstance(TimeZone.getTimeZone("GMT+0")).getTimeInMillis();
+    }
     private List<Position> convertToPosition(List<PositionDTO> positionList,long matchId,RecruiterMatch recruiterMatch) {
         List<Position> result = new ArrayList<>();
         for(PositionDTO positionDTO:positionList){
