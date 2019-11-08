@@ -107,9 +107,6 @@ public class JoinMatchController {
         return result;
     }
 
-    private static class PositionDTOList extends ArrayList<PositionDTO> {
-    }
-
     @GetMapping("/matches/{matchId}/isJoin")
     public ResponseEntity<CheckJoinedResponse> userIsJoinedTheMatch(@RequestAttribute("user") User user,
                                                                     @PathVariable long matchId){
