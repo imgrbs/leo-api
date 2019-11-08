@@ -78,8 +78,8 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         long userId = Long.parseLong((String) claims.getBody().get("userId"));
         String role = (String) claims.getBody().get("role");
-
-        return new User(userId, role);
+        long profileId = Long.parseLong((String) claims.getBody().get("profileId"));
+        return new User(userId, role, profileId);
     }
 
     private boolean isOptionMethod(HttpServletRequest request) {

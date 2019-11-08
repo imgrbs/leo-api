@@ -1,15 +1,8 @@
 package app.leo.matching.controllers;
 
-import app.leo.matching.DTO.*;
-import app.leo.matching.adapters.ProfileAdapter;
-import app.leo.matching.models.ApplicantMatch;
-import app.leo.matching.models.MatchResult;
-import app.leo.matching.models.Position;
-import app.leo.matching.models.RecruiterMatch;
-import app.leo.matching.services.ApplicantMatchService;
-import app.leo.matching.services.MatchResultService;
-import app.leo.matching.services.PositionService;
-import app.leo.matching.services.RecruiterMatchService;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +12,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import app.leo.matching.DTO.Applicant;
+import app.leo.matching.DTO.ApplicantProfile;
+import app.leo.matching.DTO.GetApplicantsByMatchIdResponse;
+import app.leo.matching.DTO.GetMatchResultByUserIdAndMatchIdResponse;
+import app.leo.matching.DTO.GetPositionsByMatchIdResponse;
+import app.leo.matching.DTO.Recruiter;
+import app.leo.matching.DTO.RecruiterProfile;
+import app.leo.matching.DTO.User;
+import app.leo.matching.adapters.ProfileAdapter;
+import app.leo.matching.models.ApplicantMatch;
+import app.leo.matching.models.MatchResult;
+import app.leo.matching.models.Position;
+import app.leo.matching.models.RecruiterMatch;
+import app.leo.matching.services.ApplicantMatchService;
+import app.leo.matching.services.MatchResultService;
+import app.leo.matching.services.PositionService;
+import app.leo.matching.services.RecruiterMatchService;
 
 @RestController
 public class MatchResultController {
@@ -44,21 +52,21 @@ public class MatchResultController {
     public ResponseEntity<List<GetMatchResultByUserIdAndMatchIdResponse>> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId ,
                                                                                                                 @RequestAttribute("user") User user,
                                                                                                                 @RequestAttribute("token") String token){
-        long userId = user.getUserId();
+        long profileId = user.getProfileId();
         String role = user.getRole();
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         List<GetMatchResultByUserIdAndMatchIdResponse> matchResultResponse = new ArrayList<>();
 
         if(role.equals("applicant")) {
-            ApplicantMatch applicantMatch = applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
+            ApplicantMatch applicantMatch = applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(profileId, matchId);
             MatchResult matchResult = matchResultService.getMatchResultByApplicantMatchIdAndMatchId(token,applicantMatch.getParticipantId(), matchId);
 
             GetMatchResultByUserIdAndMatchIdResponse response =modelMapper.map(matchResult,GetMatchResultByUserIdAndMatchIdResponse.class) ;
             responseEdit(token,applicantMatch,matchResult.getPosition(),response);
             matchResultResponse.add(response);
         }else if(role.equals("recruiter")){
-            RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(userId, matchId);
+            RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(profileId, matchId);
             List<Position> positions = positionService.getPositionByMatchIdAndRecruiterMatchParticipantId(matchId, recruiterMatch.getParticipantId());
             for (Position position: positions) {
                 List<MatchResult> positionMatchResults =  matchResultService.getMatchResultByPositionIdAndMatchId(position.getId(), matchId);

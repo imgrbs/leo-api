@@ -1,5 +1,21 @@
 package app.leo.matching.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RestController;
+
 import app.leo.matching.DTO.GetPositionsByMatchIdResponse;
 import app.leo.matching.DTO.Recruiter;
 import app.leo.matching.DTO.RecruiterProfile;
@@ -9,13 +25,6 @@ import app.leo.matching.models.Position;
 import app.leo.matching.models.RecruiterMatch;
 import app.leo.matching.services.PositionService;
 import app.leo.matching.services.RecruiterMatchService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
 
 @CrossOrigin("*")
 @RestController
@@ -54,7 +63,7 @@ public class PositionController {
     public ResponseEntity<List<GetPositionsByMatchIdResponse>> getPositionsByRecruiterIdAndMatchId(@PathVariable long matchId,
                                                                                                    @RequestAttribute("user") User user,
                                                                                                    @RequestAttribute("token") String token){
-        long recruiterId = user.getUserId();
+        long recruiterId = user.getProfileId();
         RecruiterMatch recruiterMatch = recruiterMatchService.getRecruiterMatchByRecruiterIdAndMatchId(recruiterId, matchId);
         List<Position> positions = positionService.getPositionByMatchIdAndRecruiterMatchParticipantId(matchId, recruiterMatch.getParticipantId());
         return new ResponseEntity<>(this.responseBuilder(positions,token), HttpStatus.OK);
