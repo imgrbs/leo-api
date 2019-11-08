@@ -1,9 +1,11 @@
 package app.leo.matching.services;
 
 
-import app.leo.matching.DTO.MatchDTO;
-import app.leo.matching.adapters.MatchManagementAdapter;
-import app.leo.matching.exceptions.WrongPeriodException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import app.leo.matching.models.ApplicantMatch;
 import app.leo.matching.models.ApplicantRanking;
 import app.leo.matching.models.Position;
@@ -11,10 +13,6 @@ import app.leo.matching.repositories.ApplicantMatchRepository;
 import app.leo.matching.repositories.ApplicantRankingRepository;
 import app.leo.matching.repositories.PositionRepository;
 import app.leo.matching.validator.PutApplicantRankingRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ApplicantRankingService {
@@ -45,20 +43,20 @@ public class ApplicantRankingService {
         this.applicantRankingRepository = applicantRankingRepository;
         this.periodCheckService = periodCheckService;
     }
-    public ApplicantRanking createApplicantRanking(String token,long matchId, long userId, long positionId, int sequence) {
+    public ApplicantRanking createApplicantRanking(String token,long matchId, long applicantId, long positionId, int sequence) {
         periodCheckService.todayIsApplicantRankingPeriod(token,matchId);
-        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
+        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(applicantId, matchId);
         Position position = positionRepository.findPositionById(positionId);
         ApplicantRanking applicantRanking = new ApplicantRanking(sequence,matchId,applicantMatch,position);
         return applicantRankingRepository.save(applicantRanking);
     }
 
-    public void updateApplicantRankingByMatchIdAndApplicantId(String token,long matchId, long userId, List<PutApplicantRankingRequest> applicantRankings) {
+    public void updateApplicantRankingByMatchIdAndApplicantId(String token,long matchId, long applicantId, List<PutApplicantRankingRequest> applicantRankings) {
         periodCheckService.todayIsApplicantRankingPeriod(token, matchId);
-        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(userId, matchId);
+        ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(applicantId, matchId);
         applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchParticipantId(matchId, applicantMatch.getParticipantId());
         for(PutApplicantRankingRequest putApplicantRankingRequest : applicantRankings) {
-            this.createApplicantRanking(token,matchId, applicantMatch.getParticipantId(), putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequence());
+            this.createApplicantRanking(token,matchId, applicantId, putApplicantRankingRequest.getPositionId(), putApplicantRankingRequest.getSequence());
         }
     }
 
