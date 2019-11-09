@@ -1,12 +1,14 @@
 package app.leo.matching.services;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import app.leo.matching.models.DocumentPosition;
 import app.leo.matching.models.Position;
 import app.leo.matching.repositories.DocumentPositionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class DocumentPositionService {
@@ -26,8 +28,19 @@ public class DocumentPositionService {
         return documentPositionRepository.save(documentPosition);
     }
 
+    @Transactional
     public List<DocumentPosition> createDocumentPositions(List<DocumentPosition> documentPositions){
+        deleteDocumentPositions(documentPositions);
         return documentPositionRepository.saveAll(documentPositions);
+    }
+
+    private void deleteDocumentPositions(List<DocumentPosition> documentPositions) {
+        documentPositions.forEach(documentPosition -> {
+            documentPositionRepository.deleteByUserIdAndPositionId(
+                documentPosition.getUserId(),
+                documentPosition.getPosition().getId()
+            );
+        });
     }
 
     public List<DocumentPosition> getDocumentByPositionIdAndApplicantId(long positionId, long applicantId){
