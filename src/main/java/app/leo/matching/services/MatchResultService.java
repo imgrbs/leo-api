@@ -16,7 +16,7 @@ public class MatchResultService {
     private PeriodCheckService periodCheckService;
 
     public MatchResult getMatchResultByApplicantMatchIdAndMatchId(String token,long applicantMatchId,long matchId){
-        periodCheckService.todayIsInAnnouncePeriod(token,matchId);
+        //periodCheckService.todayIsInAnnouncePeriod(token,matchId);
         return matchResultRepository.getMatchResultByApplicantMatchParticipantIdAndMatchId(applicantMatchId,matchId);
     }
 

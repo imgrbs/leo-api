@@ -44,8 +44,8 @@ public class PeriodCheckService {
     public void todayIsJoiningPeriod(String token, long matchId){
         MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
         if(todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getStartJoiningDate()), convertDateToLocalDate(match.getEndJoiningDate()))){
-            logger.warn("Sorry, it's not period for joining match.");
-            throw new WrongPeriodException("Sorry, it's not period for joining.");
+            logger.warn("Sorry, it's not period for joining match. " + currentDate + "is before " + match.getStartJoiningDate() + " or after " + match.getEndJoiningDate() );
+            throw new WrongPeriodException("Sorry, it's not period for joining match. " + currentDate + "is before " + match.getStartJoiningDate() + " or after " + match.getEndJoiningDate());
         }
     }
 
