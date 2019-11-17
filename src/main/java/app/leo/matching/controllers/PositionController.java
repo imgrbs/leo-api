@@ -44,21 +44,14 @@ public class PositionController {
         return new Date();
     }
 
-    private Map<Long, Long> recruiterMatchIdMap = new HashMap<>();
-
-    private void installMap(){
-        recruiterMatchIdMap.put(2L,1L);
-        recruiterMatchIdMap.put(6L,2L);
-    }
-
-    @GetMapping(path= "matches/{matchId:[\\d]}/positions")
+    @GetMapping(path= "matches/{matchId}/positions")
     public ResponseEntity<List<GetPositionsByMatchIdResponse>> getPositionsByMatchId(@PathVariable long matchId,
                                                                                      @RequestAttribute("token" ) String token){
         List<Position> positions = positionService.getPositionByMatchId(matchId);
         return new ResponseEntity<>(this.responseBuilder(positions,token), HttpStatus.OK);
     }
 
-    @GetMapping(path="/matches/{matchId:[\\d]}/recruiters/positions")
+    @GetMapping(path="/matches/{matchId}/recruiters/positions")
 
     public ResponseEntity<List<GetPositionsByMatchIdResponse>> getPositionsByRecruiterIdAndMatchId(@PathVariable long matchId,
                                                                                                    @RequestAttribute("user") User user,

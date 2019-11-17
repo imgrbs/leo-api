@@ -48,7 +48,7 @@ public class MatchResultController {
     @Autowired
     private ProfileAdapter profileAdapter;
 
-    @GetMapping(path = "user/matches/{matchId:[\\d]}/result")
+    @GetMapping(path = "user/matches/{matchId}/result")
     public ResponseEntity<List<GetMatchResultByUserIdAndMatchIdResponse>> getMatchResultByUserMatchIdAndMatchId(@PathVariable long matchId ,
                                                                                                                 @RequestAttribute("user") User user,
                                                                                                                 @RequestAttribute("token") String token){

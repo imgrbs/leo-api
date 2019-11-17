@@ -58,7 +58,7 @@ public class ApplicantRankingController {
         return new ResponseEntity<>(applicantRankingRequest, HttpStatus.CREATED);
     }
 
-    @GetMapping(path= "/matches/{matchId:[\\d]}/applicants/ranking")
+    @GetMapping(path= "/matches/{matchId}/applicants/ranking")
     public ResponseEntity<List<GetRankingResponse>> getApplicantRanking(@Valid @PathVariable("matchId") Long matchId,
                                                                         @RequestAttribute("user") User user,
                                                                         @RequestAttribute("token") String token){
@@ -106,7 +106,7 @@ public class ApplicantRankingController {
         applicant.setApplicant(applicant1);
     }
 
-    @PutMapping(path  = "/matches/{matchId:[\\d]}/applicants/ranking")
+    @PutMapping(path  = "/matches/{matchId}/applicants/ranking")
     public ResponseEntity<List<PutApplicantRankingRequest>> updateApplicantRanking(
             @PathVariable long matchId,
             @Valid @RequestBody List<PutApplicantRankingRequest> putApplicantRankingRequestList,
@@ -117,7 +117,7 @@ public class ApplicantRankingController {
         return new ResponseEntity<>(putApplicantRankingRequestList, HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping(path = "/matches/{matchId:[\\d]}/ranking")
+    @DeleteMapping(path = "/matches/{matchId}/ranking")
     public void deleteApplicantRanking(@PathVariable long matchId,@Valid @RequestBody ApplicantRanking applicantRanking){
         applicantRankingService.deleteApplicantRankingById(applicantRanking.getId());
     }

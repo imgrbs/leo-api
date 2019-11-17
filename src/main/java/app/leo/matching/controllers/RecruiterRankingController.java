@@ -33,7 +33,7 @@ public class RecruiterRankingController {
     @Autowired
     private DocumentPositionService documentPositionService;
 
-    @PostMapping("/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/ranking")
+    @PostMapping("/matches/{matchId}/positions/{positionId}/ranking")
     public ResponseEntity<List<CreateRecruiterRankingRequest>>createRecruiterRanking(@PathVariable long matchId,
                                                                                      @PathVariable long positionId,
                                                                                      @Valid @RequestBody List<CreateRecruiterRankingRequest>createRecruiterRankingRequestList,
@@ -44,7 +44,7 @@ public class RecruiterRankingController {
         return  new ResponseEntity<>(createRecruiterRankingRequestList,HttpStatus.CREATED);
     }
 
-    @PutMapping(path ="/matches/{matchId:[\\d]}/positions/{positionId:[\\d]}/ranking")
+    @PutMapping(path ="/matches/{matchId}/positions/{positionId}/ranking")
     public ResponseEntity<List<PutRecruiterRankingRequest>> updateRecruiterRanking(@PathVariable long matchId,
                                                                                    @PathVariable long positionId,
                                                                                    @Valid @RequestBody List<PutRecruiterRankingRequest> recruiterRankingRequestList,
@@ -53,7 +53,7 @@ public class RecruiterRankingController {
       return new ResponseEntity<>(recruiterRankingRequestList,HttpStatus.ACCEPTED);
     }
 
-    @GetMapping(path = "/matches/{matchId:[\\d]}/recruiters/positions/{positionId:[\\d]}/ranking")
+    @GetMapping(path = "/matches/{matchId}/recruiters/positions/{positionId}/ranking")
     public ResponseEntity<List<GetRankingResponse>> getPositionRankingByPositionId (@PathVariable long matchId,
                                                                                     @PathVariable long positionId,
                                                                                     @RequestAttribute("token") String token){
