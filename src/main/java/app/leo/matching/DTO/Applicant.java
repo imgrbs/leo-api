@@ -9,6 +9,7 @@ public class Applicant {
     private String telno;
     private String website;
     private String experiences;
+    private String pictureUrl;
 
     private List<Education> educations;
     private List<String> skills;
@@ -84,5 +85,13 @@ public class Applicant {
 
     public void setExperiences(String experiences) {
         this.experiences = experiences;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }

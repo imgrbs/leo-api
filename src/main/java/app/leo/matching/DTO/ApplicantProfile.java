@@ -10,6 +10,7 @@ public class ApplicantProfile implements Profile{
     private String telNo;
     private String experiences;
     private String website;
+    private String pictureUrl;
 
     private List<Education> educations;
     private List<String> skills;
@@ -87,5 +88,13 @@ public class ApplicantProfile implements Profile{
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }

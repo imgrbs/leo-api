@@ -120,6 +120,8 @@ public class MatchResultController {
         applicant.setWebsite(applicantProfile.getWebsite());
         applicant.setTelno(applicantProfile.getTelNo());
         applicant.setSkills(applicantProfile.getSkills());
+        applicant.setWebsite(applicantProfile.getExperiences());
+        applicant.setPictureUrl(applicantProfile.getPictureUrl());
         applicant.setEmail(applicantProfile.getEmail());
         return applicant;
     }
