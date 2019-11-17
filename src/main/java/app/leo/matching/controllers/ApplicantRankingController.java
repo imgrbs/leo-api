@@ -101,6 +101,8 @@ public class ApplicantRankingController {
         applicant1.setName(applicantProfile.getFirstName() + " " + applicantProfile.getLastName());
         applicant1.setEmail(applicantProfile.getEmail());
         applicant1.setSkills(applicantProfile.getSkills());
+        applicant1.setExperiences(applicantProfile.getExperiences());
+        applicant1.setPictureUrl(applicantProfile.getPictureUrl());
         applicant1.setTelno(applicantProfile.getTelNo());
         applicant1.setWebsite(applicantProfile.getWebsite());
         applicant.setApplicant(applicant1);

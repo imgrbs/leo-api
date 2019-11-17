@@ -75,6 +75,7 @@ public class ApplicantMatchController {
         applicant.setTelno(applicantProfile.getTelNo());
         applicant.setWebsite(applicantProfile.getWebsite());
         applicant.setExperiences(applicantProfile.getExperiences());
+        applicant.setPictureUrl(applicantProfile.getPictureUrl());
         applicant.setId(applicantProfile.getApplicantId());
         return applicant;
     }
