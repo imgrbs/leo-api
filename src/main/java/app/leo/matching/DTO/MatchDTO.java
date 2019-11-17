@@ -1,8 +1,12 @@
 package app.leo.matching.DTO;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class MatchDTO {
+
+    private final ZoneId UTC = ZoneId.of("UTC");
 
     private Long id;
 
@@ -58,40 +62,40 @@ public class MatchDTO {
         this.description = description;
     }
 
-    public Date getStartJoiningDate() {
-        return startJoiningDate;
+    public LocalDate getStartJoiningDate() {
+        return startJoiningDate.toInstant().atZone(UTC).toLocalDate();
     }
 
     public void setStartJoiningDate(Date startJoiningDate) {
         this.startJoiningDate = startJoiningDate;
     }
 
-    public Date getApplicantRankingEndDate() {
-        return applicantRankingEndDate;
+    public LocalDate getApplicantRankingEndDate() {
+        return applicantRankingEndDate.toInstant().atZone(UTC).toLocalDate();
     }
 
     public void setApplicantRankingEndDate(Date applicantRankingEndDate) {
         this.applicantRankingEndDate = applicantRankingEndDate;
     }
 
-    public Date getRecruiterRankingEndDate() {
-        return recruiterRankingEndDate;
+    public LocalDate getRecruiterRankingEndDate() {
+        return recruiterRankingEndDate.toInstant().atZone(UTC).toLocalDate();
     }
 
     public void setRecruiterRankingEndDate(Date recruiterRankingEndDate) {
         this.recruiterRankingEndDate = recruiterRankingEndDate;
     }
 
-    public Date getAnnounceDate() {
-        return announceDate;
+    public LocalDate getAnnounceDate() {
+        return announceDate.toInstant().atZone(UTC).toLocalDate();
     }
 
     public void setAnnounceDate(Date announceDate) {
         this.announceDate = announceDate;
     }
 
-    public Date getEndJoiningDate() {
-        return endJoiningDate;
+    public LocalDate getEndJoiningDate() {
+        return endJoiningDate.toInstant().atZone(UTC).toLocalDate();
     }
 
     public void setEndJoiningDate(Date endJoiningDate) {
