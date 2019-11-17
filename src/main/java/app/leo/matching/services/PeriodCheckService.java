@@ -53,7 +53,7 @@ public class PeriodCheckService {
         MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
         if(todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getEndJoiningDate()).plusDays(1),convertDateToLocalDate(match.getApplicantRankingEndDate()))){
             logger.warn("Sorry, it's not period for Applicant Ranking.");
-            throw new WrongPeriodException("Sorry, it's not period for Applicant Ranking.");
+            throw new WrongPeriodException("Sorry, it's not period for Applicant Ranking." + currentDate);
         }
     }
 
@@ -61,7 +61,7 @@ public class PeriodCheckService {
         MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
         if(todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getApplicantRankingEndDate()).plusDays(1),convertDateToLocalDate(match.getRecruiterRankingEndDate()))){
             logger.warn("Sorry, it's not period for Recruiter Ranking.");
-            throw new WrongPeriodException("Sorry, it's not period for Recruiter Ranking.");
+            throw new WrongPeriodException("Sorry, it's not period for Recruiter Ranking." + currentDate);
         }
     }
 
@@ -69,7 +69,7 @@ public class PeriodCheckService {
         MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
         if(currentDate.isBefore(convertDateToLocalDate(match.getAnnounceDate()))){
             logger.warn("Sorry, it's not announce yet");
-            throw new WrongPeriodException("Sorry, it's not announce yet");
+            throw new WrongPeriodException("Sorry, it's not announce yet" + currentDate);
         }
     }
 }
