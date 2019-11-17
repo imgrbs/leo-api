@@ -61,7 +61,7 @@ public class PeriodCheckService {
         System.out.println("================");
         boolean todayIsNotInPeriod =todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getStartJoiningDate()), convertDateToLocalDate(match.getEndJoiningDate()));
         System.out.println("todayIsNotInPeriod = " + todayIsNotInPeriod);
-        if(false){
+        if(todayIsNotInPeriod){
             logger.warn("Sorry, it's not period for joining match. " + currentDate + "is before " + match.getStartJoiningDate() + " or after " + match.getEndJoiningDate() );
             throw new WrongPeriodException("Sorry, it's not period for joining match. " + currentDate + "is before " + match.getStartJoiningDate() + " or after " + match.getEndJoiningDate());
         }
