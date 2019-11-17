@@ -56,7 +56,7 @@ public class JoinMatchController {
     public ResponseEntity<ApplicantMatch> joinMatch(@PathVariable long matchId,
                                                     @RequestAttribute(name ="user") User user,
                                                     @RequestAttribute(name ="token") String token){
-        //periodCheckService.todayIsJoiningPeriod(token,matchId);
+        periodCheckService.todayIsJoiningPeriod(token,matchId);
         if(user.getRole().equals("applicant")) {
             ApplicantMatch existedApplicantMatch = applicantMatchService.getApplicantMatchByApplicantIdAndMatchId(user.getProfileId(), matchId);
             if (existedApplicantMatch != null) {
@@ -76,7 +76,7 @@ public class JoinMatchController {
     public ResponseEntity<RecruiterMatch> joinMatch(@PathVariable long matchId, @RequestBody @Valid RecruiterJoinMatchRequest recruiterJoinMatchRequest,
                                                     @RequestAttribute("user")User user,
                                                     @RequestAttribute("token") String token){
-        //periodCheckService.todayIsJoiningPeriod(token,matchId);
+        periodCheckService.todayIsJoiningPeriod(token,matchId);
         if(user.getRole().equals("recruiter")) {
             RecruiterMatch recruiterMatch = new RecruiterMatch();
             recruiterMatch.setMatchId(matchId);
