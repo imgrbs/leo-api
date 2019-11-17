@@ -57,7 +57,7 @@ public class ApplicantMatchController {
             Applicant applicant = matchResponseWithApplicant(applicantProfile);
             response.setApplicant(applicant);
             if(documentWanted) {
-                List<Long> documentIdList = documentPositionService.getDocumentByPositionIdAndApplicantId(positionId, applicantId).get(0).getFilesId();
+                List<Long> documentIdList = documentPositionService.getDocumentByPositionIdAndApplicantId(positionId, applicantId).size() != 0 ?documentPositionService.getDocumentByPositionIdAndApplicantId(positionId, applicantId).get(0).getFilesId():new ArrayList<>();
                 List<DocumentDTO> documentList = profileAdapter.getDocumentByDocumentIdList(token, documentIdList);
                 response.setDocuments(documentList);
             }
