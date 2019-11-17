@@ -1,17 +1,18 @@
 package app.leo.matching.services;
 
-import app.leo.matching.DTO.MatchDTO;
-import app.leo.matching.adapters.MatchManagementAdapter;
-import app.leo.matching.exceptions.WrongPeriodException;
-import app.leo.matching.util.DateUtil;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import app.leo.matching.DTO.MatchDTO;
+import app.leo.matching.adapters.MatchManagementAdapter;
+import app.leo.matching.exceptions.WrongPeriodException;
+import app.leo.matching.util.DateUtil;
 
 @Service
 public class PeriodCheckService {
@@ -42,8 +43,8 @@ public class PeriodCheckService {
         return  currentDate.isBefore(startPeriodDate)|| currentDate.isAfter(endPeriodDate);
     }
     public void todayIsJoiningPeriod(String token, long matchId){
-        MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
         System.out.println(currentDate);
+        MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
         boolean todayIsNotInPeriod =todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getStartJoiningDate()), convertDateToLocalDate(match.getEndJoiningDate()));
         if(false){
             logger.warn("Sorry, it's not period for joining match. " + currentDate + "is before " + match.getStartJoiningDate() + " or after " + match.getEndJoiningDate() );
