@@ -40,6 +40,10 @@ public class PeriodCheckService {
     }
 
     public boolean todayIsNotInPeriod(LocalDate currentDate, LocalDate startPeriodDate, LocalDate endPeriodDate){
+        System.out.println("CHECK IS BEFORE");
+        System.out.println(currentDate.isBefore(startPeriodDate));
+        System.out.println("CHECK IS AFTER");
+        System.out.println(currentDate.isAfter(endPeriodDate));
         return  currentDate.isBefore(startPeriodDate)|| currentDate.isAfter(endPeriodDate);
     }
     public void todayIsJoiningPeriod(String token, long matchId){
@@ -56,6 +60,7 @@ public class PeriodCheckService {
         System.out.println(convertDateToLocalDate(match.getEndJoiningDate()));
         System.out.println("================");
         boolean todayIsNotInPeriod =todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getStartJoiningDate()), convertDateToLocalDate(match.getEndJoiningDate()));
+        System.out.println("todayIsNotInPeriod = " + todayIsNotInPeriod);
         if(false){
             logger.warn("Sorry, it's not period for joining match. " + currentDate + "is before " + match.getStartJoiningDate() + " or after " + match.getEndJoiningDate() );
             throw new WrongPeriodException("Sorry, it's not period for joining match. " + currentDate + "is before " + match.getStartJoiningDate() + " or after " + match.getEndJoiningDate());
