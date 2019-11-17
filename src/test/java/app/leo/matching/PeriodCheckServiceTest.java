@@ -1,6 +1,5 @@
 package app.leo.matching;
 
-import app.leo.matching.DTO.MatchDTO;
 import app.leo.matching.adapters.MatchManagementAdapter;
 import app.leo.matching.exceptions.WrongPeriodException;
 import app.leo.matching.services.PeriodCheckService;
@@ -20,26 +19,26 @@ import java.util.Date;
 
 import static org.mockito.Mockito.mock;
 
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 public class PeriodCheckServiceTest {
-
-    @Mock
-    private MatchManagementAdapter matchManagementAdapter;
-
-    @InjectMocks
-    private PeriodCheckService periodCheckService;
-
-    private DateUtil dateUtil = new DateUtil();
-
-    @Mock
-    private Logger logger;
-    @Before
-    public void setUp(){
-        MockitoAnnotations.initMocks(this);
-        this.matchManagementAdapter = mock(MatchManagementAdapter.class);
-        this.logger = mock(Logger.class);
-        this.periodCheckService = new PeriodCheckService(matchManagementAdapter,logger);
-    }
+//
+//    @Mock
+//    private MatchManagementAdapter matchManagementAdapter;
+//
+//    @InjectMocks
+//    private PeriodCheckService periodCheckService;
+//
+//    private DateUtil dateUtil = new DateUtil();
+//
+//    @Mock
+//    private Logger logger;
+//    @Before
+//    public void setUp(){
+//        MockitoAnnotations.initMocks(this);
+//        this.matchManagementAdapter = mock(MatchManagementAdapter.class);
+//        this.logger = mock(Logger.class);
+//        this.periodCheckService = new PeriodCheckService(matchManagementAdapter,logger);
+//    }
 
 
 ////    @Test(expected = WrongPeriodException.class)
