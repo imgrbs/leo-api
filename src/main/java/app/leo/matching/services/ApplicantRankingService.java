@@ -44,7 +44,7 @@ public class ApplicantRankingService {
         this.periodCheckService = periodCheckService;
     }
     public ApplicantRanking createApplicantRanking(String token,long matchId, long applicantId, long positionId, int sequence) {
-        //periodCheckService.todayIsApplicantRankingPeriod(token,matchId);
+        periodCheckService.todayIsApplicantRankingPeriod(token,matchId);
         ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(applicantId, matchId);
         Position position = positionRepository.findPositionById(positionId);
         ApplicantRanking applicantRanking = new ApplicantRanking(sequence,matchId,applicantMatch,position);
@@ -52,7 +52,7 @@ public class ApplicantRankingService {
     }
 
     public void updateApplicantRankingByMatchIdAndApplicantId(String token,long matchId, long applicantId, List<PutApplicantRankingRequest> applicantRankings) {
-        //periodCheckService.todayIsApplicantRankingPeriod(token, matchId);
+        periodCheckService.todayIsApplicantRankingPeriod(token, matchId);
         ApplicantMatch applicantMatch = applicantMatchRepository.getApplicantMatchByApplicantIdAndMatchId(applicantId, matchId);
         applicantRankingRepository.deleteApplicantRankingByMatchIdAndApplicantMatchParticipantId(matchId, applicantMatch.getParticipantId());
         for(PutApplicantRankingRequest putApplicantRankingRequest : applicantRankings) {

@@ -40,27 +40,11 @@ public class PeriodCheckService {
     }
 
     public boolean todayIsNotInPeriod(LocalDate currentDate, LocalDate startPeriodDate, LocalDate endPeriodDate){
-        System.out.println("CHECK IS BEFORE");
-        System.out.println(currentDate.isBefore(startPeriodDate));
-        System.out.println("CHECK IS AFTER");
-        System.out.println(currentDate.isAfter(endPeriodDate));
         return  currentDate.isBefore(startPeriodDate)|| currentDate.isAfter(endPeriodDate);
     }
     public void todayIsJoiningPeriod(String token, long matchId){
-        System.out.println(currentDate);
         MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
-        System.out.println("== START JOIN ==");
-        System.out.println(match.getStartJoiningDate());
-        System.out.println("== CONVERT START JOIN ==");
-        System.out.println(convertDateToLocalDate(match.getStartJoiningDate()));
-        System.out.println("================");
-        System.out.println("== END JOIN ==");
-        System.out.println(match.getEndJoiningDate());
-        System.out.println("== CONVERT START JOIN ==");
-        System.out.println(convertDateToLocalDate(match.getEndJoiningDate()));
-        System.out.println("================");
         boolean todayIsNotInPeriod =todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getStartJoiningDate()), convertDateToLocalDate(match.getEndJoiningDate()));
-        System.out.println("todayIsNotInPeriod = " + todayIsNotInPeriod);
         if(todayIsNotInPeriod){
             logger.warn("Sorry, it's not period for joining match. " + currentDate + "is before " + match.getStartJoiningDate() + " or after " + match.getEndJoiningDate() );
             throw new WrongPeriodException("Sorry, it's not period for joining match. " + currentDate + "is before " + match.getStartJoiningDate() + " or after " + match.getEndJoiningDate());
@@ -69,9 +53,8 @@ public class PeriodCheckService {
 
     public void todayIsApplicantRankingPeriod(String token,long matchId){
         MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
-        System.out.println(currentDate);
-        System.out.println(todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getEndJoiningDate()).plusDays(1),convertDateToLocalDate(match.getApplicantRankingEndDate())));
-        if(false){
+        boolean todayIsNotInPeriod=todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getEndJoiningDate()).plusDays(1),convertDateToLocalDate(match.getApplicantRankingEndDate()));
+        if(todayIsNotInPeriod){
             logger.warn("Sorry, it's not period for Applicant Ranking.");
             throw new WrongPeriodException("Sorry, it's not period for Applicant Ranking." + currentDate);
         }
@@ -79,7 +62,6 @@ public class PeriodCheckService {
 
     public void todayIsInRecruiterRankingPeriod(String token,long matchId){
         MatchDTO match = matchManagementAdapter.getMatchByMatchId(token,matchId);
-        System.out.println(currentDate);
         if(todayIsNotInPeriod(currentDate,convertDateToLocalDate(match.getApplicantRankingEndDate()).plusDays(1),convertDateToLocalDate(match.getRecruiterRankingEndDate()))){
             logger.warn("Sorry, it's not period for Recruiter Ranking.");
             throw new WrongPeriodException("Sorry, it's not period for Recruiter Ranking." + currentDate);
