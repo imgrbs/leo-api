@@ -1,13 +1,23 @@
 package app.leo.matching.services;
 
-import app.leo.matching.models.*;
-import app.leo.matching.repositories.ApplicantMatchRepository;
-import app.leo.matching.repositories.MatchResultRepository;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.*;
+import app.leo.matching.models.ApplicantMatch;
+import app.leo.matching.models.ApplicantRanking;
+import app.leo.matching.models.MatchResult;
+import app.leo.matching.models.Position;
+import app.leo.matching.models.RecruiterRanking;
+import app.leo.matching.repositories.ApplicantMatchRepository;
+import app.leo.matching.repositories.MatchResultRepository;
 
 @Service
 public class MatchingService {
@@ -24,6 +34,7 @@ public class MatchingService {
 
     @Transactional
     public List<MatchResult> matchingByMatchId(long matchId) {
+        matchResultRepository.deleteByMatchId(matchId);
         List<ApplicantMatch> applicantMatches = applicantMatchRepository.getApplicantMatchByMatchId(matchId);
         List<MatchResult> matchResults = this.matching(matchId, applicantMatches);
         return matchResultRepository.saveAll(matchResults);
